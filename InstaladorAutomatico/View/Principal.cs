@@ -53,12 +53,8 @@ namespace InstaladorAutomatico
                 }
             }
         }
-        private void ListaProgramas()
-        {
-            String nomePrograma;
-            String caminhoPrograma;
-            String nomeCheckBox;
-        }
+
+
         private void btnInstlr_Click(object sender, EventArgs e)
         {
 
