@@ -101,6 +101,7 @@ namespace InstaladorAutomatico.View
         {
             //SalvarConfiguracoes();
             //ObterConfiguracoes();
+            List<string> ListaProgramas = new List<string>();
             int valorArquitetura = 0;
             if ((txtBxNomePrograma.Text.Length != 0 && txtBxCaminhoPrograma.Text.Length != 0) && (rdoBtn32bits.Checked == true || rdoBtn64bits.Checked == true))
             {
@@ -121,8 +122,8 @@ namespace InstaladorAutomatico.View
                     valorArquitetura = 64;
                     novoPrograma.arquiteturaPrograma = valorArquitetura;
                 }
-                //enviando dados
-                SerializaPrograma(novoPrograma);
+                //enviando dados para a lista
+                AddListaProgramas(ListaProgramas,txtBxNomePrograma.Text, txtBxCaminhoPrograma.Text, txtBxArg.Text, valorArquitetura);
             }
             else
             {
@@ -151,10 +152,20 @@ namespace InstaladorAutomatico.View
             }
         }
 
-         public void SerializaPrograma(Model.Programa recebePrograma)
+        public void AddListaProgramas( List<string> ListaNaoSerializada, String nome, String caminho, String argumentos, int arquitetura)
+        {
+            ListaNaoSerializada.Add(nome);
+            ListaNaoSerializada.Add(caminho);
+            ListaNaoSerializada.Add(argumentos);
+            ListaNaoSerializada.Add(arquitetura.ToString());
+            SerializaPrograma(ListaNaoSerializada);
+        }
+
+
+         public void SerializaPrograma(List<string> ListaProgramasSerializada)
         {
 
-            Model.Programa NP = new Model.Programa();
+            /*Model.Programa NP = new Model.Programa();
 
             NP = recebePrograma;
 
@@ -164,8 +175,28 @@ namespace InstaladorAutomatico.View
 
             xs.Serialize(txtWriter, NP);
 
+            txtWriter.Close();*/
+
+            XmlSerializer xs = new XmlSerializer(typeof(List<>), new XmlRootAttribute("Novos_Programas"));
+
+            StreamWriter txtWriter = new StreamWriter(@"C:\\Users\\mperc\\Desktop\\teste.xml");
+
+            xs.Serialize(txtWriter.BaseStream, ListaProgramasSerializada);
+
             txtWriter.Close();
         }
+
+        public void ObterXML()
+        {
+            String n, c, a, aq;
+            string caminho = "C:\\Users\\mperc\\Desktop\\teste.xml";
+            XmlSerializer xs = new XmlSerializer(typeof(List<string>));
+            System.IO.StreamReader reader = new System.IO.StreamReader(caminho);
+            xs.Deserialize(reader);
+            reader.Close();
+
+        }
+
         private void TxtBxNomePrograma_TextChanged(object sender, EventArgs e)
         {
             if (txtBxNomePrograma.BackColor == Color.Red)
@@ -204,4 +235,6 @@ namespace InstaladorAutomatico.View
             Close();
         }
     }
+
+
 }
