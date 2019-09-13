@@ -14,9 +14,14 @@ namespace InstaladorAutomatico.View
 {
     public partial class Novo_Programa : Form
     {
+        //declaracao da lista de objetos
+        List<Model.Programa> ListaDeProgramas;
         public Novo_Programa()
         {
             InitializeComponent();
+            //inicializando a lista
+            ListaDeProgramas = new List<Model.Programa>();
+
         }
 
         private void BtnLimpar_Click(object sender, EventArgs e)
@@ -101,8 +106,8 @@ namespace InstaladorAutomatico.View
         {
             //SalvarConfiguracoes();
             //ObterConfiguracoes();
-            List<string> ListaProgramas = new List<string>();
             int valorArquitetura = 0;
+            Model.Programa p = new Model.Programa();
             if ((txtBxNomePrograma.Text.Length != 0 && txtBxCaminhoPrograma.Text.Length != 0) && (rdoBtn32bits.Checked == true || rdoBtn64bits.Checked == true))
             {
                 txtBxNomePrograma.BackColor = Color.White;
@@ -115,15 +120,18 @@ namespace InstaladorAutomatico.View
                 if (rdoBtn32bits.Checked == true)
                 {
                     valorArquitetura = 32;
-                    novoPrograma.arquiteturaPrograma = valorArquitetura;
+                   p.arquiteturaPrograma = valorArquitetura;
                 }
                 else if (rdoBtn64bits.Checked == true)
                 {
                     valorArquitetura = 64;
-                    novoPrograma.arquiteturaPrograma = valorArquitetura;
+                    p.arquiteturaPrograma = valorArquitetura;
                 }
                 //enviando dados para a lista
-                AddListaProgramas(ListaProgramas,txtBxNomePrograma.Text, txtBxCaminhoPrograma.Text, txtBxArg.Text, valorArquitetura);
+                p.nomePrograma = txtBxNomePrograma.Text;
+                p.caminhoPrograma = txtBxCaminhoPrograma.Text;
+                ListaDeProgramas.Add(p);
+                SerializaPrograma(ListaDeProgramas);
             }
             else
             {
@@ -152,17 +160,8 @@ namespace InstaladorAutomatico.View
             }
         }
 
-        public void AddListaProgramas( List<string> ListaNaoSerializada, String nome, String caminho, String argumentos, int arquitetura)
-        {
-            ListaNaoSerializada.Add(nome);
-            ListaNaoSerializada.Add(caminho);
-            ListaNaoSerializada.Add(argumentos);
-            ListaNaoSerializada.Add(arquitetura.ToString());
-            SerializaPrograma(ListaNaoSerializada);
-        }
 
-
-         public void SerializaPrograma(List<string> ListaProgramasSerializada)
+         public void SerializaPrograma(List<Model.Programa> ListaProgramasSerializada)
         {
 
             /*Model.Programa NP = new Model.Programa();
@@ -177,7 +176,7 @@ namespace InstaladorAutomatico.View
 
             txtWriter.Close();*/
 
-            XmlSerializer xs = new XmlSerializer(typeof(List<>), new XmlRootAttribute("Novos_Programas"));
+            XmlSerializer xs = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
 
             StreamWriter txtWriter = new StreamWriter(@"C:\\Users\\mperc\\Desktop\\teste.xml");
 
