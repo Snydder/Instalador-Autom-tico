@@ -15,13 +15,18 @@ namespace InstaladorAutomatico.View
     public partial class Novo_Programa : Form
     {
         //declaracao da lista de objetos
+        [XmlElement("ListaDePrograma")]
         List<Model.Programa> ListaDeProgramas;
+
+        List<Model.Programa> ListaDeProgramasXML;
+
+        Model.Programa p = new Model.Programa();
         public Novo_Programa()
         {
             InitializeComponent();
             //inicializando a lista
             ListaDeProgramas = new List<Model.Programa>();
-
+            ListaDeProgramasXML = new List<Model.Programa>();
         }
 
         private void BtnLimpar_Click(object sender, EventArgs e)
@@ -107,16 +112,12 @@ namespace InstaladorAutomatico.View
             //SalvarConfiguracoes();
             //ObterConfiguracoes();
             int valorArquitetura = 0;
-            Model.Programa p = new Model.Programa();
             if ((txtBxNomePrograma.Text.Length != 0 && txtBxCaminhoPrograma.Text.Length != 0) && (rdoBtn32bits.Checked == true || rdoBtn64bits.Checked == true))
             {
                 txtBxNomePrograma.BackColor = Color.White;
                 txtBxCaminhoPrograma.BackColor = Color.White;
                 rdoBtn32bits.ForeColor = Color.Black;
                 rdoBtn64bits.ForeColor = Color.Black;
-                Model.Programa novoPrograma = new Model.Programa();
-                novoPrograma.nomePrograma = txtBxNomePrograma.Text;
-                novoPrograma.caminhoPrograma = txtBxCaminhoPrograma.Text;
                 if (rdoBtn32bits.Checked == true)
                 {
                     valorArquitetura = 32;
@@ -130,6 +131,8 @@ namespace InstaladorAutomatico.View
                 //enviando dados para a lista
                 p.nomePrograma = txtBxNomePrograma.Text;
                 p.caminhoPrograma = txtBxCaminhoPrograma.Text;
+                DeserializaPrograma(ListaDeProgramasXML);
+                //ListaDeProgramas.AddRange(ListaDeProgramasXML);
                 ListaDeProgramas.Add(p);
                 SerializaPrograma(ListaDeProgramas);
             }
@@ -181,19 +184,17 @@ namespace InstaladorAutomatico.View
             StreamWriter txtWriter = new StreamWriter(@"C:\\Users\\mperc\\Desktop\\teste.xml");
 
             xs.Serialize(txtWriter.BaseStream, ListaProgramasSerializada);
-
             txtWriter.Close();
         }
 
-        public void ObterXML()
+        public void DeserializaPrograma(List<Model.Programa> listaProgramasDeserializada)
         {
-            String n, c, a, aq;
-            string caminho = "C:\\Users\\mperc\\Desktop\\teste.xml";
-            XmlSerializer xs = new XmlSerializer(typeof(List<string>));
-            System.IO.StreamReader reader = new System.IO.StreamReader(caminho);
-            xs.Deserialize(reader);
-            reader.Close();
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
+            StringReader reader = new StringReader(@"C:\\Users\\mperc\\Desktop\\teste.xml");
 
+            listaProgramasDeserializada = (List<Model.Programa>) serializer.Deserialize(reader);
+            reader.Close();
+            listaProgramasDeserializada.AddRange(ListaDeProgramasXML);
         }
 
         private void TxtBxNomePrograma_TextChanged(object sender, EventArgs e)

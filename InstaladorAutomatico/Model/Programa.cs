@@ -12,10 +12,14 @@ using System.Xml.Serialization;
 
 namespace InstaladorAutomatico.Model
 {
+    [XmlRoot("Programa")]
     public class Programa
     {
+        [XmlElement("var1")]
         public String nomePrograma { get; set; }
+        [XmlElement("var2")]
         public String caminhoPrograma { get; set; }
+        [XmlElement("var3")]
         public int arquiteturaPrograma { get; set; }
 
         public class GuardaProgramas
