@@ -73,22 +73,21 @@ namespace InstaladorAutomatico.View
                     valorArquitetura = 64;
                     p.arquiteturaPrograma = valorArquitetura;
                 }
-                    //enviando dados para a lista
-                    p.nomePrograma = txtBxNomePrograma.Text;
-                    p.caminhoPrograma = txtBxCaminhoPrograma.Text;
+                //enviando dados para a lista
+                p.nomePrograma = txtBxNomePrograma.Text;
+                p.caminhoPrograma = txtBxCaminhoPrograma.Text;
                 try
                 {
-                    DeserializaPrograma(ListaDeProgramasXML);
+                    DeserializaPrograma();
+                    ListaDeProgramasXML.Add(p);
+                    SerializaPrograma(ListaDeProgramasXML);
                 }
-                catch (FileNotFoundException)
+                catch (Exception)
                 {
-                    StreamWriter txtWriter = new StreamWriter(@"C:\\Users\\mperc\\Desktop\\teste.xml");
-                    DeserializaPrograma(ListaDeProgramasXML);
-                    txtWriter.Close();
-                }
-                    //ListaDeProgramas.AddRange(ListaDeProgramasXML);
-                    ListaDeProgramas.AddRange(ListaDeProgramasXML);
+                    ListaDeProgramas.Add(p);
                     SerializaPrograma(ListaDeProgramas);
+                    DeserializaPrograma();
+                }
             }
             else
             {
@@ -126,14 +125,14 @@ namespace InstaladorAutomatico.View
             xmlWriter.Close();
         }
 
-        public void DeserializaPrograma(List<Model.Programa> listaProgramasDeserializada)
+        public void DeserializaPrograma()
         {
+            List<Model.Programa> listaSendoDeserializada = new List<Model.Programa>();
             XmlSerializer serializer = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
-            FileStream reader = new FileStream(@"C:\\Users\\mperc\\Desktop\\teste.xml", FileMode.Open);
-
-            listaProgramasDeserializada = (List<Model.Programa>) serializer.Deserialize(reader);
+            FileStream reader = new FileStream(@"C:\\Users\\mperc\\Desktop\\teste.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            listaSendoDeserializada = (List<Model.Programa>) serializer.Deserialize(reader);
             reader.Close();
-            listaProgramasDeserializada.AddRange(ListaDeProgramasXML);
+            ListaDeProgramasXML.AddRange(listaSendoDeserializada);
         }
 
         private void TxtBxNomePrograma_TextChanged(object sender, EventArgs e)
