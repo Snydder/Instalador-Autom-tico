@@ -15,16 +15,20 @@ namespace InstaladorAutomatico.Model
     [Serializable, XmlRoot("Programa")]
     public class Programa
     {
+        //declaracao da lista de objetos
+        public static List<Model.Programa> ListaDeProgramas = new List<Model.Programa>();
+
+
+        [XmlElement(ElementName = "IDPrograma")]
+        public Int32 IDPrograma { get; set; }
+
         [XmlElement(ElementName = "nomePrograma")]
         public String nomePrograma { get; set; }
+
         [XmlElement(ElementName = "caminhoPrograma")]
         public String caminhoPrograma { get; set; }
-        [XmlElement( ElementName = "arquiteturaPrograma")]
-        public int arquiteturaPrograma { get; set; }
 
-        public class GuardaProgramas
-        {
-            List<Programa> ListaProgramas = new List<Programa>();
-        }
+        [XmlElement(ElementName = "arquiteturaPrograma")]
+        public Int32 arquiteturaPrograma { get; set; }
     }
 }

@@ -26,48 +26,12 @@ namespace InstaladorAutomatico.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string NomePrograma {
+        public string CaminhoXML {
             get {
-                return ((string)(this["NomePrograma"]));
+                return ((string)(this["CaminhoXML"]));
             }
             set {
-                this["NomePrograma"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LocalPrograma {
-            get {
-                return ((string)(this["LocalPrograma"]));
-            }
-            set {
-                this["LocalPrograma"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ArgumentosPrograma {
-            get {
-                return ((string)(this["ArgumentosPrograma"]));
-            }
-            set {
-                this["ArgumentosPrograma"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int ArquiteturaPrograma {
-            get {
-                return ((int)(this["ArquiteturaPrograma"]));
-            }
-            set {
-                this["ArquiteturaPrograma"] = value;
+                this["CaminhoXML"] = value;
             }
         }
     }
