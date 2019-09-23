@@ -13,6 +13,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace InstaladorAutomatico
 {
@@ -24,7 +25,6 @@ namespace InstaladorAutomatico
         {
             //inicializando componente e Lista
             InitializeComponent();
-            ListaLocal.AddRange(Model.Programa.ListaDeProgramas);
         }
         private void BtnMarcaDesmarca_Click(object sender, EventArgs e)
         {
@@ -105,11 +105,6 @@ namespace InstaladorAutomatico
             Application.Exit();
         }
 
-        private void NovoProgramaToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void ListaDeProgramasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //abrindo o formulário para a adição de um novo programa
@@ -117,14 +112,49 @@ namespace InstaladorAutomatico
             novoPrograma.ShowDialog();
         }
 
-        private void LblMarcaProgresso_Click(object sender, EventArgs e)
+        private void BtnVrfcInstlc_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void BtnVrfcInstlc_Click(object sender, EventArgs e)
+        private void SelecionarCaminhoXML()
         {
+            SaveFileDialog mudarDiretorioXML = new SaveFileDialog();
+            mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
+            mudarDiretorioXML.ShowDialog();
+            Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
+            Properties.Settings.Default.Save();
+        }
 
+        public void DeserializaPrograma()
+        {
+            List<Model.Programa> listaSendoDeserializada = new List<Model.Programa>();
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
+            if (Properties.Settings.Default.CaminhoXML == "")
+            {
+                SelecionarCaminhoXML();
+            }
+            FileStream reader = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
+            listaSendoDeserializada = (List<Model.Programa>)serializer.Deserialize(reader);
+            ListaLocal.AddRange(listaSendoDeserializada);
+            listaSendoDeserializada.Clear();
+            reader.Close();
+        }
+
+        private void CarregaLista()
+        {
+            DeserializaPrograma();
+            this.GradeDeDados.DataSource = ListaLocal;
+        }
+
+        private void Principal_MouseEnter(object sender, EventArgs e)
+        {
+            CarregaLista();
+        }
+
+        private void Principal_Load(object sender, EventArgs e)
+        {
+            CarregaLista();
         }
     }
 }

@@ -38,17 +38,21 @@
             this.verificarInstalaçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnCopiarArquivos = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Ícone = new System.Windows.Forms.DataGridViewImageColumn();
+            this.gpBx = new System.Windows.Forms.GroupBox();
             this.Selecionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Ícone = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GradeDeDados = new System.Windows.Forms.DataGridView();
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.caminhoProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.programaBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.programaBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.programaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.gpBx.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GradeDeDados)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -56,7 +60,7 @@
             // BtnMarcaDesmarca
             // 
             this.BtnMarcaDesmarca.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnMarcaDesmarca.Location = new System.Drawing.Point(303, 288);
+            this.BtnMarcaDesmarca.Location = new System.Drawing.Point(434, 30);
             this.BtnMarcaDesmarca.Name = "BtnMarcaDesmarca";
             this.BtnMarcaDesmarca.Size = new System.Drawing.Size(125, 30);
             this.BtnMarcaDesmarca.TabIndex = 6;
@@ -68,7 +72,7 @@
             // 
             this.btnIniciar.AutoSize = true;
             this.btnIniciar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnIniciar.Location = new System.Drawing.Point(434, 322);
+            this.btnIniciar.Location = new System.Drawing.Point(303, 30);
             this.btnIniciar.Name = "btnIniciar";
             this.btnIniciar.Size = new System.Drawing.Size(125, 30);
             this.btnIniciar.TabIndex = 8;
@@ -119,7 +123,7 @@
             // 
             this.btnSair.AutoSize = true;
             this.btnSair.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSair.Location = new System.Drawing.Point(303, 322);
+            this.btnSair.Location = new System.Drawing.Point(434, 66);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(125, 30);
             this.btnSair.TabIndex = 7;
@@ -131,39 +135,34 @@
             // 
             this.btnCopiarArquivos.AutoSize = true;
             this.btnCopiarArquivos.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCopiarArquivos.Location = new System.Drawing.Point(434, 288);
+            this.btnCopiarArquivos.Location = new System.Drawing.Point(303, 66);
             this.btnCopiarArquivos.Name = "btnCopiarArquivos";
             this.btnCopiarArquivos.Size = new System.Drawing.Size(125, 30);
             this.btnCopiarArquivos.TabIndex = 4;
             this.btnCopiarArquivos.Text = "Copiar Arquivos";
             this.btnCopiarArquivos.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // gpBx
             // 
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ID,
-            this.Ícone,
-            this.nomeProgramaDataGridViewTextBoxColumn,
-            this.caminhoProgramaDataGridViewTextBoxColumn,
-            this.arquiteturaProgramaDataGridViewTextBoxColumn,
-            this.Selecionar});
-            this.dataGridView1.DataSource = this.programaBindingSource1;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 24);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(863, 258);
-            this.dataGridView1.TabIndex = 24;
+            this.gpBx.AutoSize = true;
+            this.gpBx.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gpBx.Controls.Add(this.btnIniciar);
+            this.gpBx.Controls.Add(this.BtnMarcaDesmarca);
+            this.gpBx.Controls.Add(this.btnCopiarArquivos);
+            this.gpBx.Controls.Add(this.btnSair);
+            this.gpBx.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.gpBx.Location = new System.Drawing.Point(0, 251);
+            this.gpBx.Name = "gpBx";
+            this.gpBx.Size = new System.Drawing.Size(863, 115);
+            this.gpBx.TabIndex = 25;
+            this.gpBx.TabStop = false;
+            this.gpBx.Text = "Ações";
             // 
-            // ID
+            // Selecionar
             // 
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
+            this.Selecionar.HeaderText = "Selecionar";
+            this.Selecionar.Name = "Selecionar";
+            this.Selecionar.ReadOnly = true;
             // 
             // Ícone
             // 
@@ -171,11 +170,31 @@
             this.Ícone.Name = "Ícone";
             this.Ícone.ReadOnly = true;
             // 
-            // Selecionar
+            // ID
             // 
-            this.Selecionar.HeaderText = "Selecionar";
-            this.Selecionar.Name = "Selecionar";
-            this.Selecionar.ReadOnly = true;
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            // 
+            // GradeDeDados
+            // 
+            this.GradeDeDados.AutoGenerateColumns = false;
+            this.GradeDeDados.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.GradeDeDados.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedHeaders;
+            this.GradeDeDados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.GradeDeDados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID,
+            this.Ícone,
+            this.nomeProgramaDataGridViewTextBoxColumn,
+            this.caminhoProgramaDataGridViewTextBoxColumn,
+            this.arquiteturaProgramaDataGridViewTextBoxColumn,
+            this.Selecionar});
+            this.GradeDeDados.DataSource = this.programaBindingSource2;
+            this.GradeDeDados.Dock = System.Windows.Forms.DockStyle.Top;
+            this.GradeDeDados.Location = new System.Drawing.Point(0, 24);
+            this.GradeDeDados.Name = "GradeDeDados";
+            this.GradeDeDados.Size = new System.Drawing.Size(863, 221);
+            this.GradeDeDados.TabIndex = 24;
             // 
             // nomeProgramaDataGridViewTextBoxColumn
             // 
@@ -198,6 +217,10 @@
             this.arquiteturaProgramaDataGridViewTextBoxColumn.Name = "arquiteturaProgramaDataGridViewTextBoxColumn";
             this.arquiteturaProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             // 
+            // programaBindingSource2
+            // 
+            this.programaBindingSource2.DataSource = typeof(InstaladorAutomatico.Model.Programa);
+            // 
             // programaBindingSource1
             // 
             this.programaBindingSource1.DataSource = typeof(InstaladorAutomatico.Model.Programa);
@@ -211,19 +234,21 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(863, 366);
-            this.Controls.Add(this.BtnMarcaDesmarca);
-            this.Controls.Add(this.btnIniciar);
-            this.Controls.Add(this.btnCopiarArquivos);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.btnSair);
+            this.Controls.Add(this.gpBx);
+            this.Controls.Add(this.GradeDeDados);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Principal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Instalador";
+            this.Load += new System.EventHandler(this.Principal_Load);
+            this.MouseEnter += new System.EventHandler(this.Principal_MouseEnter);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.gpBx.ResumeLayout(false);
+            this.gpBx.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GradeDeDados)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -242,14 +267,16 @@
         private System.Windows.Forms.Button btnCopiarArquivos;
         private System.Windows.Forms.ToolStripMenuItem verificarInstalaçõesToolStripMenuItem;
         private System.Windows.Forms.BindingSource programaBindingSource;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewImageColumn Ícone;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nomeProgramaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn caminhoProgramaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn arquiteturaProgramaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Selecionar;
         private System.Windows.Forms.BindingSource programaBindingSource1;
+        private System.Windows.Forms.BindingSource programaBindingSource2;
+        private System.Windows.Forms.GroupBox gpBx;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Selecionar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn arquiteturaProgramaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn caminhoProgramaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nomeProgramaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewImageColumn Ícone;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridView GradeDeDados;
     }
 }
 

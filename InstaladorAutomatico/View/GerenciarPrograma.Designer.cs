@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtBxNomePrograma = new System.Windows.Forms.TextBox();
@@ -46,13 +45,7 @@
             this.salvarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salvarComoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importarXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.programaBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
-            this.programaBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.programaBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -225,18 +218,6 @@
             this.importarXMLToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.importarXMLToolStripMenuItem.Text = "Importar XML";
             // 
-            // programaBindingSource2
-            // 
-            this.programaBindingSource2.DataSource = typeof(InstaladorAutomatico.Model.Programa);
-            // 
-            // programaBindingSource
-            // 
-            this.programaBindingSource.DataSource = typeof(InstaladorAutomatico.Model.Programa);
-            // 
-            // programaBindingSource1
-            // 
-            this.programaBindingSource1.DataSource = typeof(InstaladorAutomatico.Model.Programa);
-            // 
             // Gerenciar_Programas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -262,9 +243,6 @@
             this.Shown += new System.EventHandler(this.Gerenciar_Programas_Shown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -289,8 +267,5 @@
         private System.Windows.Forms.ToolStripMenuItem salvarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem salvarComoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importarXMLToolStripMenuItem;
-        private System.Windows.Forms.BindingSource programaBindingSource;
-        private System.Windows.Forms.BindingSource programaBindingSource1;
-        private System.Windows.Forms.BindingSource programaBindingSource2;
     }
 }

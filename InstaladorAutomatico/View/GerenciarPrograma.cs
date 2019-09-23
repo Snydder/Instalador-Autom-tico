@@ -54,9 +54,9 @@ namespace InstaladorAutomatico.View
 
         private void BtnLimpar_Click(object sender, EventArgs e)
         {
-            txtBxCaminhoPrograma.Text = null;
-            txtBxNomePrograma.Text = null;
-            txtBxArg.Text = null;
+            txtBxCaminhoPrograma.Text = "";
+            txtBxNomePrograma.Text = "";
+            txtBxArg.Text = "";
             rdoBtn32bits.Checked = false;
             rdoBtn64bits.Checked = false;
         }
@@ -205,6 +205,7 @@ namespace InstaladorAutomatico.View
         private void BtnFechar_Click(object sender, EventArgs e)
         {
             Close();
+
         }
 
         private void SelecionarCaminhoXML()
