@@ -226,5 +226,10 @@ namespace InstaladorAutomatico.View
         {
 
         }
+
+        private void BindingNavigatorAddNewItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
