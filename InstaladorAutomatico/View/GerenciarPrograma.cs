@@ -14,17 +14,16 @@ namespace InstaladorAutomatico.View
 {
     public partial class Gerenciar_Programas : Form
     {
-        //declarando lista local
+        //declarando listas locais
         [XmlElement(ElementName = "ListaDePrograma")]
         List<Model.Programa> ListaDeProgramasXML;
+        List<Model.Programa> ListaLocal = new List<Model.Programa>();
         Model.Programa p = new Model.Programa();
-
         public Gerenciar_Programas()
         {
             InitializeComponent();
             ListaDeProgramasXML = new List<Model.Programa>();
-            
-            
+            ObterLista();
         }
 
         private void Gerenciar_Programas_Shown(object sender, EventArgs e)
@@ -109,6 +108,7 @@ namespace InstaladorAutomatico.View
                     ListaDeProgramasXML.Add(p);
                     SerializaPrograma(ListaDeProgramasXML);
                     Model.Programa.ListaDeProgramas.AddRange(ListaDeProgramasXML);
+                    GradeDeDadosXML.DataSource = Model.Programa.ListaDeProgramas;
                     ListaDeProgramasXML.Clear();
                 }
                 catch (FileNotFoundException)
@@ -167,6 +167,38 @@ namespace InstaladorAutomatico.View
             listaSendoDeserializada = (List<Model.Programa>)serializer.Deserialize(reader);
             reader.Close();
             ListaDeProgramasXML.AddRange(listaSendoDeserializada);
+        }
+
+        public Boolean ObterLista()
+        {
+            List<Model.Programa> listaSendoDeserializada = new List<Model.Programa>();
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
+            if (Properties.Settings.Default.CaminhoXML == "")
+            {
+                MessageBox.Show("Nenhum caminho para o arquivo XML está configurado.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (ObterLista() == false)
+                {
+                    return false;
+                }
+            }
+            try
+            {
+                using (FileStream reader = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+                listaSendoDeserializada = (List<Model.Programa>)serializer.Deserialize(reader);
+                ListaLocal.AddRange(listaSendoDeserializada);
+                GradeDeDadosXML.DataSource = ListaLocal;
+                listaSendoDeserializada.Clear();
+                return true;
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("Arquivo não encontrado. A tabela está vazia.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (ObterLista() == true)
+                {
+                    this.DeserializaPrograma();
+                }
+                return false;
+            }
         }
 
         private void TxtBxNomePrograma_TextChanged(object sender, EventArgs e)
@@ -228,6 +260,11 @@ namespace InstaladorAutomatico.View
         }
 
         private void BindingNavigatorAddNewItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ImportarXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }

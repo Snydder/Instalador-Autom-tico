@@ -117,44 +117,62 @@ namespace InstaladorAutomatico
 
         }
 
-        private void SelecionarCaminhoXML()
+        private Boolean SelecionarCaminhoXML()
         {
-            SaveFileDialog mudarDiretorioXML = new SaveFileDialog();
+            OpenFileDialog mudarDiretorioXML = new OpenFileDialog();
             mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
-            mudarDiretorioXML.ShowDialog();
-            Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
-            Properties.Settings.Default.Save();
+            if (mudarDiretorioXML.ShowDialog() == DialogResult.OK)
+            {
+                Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
+                Properties.Settings.Default.Save();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public void DeserializaPrograma()
+        public Boolean ObterLista()
         {
             List<Model.Programa> listaSendoDeserializada = new List<Model.Programa>();
             XmlSerializer serializer = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
             if (Properties.Settings.Default.CaminhoXML == "")
             {
-                SelecionarCaminhoXML();
+                MessageBox.Show("Nenhum caminho para o arquivo XML está configurado.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (SelecionarCaminhoXML() == false)
+                {
+                    return false;
+                }
             }
-            FileStream reader = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-            listaSendoDeserializada = (List<Model.Programa>)serializer.Deserialize(reader);
-            ListaLocal.AddRange(listaSendoDeserializada);
-            listaSendoDeserializada.Clear();
-            reader.Close();
-        }
-
-        private void CarregaLista()
-        {
-            DeserializaPrograma();
-            this.GradeDeDados.DataSource = ListaLocal;
+            try
+            {
+                using (FileStream reader = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+                listaSendoDeserializada = (List<Model.Programa>)serializer.Deserialize(reader);
+                ListaLocal.AddRange(listaSendoDeserializada);
+                GradeDeDados.DataSource = ListaLocal;
+                listaSendoDeserializada.Clear();
+                return true;
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("Arquivo não encontrado. A tabela está vazia.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (SelecionarCaminhoXML() == true)
+                {
+                    this.ObterLista();
+                }
+                return false;
+            }
         }
 
         private void Principal_MouseEnter(object sender, EventArgs e)
         {
-            CarregaLista();
+            ObterLista();
         }
 
         private void Principal_Load(object sender, EventArgs e)
         {
-            CarregaLista();
+            ObterLista();
         }
     }
 }

@@ -189,7 +189,7 @@
             this.caminhoProgramaDataGridViewTextBoxColumn,
             this.arquiteturaProgramaDataGridViewTextBoxColumn,
             this.Selecionar});
-            this.GradeDeDados.DataSource = this.programaBindingSource2;
+            this.GradeDeDados.DataSource = this.programaBindingSource;
             this.GradeDeDados.Dock = System.Windows.Forms.DockStyle.Top;
             this.GradeDeDados.Location = new System.Drawing.Point(0, 24);
             this.GradeDeDados.Name = "GradeDeDados";
