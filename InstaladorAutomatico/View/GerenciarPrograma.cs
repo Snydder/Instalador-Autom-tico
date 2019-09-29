@@ -51,40 +51,49 @@ namespace InstaladorAutomatico.View
             }
         }
 
-        private void BtnLimpar_Click(object sender, EventArgs e)
+        private void LimpaCampos()
         {
-            txtBxCaminhoPrograma.Text = "";
+            txtBxNomePrograma.BackColor = Color.White;
+            txtBxDiretorioPrograma.BackColor = Color.White;
+            rdoBtn32bits.ForeColor = Color.Black;
+            rdoBtn64bits.ForeColor = Color.Black;
+            txtBxDiretorioPrograma.Text = "";
             txtBxNomePrograma.Text = "";
             txtBxArg.Text = "";
             rdoBtn32bits.Checked = false;
             rdoBtn64bits.Checked = false;
         }
 
-        private void BtnCaminhoPrograma_Click(object sender, EventArgs e)
+        private void BtnLimpar_Click(object sender, EventArgs e)
+        {
+            LimpaCampos();
+        }
+
+        private void BtnCaminhoIcone_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog selecionarIcone = new OpenFileDialog();
+            selecionarIcone.Filter = "Icones | * .ico";
+            selecionarIcone.ShowDialog();
+            String caminhoIconeStr = selecionarIcone.FileName;
+            txtBxCaminhoIcone.Text = caminhoIconeStr;
+        }
+
+        private void BtnDiretorioPrograma_Click(object sender, EventArgs e)
         {
             OpenFileDialog selecionarPrograma = new OpenFileDialog();
             selecionarPrograma.ShowDialog();
             String caminhoProgramaStr = selecionarPrograma.FileName;
-            txtBxCaminhoPrograma.Text = caminhoProgramaStr;
+            txtBxDiretorioPrograma.Text = caminhoProgramaStr;
         }
 
         private void SalvarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //declarando variáveis
-            //String validaNomePrograma;
-            //String validaCaminhoPrograma;
+            //declarando variável
             Int32 valorArquitetura = 0;
-
-            //validaNomePrograma = GradeDeDadosXML.Rows[p.IDPrograma].Cells["nomeProgramaDataGridViewTextBoxColumn"].Value.ToString();
-            //validaCaminhoPrograma = GradeDeDadosXML.Rows[p.IDPrograma].Cells["caminhoProgramaDataGridViewTextBoxColumn"].Value.ToString();
-            if ((txtBxNomePrograma.Text.Length != 0 && txtBxCaminhoPrograma.Text.Length != 0) && (rdoBtn32bits.Checked == true || rdoBtn64bits.Checked == true))
+            if ((txtBxNomePrograma.Text.Length != 0 && txtBxDiretorioPrograma.Text.Length != 0) && (rdoBtn32bits.Checked == true || rdoBtn64bits.Checked == true))
             {
-                txtBxNomePrograma.BackColor = Color.White;
-                txtBxCaminhoPrograma.BackColor = Color.White;
-                rdoBtn32bits.ForeColor = Color.Black;
-                rdoBtn64bits.ForeColor = Color.Black;
+                LimpaCampos();
 
-                //depreciado
                 if (rdoBtn32bits.Checked == true)
                 {
                     valorArquitetura = 32;
@@ -101,7 +110,8 @@ namespace InstaladorAutomatico.View
                 //p.nomePrograma = GradeDeDadosXML.Rows[p.IDPrograma].Cells["nomeProgramaDataGridViewTextBoxColumn"].Value.ToString();
                 //p.caminhoPrograma = GradeDeDadosXML.Rows[p.IDPrograma].Cells["caminhoProgramaDataGridViewTextBoxColumn"].Value.ToString();
                 p.nomePrograma = txtBxNomePrograma.Text;
-                p.caminhoPrograma = txtBxCaminhoPrograma.Text;
+                //p.caminhoIcone = txtBxCaminhoIcone.Text;
+                p.diretorioPrograma = txtBxDiretorioPrograma.Text;
                 try
                 {
                     ListaDeProgramasXML.AddRange(p.DeserializaPrograma());
@@ -116,13 +126,27 @@ namespace InstaladorAutomatico.View
                     Model.Programa.ListaDeProgramas.Add(p);
                     SerializaPrograma(Model.Programa.ListaDeProgramas);
                 }
+                /*try
+                {
+                    ListaDeProgramasXML.AddRange(p.DeserializaPrograma());
+                    ListaDeProgramasXML.Add(p);
+                    SerializaPrograma(ListaDeProgramasXML);
+                    Model.Programa.ListaDeProgramas.AddRange(ListaDeProgramasXML);
+                    GradeDeDadosXML.DataSource = Model.Programa.ListaDeProgramas;
+                    ListaDeProgramasXML.Clear();
+                }
+                catch (FileNotFoundException)
+                {
+                    Model.Programa.ListaDeProgramas.Add(p);
+                    SerializaPrograma(Model.Programa.ListaDeProgramas);
+                }*/
             }
             else
             {
-                if (txtBxNomePrograma.Text.Length == 0 && txtBxCaminhoPrograma.Text.Length == 0)
+                if (txtBxNomePrograma.Text.Length == 0 && txtBxDiretorioPrograma.Text.Length == 0)
                 {
                     txtBxNomePrograma.BackColor = Color.Red;
-                    txtBxCaminhoPrograma.BackColor = Color.Red;
+                    txtBxDiretorioPrograma.BackColor = Color.Red;
                     MessageBox.Show("Preencha o nome e o caminho do programa.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (txtBxNomePrograma.Text.Length == 0)
@@ -130,9 +154,9 @@ namespace InstaladorAutomatico.View
                     txtBxNomePrograma.BackColor = Color.Red;
                     MessageBox.Show("Preencha o nome do programa.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                else if (txtBxCaminhoPrograma.Text.Length == 0)
+                else if (txtBxDiretorioPrograma.Text.Length == 0)
                 {
-                    txtBxCaminhoPrograma.BackColor = Color.Red;
+                    txtBxDiretorioPrograma.BackColor = Color.Red;
                     MessageBox.Show("Preencha o caminho do programa.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 if (rdoBtn32bits.Checked == false && rdoBtn64bits.Checked == false)
@@ -143,6 +167,7 @@ namespace InstaladorAutomatico.View
                 }
             }
         }
+
         public void SerializaPrograma(List<Model.Programa> ListaAlvoSerializacao)
         {
             XmlSerializer xs = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
@@ -160,11 +185,9 @@ namespace InstaladorAutomatico.View
             if (Properties.Settings.Default.CaminhoXML == "")
             {
                 MessageBox.Show("Nenhum caminho para o arquivo XML está configurado.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (ObterLista() == false)
-                {
-                    return false;
-                }
+                SelecionarCaminhoXML();
             }
+
             try
             {
                 ListaLocal.AddRange(p.DeserializaPrograma());
@@ -189,12 +212,11 @@ namespace InstaladorAutomatico.View
                 txtBxNomePrograma.BackColor = Color.White;
             }
         }
-
-        private void TxtBxCaminhoPrograma_TextChanged(object sender, EventArgs e)
+        private void TxtBxDiretorioPrograma_TextChanged(object sender, EventArgs e)
         {
-            if (txtBxCaminhoPrograma.BackColor == Color.Red)
+            if (txtBxDiretorioPrograma.BackColor == Color.Red)
             {
-                txtBxCaminhoPrograma.BackColor = Color.White;
+                txtBxDiretorioPrograma.BackColor = Color.White;
             }
         }
 
@@ -218,7 +240,6 @@ namespace InstaladorAutomatico.View
         private void BtnFechar_Click(object sender, EventArgs e)
         {
             Close();
-
         }
 
         private void SelecionarCaminhoXML()
@@ -228,6 +249,19 @@ namespace InstaladorAutomatico.View
             mudarDiretorioXML.ShowDialog();
             Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
             Properties.Settings.Default.Save();
+        }
+
+        private void ImportandoXML()
+        {
+            OpenFileDialog mudarDiretorioXML = new OpenFileDialog();
+            mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
+            mudarDiretorioXML.ShowDialog();
+            Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
+            Properties.Settings.Default.Save();
+            ListaLocal.Clear();
+            ListaLocal.AddRange(p.DeserializaPrograma());
+            GradeDeDadosXML.DataSource = null;
+            GradeDeDadosXML.DataSource = ListaLocal;
         }
 
         private void SalvarComoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -247,7 +281,7 @@ namespace InstaladorAutomatico.View
 
         private void ImportarXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            ImportandoXML();
         }
     }
 }

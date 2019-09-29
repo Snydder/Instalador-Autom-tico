@@ -21,11 +21,14 @@ namespace InstaladorAutomatico.Model
         [XmlElement(ElementName = "IDPrograma")]
         public Int32 IDPrograma { get; set; }
 
+        [XmlElement(ElementName = "caminhoIcone")]
+        public String caminhoIcone { get; set; }
+
         [XmlElement(ElementName = "nomePrograma")]
         public String nomePrograma { get; set; }
 
         [XmlElement(ElementName = "caminhoPrograma")]
-        public String caminhoPrograma { get; set; }
+        public String diretorioPrograma { get; set; }
 
         [XmlElement(ElementName = "arquiteturaPrograma")]
         public Int32 arquiteturaPrograma { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,11 +22,12 @@ namespace InstaladorAutomatico
     {
         //declarando lista local
         List<Model.Programa> ListaLocal = new List<Model.Programa>();
-        Model.Programa teste = new Model.Programa();
+        Model.Programa ProgramaFuncoes = new Model.Programa();
         public Principal()
         {
             //inicializando componente e Lista
             InitializeComponent();
+
         }
         private void BtnMarcaDesmarca_Click(object sender, EventArgs e)
         {
@@ -146,7 +148,7 @@ namespace InstaladorAutomatico
             }
             try
             {
-                ListaLocal.AddRange(teste.DeserializaPrograma());
+                ListaLocal.AddRange(ProgramaFuncoes.DeserializaPrograma());
                 GradeDeDados.DataSource = null;
                 GradeDeDados.DataSource = ListaLocal;
                 return true;
@@ -162,14 +164,25 @@ namespace InstaladorAutomatico
             }
         }
 
-        private void Principal_MouseEnter(object sender, EventArgs e)
+        private void BtnAtualizarDataGrid_Click(object sender, EventArgs e)
         {
             ObterLista();
+            GradeDeDados.FirstDisplayedScrollingRowIndex = GradeDeDados.RowCount - 1;
         }
 
         private void Principal_Load(object sender, EventArgs e)
         {
             ObterLista();
+        }
+
+        private void SairToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void BtnSair_Click_1(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
