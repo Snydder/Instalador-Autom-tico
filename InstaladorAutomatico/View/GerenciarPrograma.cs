@@ -104,7 +104,7 @@ namespace InstaladorAutomatico.View
                 p.caminhoPrograma = txtBxCaminhoPrograma.Text;
                 try
                 {
-                    DeserializaPrograma();
+                    ListaDeProgramasXML.AddRange(p.DeserializaPrograma());
                     ListaDeProgramasXML.Add(p);
                     SerializaPrograma(ListaDeProgramasXML);
                     Model.Programa.ListaDeProgramas.AddRange(ListaDeProgramasXML);
@@ -143,7 +143,7 @@ namespace InstaladorAutomatico.View
                 }
             }
         }
-        public void SerializaPrograma(List<Model.Programa> ListaProgramasSerializada)
+        public void SerializaPrograma(List<Model.Programa> ListaAlvoSerializacao)
         {
             XmlSerializer xs = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
             if (Properties.Settings.Default.CaminhoXML == "")
@@ -151,28 +151,12 @@ namespace InstaladorAutomatico.View
                 SelecionarCaminhoXML();
             }
             FileStream xmlWriter = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Create);
-            xs.Serialize(xmlWriter, ListaProgramasSerializada);
+            xs.Serialize(xmlWriter, ListaAlvoSerializacao);
             xmlWriter.Close();
-        }
-
-        public void DeserializaPrograma()
-        {
-            List<Model.Programa> listaSendoDeserializada = new List<Model.Programa>();
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
-            if (Properties.Settings.Default.CaminhoXML == "")
-            {
-                SelecionarCaminhoXML();
-            }
-            FileStream reader = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Open, FileAccess.Read, FileShare.Read);
-            listaSendoDeserializada = (List<Model.Programa>)serializer.Deserialize(reader);
-            reader.Close();
-            ListaDeProgramasXML.AddRange(listaSendoDeserializada);
         }
 
         public Boolean ObterLista()
         {
-            List<Model.Programa> listaSendoDeserializada = new List<Model.Programa>();
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
             if (Properties.Settings.Default.CaminhoXML == "")
             {
                 MessageBox.Show("Nenhum caminho para o arquivo XML está configurado.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -183,11 +167,8 @@ namespace InstaladorAutomatico.View
             }
             try
             {
-                using (FileStream reader = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
-                listaSendoDeserializada = (List<Model.Programa>)serializer.Deserialize(reader);
-                ListaLocal.AddRange(listaSendoDeserializada);
+                ListaLocal.AddRange(p.DeserializaPrograma());
                 GradeDeDadosXML.DataSource = ListaLocal;
-                listaSendoDeserializada.Clear();
                 return true;
             }
             catch (FileNotFoundException)
@@ -195,7 +176,7 @@ namespace InstaladorAutomatico.View
                 MessageBox.Show("Arquivo não encontrado. A tabela está vazia.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (ObterLista() == true)
                 {
-                    this.DeserializaPrograma();
+                    this.p.DeserializaPrograma();
                 }
                 return false;
             }

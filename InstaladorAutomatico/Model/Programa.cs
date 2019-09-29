@@ -18,7 +18,6 @@ namespace InstaladorAutomatico.Model
         //declaracao da lista de objetos
         public static List<Model.Programa> ListaDeProgramas = new List<Model.Programa>();
 
-
         [XmlElement(ElementName = "IDPrograma")]
         public Int32 IDPrograma { get; set; }
 
@@ -30,5 +29,27 @@ namespace InstaladorAutomatico.Model
 
         [XmlElement(ElementName = "arquiteturaPrograma")]
         public Int32 arquiteturaPrograma { get; set; }
+
+        private void SelecionarCaminhoXML()
+        {
+            SaveFileDialog mudarDiretorioXML = new SaveFileDialog();
+            mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
+            mudarDiretorioXML.ShowDialog();
+            Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
+            Properties.Settings.Default.Save();
+        }
+        public List<Model.Programa> DeserializaPrograma()
+        {
+            List<Model.Programa> listaSendoDeserializada = new List<Model.Programa>();
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
+            if (Properties.Settings.Default.CaminhoXML == "")
+            {
+                SelecionarCaminhoXML();
+            }
+            FileStream reader = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Open, FileAccess.Read, FileShare.Read);
+            listaSendoDeserializada = (List<Model.Programa>)serializer.Deserialize(reader);
+            reader.Close();
+            return listaSendoDeserializada;
+        }
     }
 }

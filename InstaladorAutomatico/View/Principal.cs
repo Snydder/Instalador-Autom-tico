@@ -21,6 +21,7 @@ namespace InstaladorAutomatico
     {
         //declarando lista local
         List<Model.Programa> ListaLocal = new List<Model.Programa>();
+        Model.Programa teste = new Model.Programa();
         public Principal()
         {
             //inicializando componente e Lista
@@ -135,8 +136,6 @@ namespace InstaladorAutomatico
 
         public Boolean ObterLista()
         {
-            List<Model.Programa> listaSendoDeserializada = new List<Model.Programa>();
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
             if (Properties.Settings.Default.CaminhoXML == "")
             {
                 MessageBox.Show("Nenhum caminho para o arquivo XML está configurado.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -147,11 +146,9 @@ namespace InstaladorAutomatico
             }
             try
             {
-                using (FileStream reader = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
-                listaSendoDeserializada = (List<Model.Programa>)serializer.Deserialize(reader);
-                ListaLocal.AddRange(listaSendoDeserializada);
+                ListaLocal.AddRange(teste.DeserializaPrograma());
+                GradeDeDados.DataSource = null;
                 GradeDeDados.DataSource = ListaLocal;
-                listaSendoDeserializada.Clear();
                 return true;
             }
             catch (FileNotFoundException)
