@@ -16,13 +16,20 @@ namespace InstaladorAutomatico.View
     {
         //declarando listas locais
         [XmlElement(ElementName = "ListaDePrograma")]
-        List<Model.Programa> ListaDeProgramasXML;
+        List<Model.Programa> ListaDeProgramasXML = new List<Model.Programa>();
+
         List<Model.Programa> ListaLocal = new List<Model.Programa>();
+
+        //declarando novo objeto do tipo Model.Programa
         Model.Programa p = new Model.Programa();
+
+
+        //declarando variável
+        Int32 valorArquitetura = 0;
+
         public Gerenciar_Programas()
         {
             InitializeComponent();
-            ListaDeProgramasXML = new List<Model.Programa>();
             ObterLista();
         }
 
@@ -67,6 +74,7 @@ namespace InstaladorAutomatico.View
         private void BtnLimpar_Click(object sender, EventArgs e)
         {
             LimpaCampos();
+            MessageBox.Show(Properties.Settings.Default.CaminhoXML);
         }
 
         private void BtnCaminhoIcone_Click(object sender, EventArgs e)
@@ -88,58 +96,18 @@ namespace InstaladorAutomatico.View
 
         private void SalvarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //declarando variável
-            Int32 valorArquitetura = 0;
             if ((txtBxNomePrograma.Text.Length != 0 && txtBxDiretorioPrograma.Text.Length != 0) && (rdoBtn32bits.Checked == true || rdoBtn64bits.Checked == true))
             {
-                LimpaCampos();
-
                 if (rdoBtn32bits.Checked == true)
                 {
                     valorArquitetura = 32;
-                    p.arquiteturaPrograma = valorArquitetura;
                 }
                 else if (rdoBtn64bits.Checked == true)
                 {
                     valorArquitetura = 64;
-                    p.arquiteturaPrograma = valorArquitetura;
                 }
-
-
                 //enviando dados para a lista
-                //p.nomePrograma = GradeDeDadosXML.Rows[p.IDPrograma].Cells["nomeProgramaDataGridViewTextBoxColumn"].Value.ToString();
-                //p.caminhoPrograma = GradeDeDadosXML.Rows[p.IDPrograma].Cells["caminhoProgramaDataGridViewTextBoxColumn"].Value.ToString();
-                p.nomePrograma = txtBxNomePrograma.Text;
-                //p.caminhoIcone = txtBxCaminhoIcone.Text;
-                p.diretorioPrograma = txtBxDiretorioPrograma.Text;
-                try
-                {
-                    ListaDeProgramasXML.AddRange(p.DeserializaPrograma());
-                    ListaDeProgramasXML.Add(p);
-                    SerializaPrograma(ListaDeProgramasXML);
-                    Model.Programa.ListaDeProgramas.AddRange(ListaDeProgramasXML);
-                    GradeDeDadosXML.DataSource = Model.Programa.ListaDeProgramas;
-                    ListaDeProgramasXML.Clear();
-                }
-                catch (FileNotFoundException)
-                {
-                    Model.Programa.ListaDeProgramas.Add(p);
-                    SerializaPrograma(Model.Programa.ListaDeProgramas);
-                }
-                /*try
-                {
-                    ListaDeProgramasXML.AddRange(p.DeserializaPrograma());
-                    ListaDeProgramasXML.Add(p);
-                    SerializaPrograma(ListaDeProgramasXML);
-                    Model.Programa.ListaDeProgramas.AddRange(ListaDeProgramasXML);
-                    GradeDeDadosXML.DataSource = Model.Programa.ListaDeProgramas;
-                    ListaDeProgramasXML.Clear();
-                }
-                catch (FileNotFoundException)
-                {
-                    Model.Programa.ListaDeProgramas.Add(p);
-                    SerializaPrograma(Model.Programa.ListaDeProgramas);
-                }*/
+                SalvarXML();
             }
             else
             {
@@ -180,7 +148,7 @@ namespace InstaladorAutomatico.View
             xmlWriter.Close();
         }
 
-        public Boolean ObterLista()
+        public void ObterLista()
         {
             if (Properties.Settings.Default.CaminhoXML == "")
             {
@@ -190,18 +158,22 @@ namespace InstaladorAutomatico.View
 
             try
             {
+                ListaLocal.Clear();
                 ListaLocal.AddRange(p.DeserializaPrograma());
+                GradeDeDadosXML.DataSource = null;
                 GradeDeDadosXML.DataSource = ListaLocal;
-                return true;
             }
             catch (FileNotFoundException)
             {
                 MessageBox.Show("Arquivo não encontrado. A tabela está vazia.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (ObterLista() == true)
+                if (SelecionarCaminhoXML() == false)
                 {
-                    this.p.DeserializaPrograma();
+                    return;
                 }
-                return false;
+                else
+                {
+                    this.ObterLista();
+                }
             }
         }
 
@@ -242,16 +214,23 @@ namespace InstaladorAutomatico.View
             Close();
         }
 
-        private void SelecionarCaminhoXML()
+        private Boolean SelecionarCaminhoXML()
         {
             SaveFileDialog mudarDiretorioXML = new SaveFileDialog();
             mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
-            mudarDiretorioXML.ShowDialog();
-            Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
-            Properties.Settings.Default.Save();
+            if (mudarDiretorioXML.ShowDialog() == DialogResult.OK)
+            {
+                Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
+                Properties.Settings.Default.Save();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        private void ImportandoXML()
+        private void ImportarXML()
         {
             OpenFileDialog mudarDiretorioXML = new OpenFileDialog();
             mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
@@ -260,8 +239,46 @@ namespace InstaladorAutomatico.View
             Properties.Settings.Default.Save();
             ListaLocal.Clear();
             ListaLocal.AddRange(p.DeserializaPrograma());
-            GradeDeDadosXML.DataSource = null;
-            GradeDeDadosXML.DataSource = ListaLocal;
+            ObterLista();
+        }
+
+        private void CriarArquivoXML()
+        {
+            SaveFileDialog mudarDiretorioXML = new SaveFileDialog();
+            mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
+            mudarDiretorioXML.ShowDialog();
+            Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
+            Properties.Settings.Default.Save();
+            SerializaPrograma(ListaDeProgramasXML);
+            ObterLista();
+        }
+
+        private void SalvarXML()
+        {
+            p.nomePrograma = txtBxNomePrograma.Text;
+            //p.caminhoIcone = txtBxCaminhoIcone.Text;
+            p.diretorioPrograma = txtBxDiretorioPrograma.Text;
+            p.arquiteturaPrograma = valorArquitetura;
+            LimpaCampos();
+            try
+            {
+                ListaDeProgramasXML.AddRange(p.DeserializaPrograma());
+                ListaDeProgramasXML.Add(p);
+                SerializaPrograma(ListaDeProgramasXML);
+                ObterLista();
+                ListaDeProgramasXML.Clear();
+            }
+            catch (FileNotFoundException)
+            {
+                Model.Programa.ListaDeProgramas.Add(p);
+                SerializaPrograma(Model.Programa.ListaDeProgramas);
+            }
+            GradeDeDadosXML.FirstDisplayedScrollingRowIndex = GradeDeDadosXML.RowCount - 1;
+        }
+
+        private void GerarNovoXMLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CriarArquivoXML();
         }
 
         private void SalvarComoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -281,7 +298,7 @@ namespace InstaladorAutomatico.View
 
         private void ImportarXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ImportandoXML();
+            ImportarXML();
         }
     }
 }

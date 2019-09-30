@@ -21,13 +21,13 @@ namespace InstaladorAutomatico.Model
         [XmlElement(ElementName = "IDPrograma")]
         public Int32 IDPrograma { get; set; }
 
-        [XmlElement(ElementName = "caminhoIcone")]
-        public String caminhoIcone { get; set; }
-
         [XmlElement(ElementName = "nomePrograma")]
         public String nomePrograma { get; set; }
 
-        [XmlElement(ElementName = "caminhoPrograma")]
+        [XmlElement(ElementName = "caminhoIcone")]
+        public String caminhoIcone { get; set; }
+
+        [XmlElement(ElementName = "diretorioPrograma")]
         public String diretorioPrograma { get; set; }
 
         [XmlElement(ElementName = "arquiteturaPrograma")]
@@ -49,7 +49,7 @@ namespace InstaladorAutomatico.Model
             {
                 SelecionarCaminhoXML();
             }
-            FileStream reader = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Open, FileAccess.Read, FileShare.Read);
+            FileStream reader = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
             listaSendoDeserializada = (List<Model.Programa>)serializer.Deserialize(reader);
             reader.Close();
             return listaSendoDeserializada;

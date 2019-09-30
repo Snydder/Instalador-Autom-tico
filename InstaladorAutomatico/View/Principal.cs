@@ -27,7 +27,7 @@ namespace InstaladorAutomatico
         {
             //inicializando componente e Lista
             InitializeComponent();
-
+            MessageBox.Show(Properties.Settings.Default.CaminhoXML);
         }
         private void BtnMarcaDesmarca_Click(object sender, EventArgs e)
         {
@@ -136,14 +136,14 @@ namespace InstaladorAutomatico
             }
         }
 
-        public Boolean ObterLista()
+        public void ObterLista()
         {
             if (Properties.Settings.Default.CaminhoXML == "")
             {
                 MessageBox.Show("Nenhum caminho para o arquivo XML está configurado.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (SelecionarCaminhoXML() == false)
                 {
-                    return false;
+                    return;
                 }
             }
             try
@@ -151,7 +151,6 @@ namespace InstaladorAutomatico
                 ListaLocal.AddRange(ProgramaFuncoes.DeserializaPrograma());
                 GradeDeDados.DataSource = null;
                 GradeDeDados.DataSource = ListaLocal;
-                return true;
             }
             catch (FileNotFoundException)
             {
@@ -160,7 +159,6 @@ namespace InstaladorAutomatico
                 {
                     this.ObterLista();
                 }
-                return false;
             }
         }
 

@@ -33,6 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtBxNomePrograma = new System.Windows.Forms.TextBox();
+            this.programaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.txtBxDiretorioPrograma = new System.Windows.Forms.TextBox();
             this.btnDiretorioPrograma = new System.Windows.Forms.Button();
             this.btnFechar = new System.Windows.Forms.Button();
@@ -69,13 +70,13 @@
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.diretorioProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.programaBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.gerarNovoXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
             this.gpBxEditar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDadosXML)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -100,14 +101,20 @@
             // 
             // txtBxNomePrograma
             // 
+            this.txtBxNomePrograma.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.programaBindingSource, "nomePrograma", true));
             this.txtBxNomePrograma.Location = new System.Drawing.Point(164, 26);
             this.txtBxNomePrograma.Name = "txtBxNomePrograma";
             this.txtBxNomePrograma.Size = new System.Drawing.Size(244, 20);
             this.txtBxNomePrograma.TabIndex = 2;
             this.txtBxNomePrograma.TextChanged += new System.EventHandler(this.TxtBxNomePrograma_TextChanged);
             // 
+            // programaBindingSource
+            // 
+            this.programaBindingSource.DataSource = typeof(InstaladorAutomatico.Model.Programa);
+            // 
             // txtBxDiretorioPrograma
             // 
+            this.txtBxDiretorioPrograma.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.programaBindingSource, "diretorioPrograma", true));
             this.txtBxDiretorioPrograma.Location = new System.Drawing.Point(164, 79);
             this.txtBxDiretorioPrograma.Name = "txtBxDiretorioPrograma";
             this.txtBxDiretorioPrograma.Size = new System.Drawing.Size(205, 20);
@@ -165,6 +172,7 @@
             // rdoBtn32bits
             // 
             this.rdoBtn32bits.AutoSize = true;
+            this.rdoBtn32bits.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.programaBindingSource, "arquiteturaPrograma", true));
             this.rdoBtn32bits.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdoBtn32bits.Location = new System.Drawing.Point(94, 132);
             this.rdoBtn32bits.Name = "rdoBtn32bits";
@@ -178,6 +186,7 @@
             // rdoBtn64bits
             // 
             this.rdoBtn64bits.AutoSize = true;
+            this.rdoBtn64bits.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.programaBindingSource, "arquiteturaPrograma", true));
             this.rdoBtn64bits.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdoBtn64bits.Location = new System.Drawing.Point(170, 132);
             this.rdoBtn64bits.Name = "rdoBtn64bits";
@@ -220,7 +229,8 @@
             this.arquivoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.salvarToolStripMenuItem,
             this.salvarComoToolStripMenuItem,
-            this.importarXMLToolStripMenuItem});
+            this.importarXMLToolStripMenuItem,
+            this.gerarNovoXMLToolStripMenuItem});
             this.arquivoToolStripMenuItem.Name = "arquivoToolStripMenuItem";
             this.arquivoToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.arquivoToolStripMenuItem.Text = "Arquivo";
@@ -229,7 +239,7 @@
             // 
             this.salvarToolStripMenuItem.Name = "salvarToolStripMenuItem";
             this.salvarToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.salvarToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.salvarToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.salvarToolStripMenuItem.Text = "Salvar";
             this.salvarToolStripMenuItem.Click += new System.EventHandler(this.SalvarToolStripMenuItem_Click);
             // 
@@ -237,7 +247,7 @@
             // 
             this.salvarComoToolStripMenuItem.Name = "salvarComoToolStripMenuItem";
             this.salvarComoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
-            this.salvarComoToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.salvarComoToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.salvarComoToolStripMenuItem.Text = "Salvar Como";
             this.salvarComoToolStripMenuItem.Click += new System.EventHandler(this.SalvarComoToolStripMenuItem_Click);
             // 
@@ -245,7 +255,7 @@
             // 
             this.importarXMLToolStripMenuItem.Name = "importarXMLToolStripMenuItem";
             this.importarXMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.importarXMLToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.importarXMLToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.importarXMLToolStripMenuItem.Text = "Importar XML";
             this.importarXMLToolStripMenuItem.Click += new System.EventHandler(this.ImportarXMLToolStripMenuItem_Click);
             // 
@@ -467,9 +477,13 @@
             this.arquiteturaProgramaDataGridViewTextBoxColumn.HeaderText = "Arquitetura";
             this.arquiteturaProgramaDataGridViewTextBoxColumn.Name = "arquiteturaProgramaDataGridViewTextBoxColumn";
             // 
-            // programaBindingSource
+            // gerarNovoXMLToolStripMenuItem
             // 
-            this.programaBindingSource.DataSource = typeof(InstaladorAutomatico.Model.Programa);
+            this.gerarNovoXMLToolStripMenuItem.Name = "gerarNovoXMLToolStripMenuItem";
+            this.gerarNovoXMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.gerarNovoXMLToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.gerarNovoXMLToolStripMenuItem.Text = "Gerar Novo XML";
+            this.gerarNovoXMLToolStripMenuItem.Click += new System.EventHandler(this.GerarNovoXMLToolStripMenuItem_Click);
             // 
             // Gerenciar_Programas
             // 
@@ -485,6 +499,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Gerenciar Programa";
             this.Shown += new System.EventHandler(this.Gerenciar_Programas_Shown);
+            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
@@ -493,7 +508,6 @@
             this.gpBxEditar.ResumeLayout(false);
             this.gpBxEditar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDadosXML)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -541,5 +555,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn nomeProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn diretorioProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn arquiteturaProgramaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.ToolStripMenuItem gerarNovoXMLToolStripMenuItem;
     }
 }
