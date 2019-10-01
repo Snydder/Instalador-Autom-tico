@@ -108,14 +108,8 @@ namespace InstaladorAutomatico.View
                 }
                 //enviando dados para a lista
                 SalvarXML();
-                /*p.IDPrograma = (Int32) GradeDeDadosXML.Rows[GradeDeDadosXML.RowCount].Cells["nomeProgramaDataGridViewTextBoxColumn"].Value;
-                GradeDeDadosXML.Rows[p.IDPrograma].Cells["nomeProgramaDataGridViewTextBoxColumn"].Value = txtBxNomePrograma.Text;
-                GradeDeDadosXML.Rows[p.IDPrograma].Cells["nomeProgramaDataGridViewTextBoxColumn"].Value = txtBxNomePrograma.Text;
-                GradeDeDadosXML.Rows[p.IDPrograma].Cells["diretorioProgramaDataGridViewTextBoxColumn"].Value = txtBxDiretorioPrograma.Text;
-                GradeDeDadosXML.Rows[p.IDPrograma].Cells["arquiteturaProgramaDataGridViewTextBoxColumn"].Value = valorArquitetura;*/
-
-
-
+                ObterLista();
+                //DataGridToXML();
             }
             else
             {
@@ -183,6 +177,48 @@ namespace InstaladorAutomatico.View
                     this.ObterLista();
                 }
             }
+        }
+
+        public void DataGridToXML()
+        {
+            for (Int32 posicaoLinha = 0; posicaoLinha <=  GradeDeDadosXML.Rows.Count; posicaoLinha++)
+            {
+                p.IDPrograma = (Int32)GradeDeDadosXML.Rows[posicaoLinha].Cells["iDProgramaDataGridViewTextBoxColumn"].Value;
+                p.nomePrograma = GradeDeDadosXML.Rows[posicaoLinha].Cells["nomeProgramaDataGridViewTextBoxColumn"].Value.ToString();
+                //TODO: icone
+                p.diretorioPrograma = GradeDeDadosXML.Rows[posicaoLinha].Cells["diretorioProgramaDataGridViewTextBoxColumn"].Value.ToString();
+                p.arquiteturaPrograma = (Int32) GradeDeDadosXML.Rows[posicaoLinha].Cells["arquiteturaProgramaDataGridViewTextBoxColumn"].Value;
+                ListaDeProgramasXML.Add(p);
+            }
+            try
+            {
+                SerializaPrograma(ListaDeProgramasXML);
+                ListaDeProgramasXML.Clear();
+                ObterLista();
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("Arquivo não encontrado. A tabela está vazia.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Model.Programa.ListaDeProgramas.Add(p);
+                SerializaPrograma(Model.Programa.ListaDeProgramas);
+            }
+            GradeDeDadosXML.FirstDisplayedScrollingRowIndex = GradeDeDadosXML.RowCount - 1;
+        }
+
+        private void BtnAdicionaNoDataGrid_Click(object sender, EventArgs e)
+        {
+            Int32 contagemDeLinhas = GradeDeDadosXML.Rows.Count;
+            if (GradeDeDadosXML.Rows.Count == 0)
+            {
+                GradeDeDadosXML.Rows.Add();
+                contagemDeLinhas = GradeDeDadosXML.Rows.Count;
+            }
+                GradeDeDadosXML.Rows[contagemDeLinhas].Cells["iDProgramaDataGridViewTextBoxColumn"].Value = GradeDeDadosXML.Rows.Count;
+                GradeDeDadosXML.Rows[contagemDeLinhas].Cells["nomeProgramaDataGridViewTextBoxColumn"].Value = txtBxNomePrograma.Text;
+                // TODO: ícone
+                GradeDeDadosXML.Rows[contagemDeLinhas].Cells["diretorioProgramaDataGridViewTextBoxColumn"].Value = txtBxDiretorioPrograma.Text;
+                GradeDeDadosXML.Rows[contagemDeLinhas].Cells["arquiteturaProgramaDataGridViewTextBoxColumn"].Value = valorArquitetura;
+            DataGridToXML();
         }
 
         private void TxtBxNomePrograma_TextChanged(object sender, EventArgs e)
@@ -275,7 +311,6 @@ namespace InstaladorAutomatico.View
                 ListaDeProgramasXML.AddRange(p.DeserializaPrograma());
                 ListaDeProgramasXML.Add(p);
                 SerializaPrograma(ListaDeProgramasXML);
-                ObterLista();
                 ListaDeProgramasXML.Clear();
             }
             catch (FileNotFoundException)
@@ -288,7 +323,6 @@ namespace InstaladorAutomatico.View
 
         private void ListaRecebeDataGrid()
         {
-            p.IDPrograma = ListaLocal.Count;
             p.nomePrograma = GradeDeDadosXML.Rows[p.IDPrograma].Cells["nomeProgramaDataGridViewTextBoxColumn"].Value.ToString();
             p.diretorioPrograma = GradeDeDadosXML.Rows[p.IDPrograma].Cells["diretorioProgramaDataGridViewTextBoxColumn"].Value.ToString();
             p.arquiteturaPrograma = (Int32) GradeDeDadosXML.Rows[p.IDPrograma].Cells["arquiteturaProgramaDataGridViewTextBoxColumn"].Value;

@@ -48,6 +48,7 @@
             this.salvarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salvarComoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importarXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gerarNovoXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
@@ -70,7 +71,7 @@
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.diretorioProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gerarNovoXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnAdicionaNoDataGrid = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
@@ -259,6 +260,14 @@
             this.importarXMLToolStripMenuItem.Text = "Importar XML";
             this.importarXMLToolStripMenuItem.Click += new System.EventHandler(this.ImportarXMLToolStripMenuItem_Click);
             // 
+            // gerarNovoXMLToolStripMenuItem
+            // 
+            this.gerarNovoXMLToolStripMenuItem.Name = "gerarNovoXMLToolStripMenuItem";
+            this.gerarNovoXMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.gerarNovoXMLToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.gerarNovoXMLToolStripMenuItem.Text = "Gerar Novo XML";
+            this.gerarNovoXMLToolStripMenuItem.Click += new System.EventHandler(this.GerarNovoXMLToolStripMenuItem_Click);
+            // 
             // bindingNavigator1
             // 
             this.bindingNavigator1.AddNewItem = this.bindingNavigatorAddNewItem;
@@ -404,6 +413,7 @@
             // gpBxEditar
             // 
             this.gpBxEditar.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gpBxEditar.Controls.Add(this.btnAdicionaNoDataGrid);
             this.gpBxEditar.Controls.Add(this.label1);
             this.gpBxEditar.Controls.Add(this.label4);
             this.gpBxEditar.Controls.Add(this.label2);
@@ -477,13 +487,19 @@
             this.arquiteturaProgramaDataGridViewTextBoxColumn.HeaderText = "Arquitetura";
             this.arquiteturaProgramaDataGridViewTextBoxColumn.Name = "arquiteturaProgramaDataGridViewTextBoxColumn";
             // 
-            // gerarNovoXMLToolStripMenuItem
+            // btnAdicionaNoDataGrid
             // 
-            this.gerarNovoXMLToolStripMenuItem.Name = "gerarNovoXMLToolStripMenuItem";
-            this.gerarNovoXMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.gerarNovoXMLToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-            this.gerarNovoXMLToolStripMenuItem.Text = "Gerar Novo XML";
-            this.gerarNovoXMLToolStripMenuItem.Click += new System.EventHandler(this.GerarNovoXMLToolStripMenuItem_Click);
+            this.btnAdicionaNoDataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAdicionaNoDataGrid.AutoSize = true;
+            this.btnAdicionaNoDataGrid.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnAdicionaNoDataGrid.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdicionaNoDataGrid.Location = new System.Drawing.Point(144, 191);
+            this.btnAdicionaNoDataGrid.Name = "btnAdicionaNoDataGrid";
+            this.btnAdicionaNoDataGrid.Size = new System.Drawing.Size(77, 27);
+            this.btnAdicionaNoDataGrid.TabIndex = 21;
+            this.btnAdicionaNoDataGrid.Text = "Adicionar";
+            this.btnAdicionaNoDataGrid.UseVisualStyleBackColor = true;
+            this.btnAdicionaNoDataGrid.Click += new System.EventHandler(this.BtnAdicionaNoDataGrid_Click);
             // 
             // Gerenciar_Programas
             // 
@@ -556,5 +572,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn diretorioProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn arquiteturaProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.ToolStripMenuItem gerarNovoXMLToolStripMenuItem;
+        private System.Windows.Forms.Button btnAdicionaNoDataGrid;
     }
 }
