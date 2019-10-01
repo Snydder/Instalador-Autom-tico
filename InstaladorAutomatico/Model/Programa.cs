@@ -37,9 +37,16 @@ namespace InstaladorAutomatico.Model
         {
             SaveFileDialog mudarDiretorioXML = new SaveFileDialog();
             mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
-            mudarDiretorioXML.ShowDialog();
-            Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
-            Properties.Settings.Default.Save();
+            if (mudarDiretorioXML.ShowDialog() == DialogResult.OK)
+            {
+                Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
+                Properties.Settings.Default.Save();
+            }
+            else
+            {
+                Properties.Settings.Default.CaminhoXML = "";
+                return;
+            }
         }
         public List<Model.Programa> DeserializaPrograma()
         {
