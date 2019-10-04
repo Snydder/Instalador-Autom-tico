@@ -142,14 +142,6 @@ namespace InstaladorAutomatico.View
             catch (FileNotFoundException)
             {
                 MessageBox.Show("Arquivo não encontrado. A tabela está vazia.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (SelecionarCaminhoXML() == false)
-                {
-                    return;
-                }
-                else
-                {
-                    this.ObterLista();
-                }
             }
         }
 
