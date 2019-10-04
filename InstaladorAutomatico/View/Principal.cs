@@ -123,15 +123,19 @@ namespace InstaladorAutomatico
         private Boolean SelecionarCaminhoXML()
         {
             OpenFileDialog mudarDiretorioXML = new OpenFileDialog();
+            DialogResult resultado = new DialogResult();
             mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
-            if (mudarDiretorioXML.ShowDialog() == DialogResult.OK)
+            mudarDiretorioXML.ShowDialog();
+            if (resultado == DialogResult.OK)
             {
+                MessageBox.Show("Bati no resultado ==");
                 Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
                 Properties.Settings.Default.Save();
                 return true;
             }
             else
             {
+                MessageBox.Show("Bati no else.");
                 return false;
             }
         }
@@ -140,8 +144,16 @@ namespace InstaladorAutomatico
         {
             if (Properties.Settings.Default.CaminhoXML == "")
             {
-                MessageBox.Show("Nenhum caminho para o arquivo XML está configurado.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (SelecionarCaminhoXML() == false)
+                DialogResult resultado = new DialogResult();
+                MessageBox.Show("Nenhum caminho para o arquivo XML está configurado. Deseja escolher um arquivo?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (resultado == DialogResult.Yes)
+                {
+                    if (SelecionarCaminhoXML() == false)
+                    {
+                        return;
+                    }
+                }
+                else
                 {
                     return;
                 }
@@ -157,6 +169,7 @@ namespace InstaladorAutomatico
                 MessageBox.Show("Arquivo não encontrado. A tabela está vazia.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (SelecionarCaminhoXML() == true)
                 {
+                    MessageBox.Show("Aqui");
                     this.ObterLista();
                 }
             }

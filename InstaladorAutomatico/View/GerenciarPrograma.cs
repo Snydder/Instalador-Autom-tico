@@ -33,31 +33,6 @@ namespace InstaladorAutomatico.View
             ObterLista();
         }
 
-        private void Gerenciar_Programas_Shown(object sender, EventArgs e)
-        {
-            if (Properties.Settings.Default.CaminhoXML != "")
-            {
-                /*try
-                {
-                    DeserializaPrograma();
-                }
-                catch (FileNotFoundException)
-                {
-                    if (MessageBox.Show("XML não encontrado. Deseja carregar a lista padrão?", "Aviso.", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
-                    {
-                        //Carregar Lista Padrão de programas.
-                        SerializaPrograma(ListaDeProgramasXML);
-                        DeserializaPrograma();
-                    }
-                    else
-                    {
-                        //prosseguir sem carregar a lista.
-                    }
-                    
-                }*/
-            }
-        }
-
         private void LimpaCampos()
         {
             txtBxNomePrograma.BackColor = Color.White;
@@ -154,8 +129,7 @@ namespace InstaladorAutomatico.View
         {
             if (Properties.Settings.Default.CaminhoXML == "")
             {
-                MessageBox.Show("Nenhum caminho para o arquivo XML está configurado.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                SelecionarCaminhoXML();
+                return;
             }
 
             try
@@ -304,7 +278,14 @@ namespace InstaladorAutomatico.View
             //p.caminhoIcone = txtBxCaminhoIcone.Text;
             p.diretorioPrograma = txtBxDiretorioPrograma.Text;
             p.arquiteturaPrograma = valorArquitetura;
-            p.IDPrograma = ListaLocal.Count + 1;
+            if (ListaLocal.Count == 0)
+            {
+                p.IDPrograma = ListaLocal.Count + 1;
+            }
+            else
+            {
+                p.IDPrograma = ListaLocal.Count;
+            }
             LimpaCampos();
             try
             {
