@@ -42,14 +42,14 @@
             this.btnSair = new System.Windows.Forms.Button();
             this.btnAtualizarDataGrid = new System.Windows.Forms.Button();
             this.GradeDeDados = new System.Windows.Forms.DataGridView();
-            this.programaBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.programaBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.iDProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.caminhoIconeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.diretorioProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Selecionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.programaBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.programaBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
             this.gpBx.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDados)).BeginInit();
@@ -60,10 +60,9 @@
             // BtnMarcaDesmarca
             // 
             this.BtnMarcaDesmarca.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnMarcaDesmarca.Location = new System.Drawing.Point(651, 46);
-            this.BtnMarcaDesmarca.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.BtnMarcaDesmarca.Location = new System.Drawing.Point(434, 30);
             this.BtnMarcaDesmarca.Name = "BtnMarcaDesmarca";
-            this.BtnMarcaDesmarca.Size = new System.Drawing.Size(188, 46);
+            this.BtnMarcaDesmarca.Size = new System.Drawing.Size(125, 35);
             this.BtnMarcaDesmarca.TabIndex = 6;
             this.BtnMarcaDesmarca.Text = "Marcar Tudo";
             this.BtnMarcaDesmarca.UseVisualStyleBackColor = true;
@@ -73,10 +72,9 @@
             // 
             this.btnIniciar.AutoSize = true;
             this.btnIniciar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnIniciar.Location = new System.Drawing.Point(651, 102);
-            this.btnIniciar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnIniciar.Location = new System.Drawing.Point(434, 71);
             this.btnIniciar.Name = "btnIniciar";
-            this.btnIniciar.Size = new System.Drawing.Size(188, 54);
+            this.btnIniciar.Size = new System.Drawing.Size(125, 35);
             this.btnIniciar.TabIndex = 8;
             this.btnIniciar.Text = "Instalar";
             this.btnIniciar.UseVisualStyleBackColor = true;
@@ -89,8 +87,7 @@
             this.arquivoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
-            this.menuStrip1.Size = new System.Drawing.Size(1294, 35);
+            this.menuStrip1.Size = new System.Drawing.Size(863, 24);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -102,33 +99,33 @@
             this.verificarInstalaçõesToolStripMenuItem,
             this.sairToolStripMenuItem});
             this.arquivoToolStripMenuItem.Name = "arquivoToolStripMenuItem";
-            this.arquivoToolStripMenuItem.Size = new System.Drawing.Size(91, 29);
+            this.arquivoToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.arquivoToolStripMenuItem.Text = "Arquivo";
             // 
             // listaDeProgramasToolStripMenuItem
             // 
             this.listaDeProgramasToolStripMenuItem.Name = "listaDeProgramasToolStripMenuItem";
-            this.listaDeProgramasToolStripMenuItem.Size = new System.Drawing.Size(318, 34);
+            this.listaDeProgramasToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.listaDeProgramasToolStripMenuItem.Text = "Gerenciar Programas";
             this.listaDeProgramasToolStripMenuItem.Click += new System.EventHandler(this.ListaDeProgramasToolStripMenuItem_Click);
             // 
             // verificarWindowsUpdateToolStripMenuItem
             // 
             this.verificarWindowsUpdateToolStripMenuItem.Name = "verificarWindowsUpdateToolStripMenuItem";
-            this.verificarWindowsUpdateToolStripMenuItem.Size = new System.Drawing.Size(318, 34);
+            this.verificarWindowsUpdateToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.verificarWindowsUpdateToolStripMenuItem.Text = "Verificar Windows Update";
             // 
             // verificarInstalaçõesToolStripMenuItem
             // 
             this.verificarInstalaçõesToolStripMenuItem.Name = "verificarInstalaçõesToolStripMenuItem";
-            this.verificarInstalaçõesToolStripMenuItem.Size = new System.Drawing.Size(318, 34);
+            this.verificarInstalaçõesToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.verificarInstalaçõesToolStripMenuItem.Text = "Verificar Instalações";
             // 
             // sairToolStripMenuItem
             // 
             this.sairToolStripMenuItem.Name = "sairToolStripMenuItem";
             this.sairToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.sairToolStripMenuItem.Size = new System.Drawing.Size(318, 34);
+            this.sairToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.sairToolStripMenuItem.Text = "Sair";
             this.sairToolStripMenuItem.Click += new System.EventHandler(this.SairToolStripMenuItem_Click);
             // 
@@ -136,10 +133,9 @@
             // 
             this.btnCopiarArquivos.AutoSize = true;
             this.btnCopiarArquivos.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCopiarArquivos.Location = new System.Drawing.Point(454, 102);
-            this.btnCopiarArquivos.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnCopiarArquivos.Location = new System.Drawing.Point(303, 71);
             this.btnCopiarArquivos.Name = "btnCopiarArquivos";
-            this.btnCopiarArquivos.Size = new System.Drawing.Size(243, 54);
+            this.btnCopiarArquivos.Size = new System.Drawing.Size(125, 35);
             this.btnCopiarArquivos.TabIndex = 4;
             this.btnCopiarArquivos.Text = "Copiar Arquivos";
             this.btnCopiarArquivos.UseVisualStyleBackColor = true;
@@ -152,11 +148,9 @@
             this.gpBx.Controls.Add(this.btnCopiarArquivos);
             this.gpBx.Controls.Add(this.btnAtualizarDataGrid);
             this.gpBx.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.gpBx.Location = new System.Drawing.Point(0, 366);
-            this.gpBx.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gpBx.Location = new System.Drawing.Point(0, 238);
             this.gpBx.Name = "gpBx";
-            this.gpBx.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.gpBx.Size = new System.Drawing.Size(1294, 197);
+            this.gpBx.Size = new System.Drawing.Size(863, 128);
             this.gpBx.TabIndex = 25;
             this.gpBx.TabStop = false;
             this.gpBx.Text = "Ações";
@@ -165,10 +159,9 @@
             // 
             this.btnSair.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnSair.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSair.Location = new System.Drawing.Point(1150, 142);
-            this.btnSair.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnSair.Location = new System.Drawing.Point(767, 92);
             this.btnSair.Name = "btnSair";
-            this.btnSair.Size = new System.Drawing.Size(126, 46);
+            this.btnSair.Size = new System.Drawing.Size(84, 30);
             this.btnSair.TabIndex = 9;
             this.btnSair.Text = "Sair";
             this.btnSair.UseVisualStyleBackColor = true;
@@ -178,10 +171,9 @@
             // 
             this.btnAtualizarDataGrid.AutoSize = true;
             this.btnAtualizarDataGrid.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAtualizarDataGrid.Location = new System.Drawing.Point(454, 46);
-            this.btnAtualizarDataGrid.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnAtualizarDataGrid.Location = new System.Drawing.Point(303, 30);
             this.btnAtualizarDataGrid.Name = "btnAtualizarDataGrid";
-            this.btnAtualizarDataGrid.Size = new System.Drawing.Size(188, 54);
+            this.btnAtualizarDataGrid.Size = new System.Drawing.Size(125, 35);
             this.btnAtualizarDataGrid.TabIndex = 7;
             this.btnAtualizarDataGrid.Text = "Regarregar";
             this.btnAtualizarDataGrid.UseVisualStyleBackColor = true;
@@ -202,20 +194,11 @@
             this.Selecionar});
             this.GradeDeDados.DataSource = this.programaBindingSource1;
             this.GradeDeDados.Dock = System.Windows.Forms.DockStyle.Top;
-            this.GradeDeDados.Location = new System.Drawing.Point(0, 35);
-            this.GradeDeDados.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.GradeDeDados.Location = new System.Drawing.Point(0, 24);
             this.GradeDeDados.Name = "GradeDeDados";
             this.GradeDeDados.RowHeadersWidth = 62;
-            this.GradeDeDados.Size = new System.Drawing.Size(1294, 340);
+            this.GradeDeDados.Size = new System.Drawing.Size(863, 221);
             this.GradeDeDados.TabIndex = 24;
-            // 
-            // programaBindingSource1
-            // 
-            this.programaBindingSource1.DataSource = typeof(InstaladorAutomatico.Model.Programa);
-            // 
-            // programaBindingSource2
-            // 
-            this.programaBindingSource2.DataSource = typeof(InstaladorAutomatico.Model.Programa);
             // 
             // iDProgramaDataGridViewTextBoxColumn
             // 
@@ -259,16 +242,23 @@
             this.Selecionar.Name = "Selecionar";
             this.Selecionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
+            // programaBindingSource1
+            // 
+            this.programaBindingSource1.DataSource = typeof(InstaladorAutomatico.Model.Programa);
+            // 
+            // programaBindingSource2
+            // 
+            this.programaBindingSource2.DataSource = typeof(InstaladorAutomatico.Model.Programa);
+            // 
             // Principal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1294, 563);
+            this.ClientSize = new System.Drawing.Size(863, 366);
             this.Controls.Add(this.gpBx);
             this.Controls.Add(this.GradeDeDados);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Principal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Instalador";

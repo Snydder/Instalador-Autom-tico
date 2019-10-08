@@ -19,13 +19,12 @@ namespace InstaladorAutomatico.View
         List<Model.Programa> ListaDeProgramasXML = new List<Model.Programa>();
 
         List<Model.Programa> ListaLocal = new List<Model.Programa>();
-
         //declarando novo objeto do tipo Model.Programa
         Model.Programa p = new Model.Programa();
 
 
         //declarando variável
-        Int32 valorArquitetura = 0;
+        Int32 valorArquitetura = 0, i = 0;
 
         public Gerenciar_Programas()
         {
@@ -145,46 +144,12 @@ namespace InstaladorAutomatico.View
             }
         }
 
-        public void DataGridToXML()
-        {
-            for (Int32 posicaoLinha = 0; posicaoLinha <=  GradeDeDadosXML.Rows.Count; posicaoLinha++)
-            {
-                p.IDPrograma = (Int32)GradeDeDadosXML.Rows[posicaoLinha].Cells["iDProgramaDataGridViewTextBoxColumn"].Value;
-                p.nomePrograma = GradeDeDadosXML.Rows[posicaoLinha].Cells["nomeProgramaDataGridViewTextBoxColumn"].Value.ToString();
-                //TODO: icone
-                p.diretorioPrograma = GradeDeDadosXML.Rows[posicaoLinha].Cells["diretorioProgramaDataGridViewTextBoxColumn"].Value.ToString();
-                p.arquiteturaPrograma = (Int32) GradeDeDadosXML.Rows[posicaoLinha].Cells["arquiteturaProgramaDataGridViewTextBoxColumn"].Value;
-                ListaDeProgramasXML.Add(p);
-            }
-            try
-            {
-                SerializaPrograma(ListaDeProgramasXML);
-                ListaDeProgramasXML.Clear();
-                ObterLista();
-            }
-            catch (FileNotFoundException)
-            {
-                MessageBox.Show("Arquivo não encontrado. A tabela está vazia.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Model.Programa.ListaDeProgramas.Add(p);
-                SerializaPrograma(Model.Programa.ListaDeProgramas);
-            }
-            GradeDeDadosXML.FirstDisplayedScrollingRowIndex = GradeDeDadosXML.RowCount - 1;
-        }
-
         private void BtnAdicionaNoDataGrid_Click(object sender, EventArgs e)
         {
             Int32 contagemDeLinhas = GradeDeDadosXML.Rows.Count;
-            if (GradeDeDadosXML.Rows.Count == 0)
-            {
-                GradeDeDadosXML.Rows.Add();
-                contagemDeLinhas = GradeDeDadosXML.Rows.Count;
-            }
-                GradeDeDadosXML.Rows[contagemDeLinhas].Cells["iDProgramaDataGridViewTextBoxColumn"].Value = GradeDeDadosXML.Rows.Count;
-                GradeDeDadosXML.Rows[contagemDeLinhas].Cells["nomeProgramaDataGridViewTextBoxColumn"].Value = txtBxNomePrograma.Text;
-                // TODO: ícone
-                GradeDeDadosXML.Rows[contagemDeLinhas].Cells["diretorioProgramaDataGridViewTextBoxColumn"].Value = txtBxDiretorioPrograma.Text;
-                GradeDeDadosXML.Rows[contagemDeLinhas].Cells["arquiteturaProgramaDataGridViewTextBoxColumn"].Value = valorArquitetura;
-            DataGridToXML();
+            SalvaNaLista();
+            GradeDeDadosXML.DataSource = null;
+            GradeDeDadosXML.DataSource = ListaLocal;
         }
 
         private void TxtBxNomePrograma_TextChanged(object sender, EventArgs e)
@@ -241,6 +206,15 @@ namespace InstaladorAutomatico.View
             }
         }
 
+        private void SalvaNaLista()
+        {
+            p.IDPrograma = ListaLocal.Count;
+            p.nomePrograma = txtBxNomePrograma.Text;
+            p.caminhoIcone = txtBxCaminhoIcone.Text;
+            p.diretorioPrograma = txtBxDiretorioPrograma.Text;
+            p.arquiteturaPrograma = valorArquitetura;
+        }
+
         private void ImportarXML()
         {
             OpenFileDialog mudarDiretorioXML = new OpenFileDialog();
@@ -270,42 +244,13 @@ namespace InstaladorAutomatico.View
             //p.caminhoIcone = txtBxCaminhoIcone.Text;
             p.diretorioPrograma = txtBxDiretorioPrograma.Text;
             p.arquiteturaPrograma = valorArquitetura;
-            if (ListaLocal.Count == 0)
-            {
-                p.IDPrograma = ListaLocal.Count + 1;
-            }
-            else
-            {
-                p.IDPrograma = ListaLocal.Count;
-            }
+            p.IDPrograma = ListaLocal.Count;
             LimpaCampos();
             try
             {
                 ListaDeProgramasXML.AddRange(p.DeserializaPrograma());
                 ListaDeProgramasXML.Add(p);
                 SerializaPrograma(ListaDeProgramasXML);
-                ListaDeProgramasXML.Clear();
-            }
-            catch (FileNotFoundException)
-            {
-                Model.Programa.ListaDeProgramas.Add(p);
-                SerializaPrograma(Model.Programa.ListaDeProgramas);
-            }
-            GradeDeDadosXML.FirstDisplayedScrollingRowIndex = GradeDeDadosXML.RowCount - 1;
-        }
-
-        private void ListaRecebeDataGrid()
-        {
-            p.nomePrograma = GradeDeDadosXML.Rows[p.IDPrograma].Cells["nomeProgramaDataGridViewTextBoxColumn"].Value.ToString();
-            p.diretorioPrograma = GradeDeDadosXML.Rows[p.IDPrograma].Cells["diretorioProgramaDataGridViewTextBoxColumn"].Value.ToString();
-            p.arquiteturaPrograma = (Int32) GradeDeDadosXML.Rows[p.IDPrograma].Cells["arquiteturaProgramaDataGridViewTextBoxColumn"].Value;
-            LimpaCampos();
-            try
-            {
-                ListaDeProgramasXML.AddRange(p.DeserializaPrograma());
-                ListaDeProgramasXML.Add(p);
-                SerializaPrograma(ListaDeProgramasXML);
-                ObterLista();
                 ListaDeProgramasXML.Clear();
             }
             catch (FileNotFoundException)
@@ -339,6 +284,25 @@ namespace InstaladorAutomatico.View
         private void ImportarXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ImportarXML();
+        }
+
+        private void BtnAvancarLista_Click(object sender, EventArgs e)
+        {
+            if (i < GradeDeDadosXML.Rows.Count)
+            {
+                if (i == 0)
+                {
+                    i++;
+                }
+                GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", i];
+                i++;
+                return;
+            }
+            if (i >= GradeDeDadosXML.Rows.Count)
+            {
+                i = 0;
+                GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", i];
+            }
         }
     }
 }
