@@ -70,46 +70,7 @@ namespace InstaladorAutomatico.View
 
         private void SalvarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if ((txtBxNomePrograma.Text.Length != 0 && txtBxDiretorioPrograma.Text.Length != 0) && (rdoBtn32bits.Checked == true || rdoBtn64bits.Checked == true))
-            {
-                if (rdoBtn32bits.Checked == true)
-                {
-                    valorArquitetura = 32;
-                }
-                else if (rdoBtn64bits.Checked == true)
-                {
-                    valorArquitetura = 64;
-                }
-                //enviando dados para a lista
-                SalvarXML();
-                ObterLista();
-                //DataGridToXML();
-            }
-            else
-            {
-                if (txtBxNomePrograma.Text.Length == 0 && txtBxDiretorioPrograma.Text.Length == 0)
-                {
-                    txtBxNomePrograma.BackColor = Color.Red;
-                    txtBxDiretorioPrograma.BackColor = Color.Red;
-                    MessageBox.Show("Preencha o nome e o caminho do programa.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else if (txtBxNomePrograma.Text.Length == 0)
-                {
-                    txtBxNomePrograma.BackColor = Color.Red;
-                    MessageBox.Show("Preencha o nome do programa.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else if (txtBxDiretorioPrograma.Text.Length == 0)
-                {
-                    txtBxDiretorioPrograma.BackColor = Color.Red;
-                    MessageBox.Show("Preencha o caminho do programa.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                if (rdoBtn32bits.Checked == false && rdoBtn64bits.Checked == false)
-                {
-                    rdoBtn32bits.ForeColor = Color.Red;
-                    rdoBtn64bits.ForeColor = Color.Red;
-                    MessageBox.Show("Escolha uma das arquiteturas.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            ValidaSalvaXML();
         }
 
         public void SerializaPrograma(List<Model.Programa> ListaAlvoSerializacao)
@@ -146,10 +107,7 @@ namespace InstaladorAutomatico.View
 
         private void BtnAdicionaNoDataGrid_Click(object sender, EventArgs e)
         {
-            Int32 contagemDeLinhas = GradeDeDadosXML.Rows.Count;
-            SalvaNaLista();
-            GradeDeDadosXML.DataSource = null;
-            GradeDeDadosXML.DataSource = ListaLocal;
+            ValidaSalvaXML();
         }
 
         private void TxtBxNomePrograma_TextChanged(object sender, EventArgs e)
@@ -261,6 +219,62 @@ namespace InstaladorAutomatico.View
             GradeDeDadosXML.FirstDisplayedScrollingRowIndex = GradeDeDadosXML.RowCount - 1;
         }
 
+        private void MarcaCampos()
+        {
+            if (txtBxNomePrograma.Text.Length == 0 && txtBxDiretorioPrograma.Text.Length == 0)
+            {
+                txtBxNomePrograma.BackColor = Color.Red;
+                txtBxDiretorioPrograma.BackColor = Color.Red;
+                MessageBox.Show("Preencha o nome e o caminho do programa.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (txtBxNomePrograma.Text.Length == 0)
+            {
+                txtBxNomePrograma.BackColor = Color.Red;
+                MessageBox.Show("Preencha o nome do programa.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (txtBxDiretorioPrograma.Text.Length == 0)
+            {
+                txtBxDiretorioPrograma.BackColor = Color.Red;
+                MessageBox.Show("Preencha o caminho do programa.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            if (rdoBtn32bits.Checked == false && rdoBtn64bits.Checked == false)
+            {
+                rdoBtn32bits.ForeColor = Color.Red;
+                rdoBtn64bits.ForeColor = Color.Red;
+                MessageBox.Show("Escolha uma das arquiteturas.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private Boolean ValidaCampos()
+        {
+            if ((txtBxNomePrograma.Text.Length != 0 && txtBxDiretorioPrograma.Text.Length != 0) && (rdoBtn32bits.Checked == true || rdoBtn64bits.Checked == true))
+            {
+                if (rdoBtn32bits.Checked == true)
+                {
+                    valorArquitetura = 32;
+                }
+                else if (rdoBtn64bits.Checked == true)
+                {
+                    valorArquitetura = 64;
+                }
+                return true;
+            }
+            else return false;
+        }
+
+        private void ValidaSalvaXML()
+        {
+            if (ValidaCampos() == true)
+            {
+                //enviando dados para a lista
+                SalvarXML();
+                ObterLista();
+            }
+            else
+            {
+                MarcaCampos();
+            }
+        }
+
         private void GerarNovoXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CriarArquivoXML();
@@ -288,21 +302,39 @@ namespace InstaladorAutomatico.View
 
         private void BtnAvancarLista_Click(object sender, EventArgs e)
         {
+            i = GradeDeDadosXML.CurrentCell.RowIndex + 1;
             if (i < GradeDeDadosXML.Rows.Count)
             {
-                if (i == 0)
-                {
-                    i++;
-                }
                 GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", i];
-                i++;
                 return;
             }
-            if (i >= GradeDeDadosXML.Rows.Count)
+            if (i == GradeDeDadosXML.Rows.Count)
             {
                 i = 0;
                 GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", i];
             }
+        }
+
+        private void BtnAdiciona(object sender, EventArgs e)
+        {
+            ValidaSalvaXML();
+        }
+
+        private void BtnRetroceder_Click(object sender, EventArgs e)
+        {
+            i = GradeDeDadosXML.CurrentCell.RowIndex - 1;
+            if (i < GradeDeDadosXML.Rows.Count)
+            {
+                if (i < 0)
+                {
+                    i = GradeDeDadosXML.Rows.Count - 1;
+                    GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", i];
+                    return;
+                }
+                GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", i];
+                return;
+            }
+            
         }
     }
 }
