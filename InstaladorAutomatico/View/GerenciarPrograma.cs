@@ -19,6 +19,7 @@ namespace InstaladorAutomatico.View
         List<Model.Programa> ListaDeProgramasXML = new List<Model.Programa>();
 
         List<Model.Programa> ListaLocal = new List<Model.Programa>();
+        List<Model.Programa> ListaLocal2 = new List<Model.Programa>();
         //declarando novo objeto do tipo Model.Programa
         Model.Programa p = new Model.Programa();
 
@@ -206,17 +207,20 @@ namespace InstaladorAutomatico.View
             LimpaCampos();
             try
             {
+                ListaDeProgramasXML.Clear();
                 ListaDeProgramasXML.AddRange(p.DeserializaPrograma());
                 ListaDeProgramasXML.Add(p);
                 SerializaPrograma(ListaDeProgramasXML);
-                ListaDeProgramasXML.Clear();
             }
             catch (FileNotFoundException)
             {
                 Model.Programa.ListaDeProgramas.Add(p);
                 SerializaPrograma(Model.Programa.ListaDeProgramas);
             }
-            GradeDeDadosXML.FirstDisplayedScrollingRowIndex = GradeDeDadosXML.RowCount - 1;
+            if (GradeDeDadosXML.RowCount > 1)
+            {
+                GradeDeDadosXML.FirstDisplayedScrollingRowIndex = GradeDeDadosXML.RowCount - 1;
+            }
         }
 
         private void MarcaCampos()
@@ -318,6 +322,24 @@ namespace InstaladorAutomatico.View
         private void BtnAdiciona(object sender, EventArgs e)
         {
             ValidaSalvaXML();
+        }
+
+        public virtual void RemoverDaLista(Int32 id)
+        {
+            //remover item da Lista aqui
+            ListaLocal2.AddRange(ListaLocal);
+            ListaLocal2 = ListaLocal2.Where(p => p.IDPrograma != id).ToList();
+            ListaLocal.Clear();
+            ListaLocal.AddRange(ListaLocal2);
+            ListaLocal2.Clear();
+            SerializaPrograma(ListaLocal);
+            ObterLista();
+        }
+
+        private void btnRemover_Click(object sender, EventArgs e)
+        {
+            //foreach (var n in ListaLocal.Where(p => p.IDPrograma == GradeDeDadosXML.CurrentCell.RowIndex).ToArray()) ListaLocal.Remove(n);
+            RemoverDaLista(Int32.Parse(Convert.ToString(GradeDeDadosXML.Rows[GradeDeDadosXML.CurrentCell.RowIndex].Cells["iDProgramaDataGridViewTextBoxColumn"].Value)));
         }
 
         private void BtnRetroceder_Click(object sender, EventArgs e)

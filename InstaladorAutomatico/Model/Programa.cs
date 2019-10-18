@@ -57,7 +57,14 @@ namespace InstaladorAutomatico.Model
                 SelecionarCaminhoXML();
             }
             FileStream reader = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-            listaSendoDeserializada = (List<Model.Programa>)serializer.Deserialize(reader);
+            try
+            {
+                listaSendoDeserializada = (List<Model.Programa>)serializer.Deserialize(reader);
+            }
+            catch (InvalidOperationException)
+            {
+                MessageBox.Show("Erro ao importar o documento XML.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             reader.Close();
             return listaSendoDeserializada;
         }

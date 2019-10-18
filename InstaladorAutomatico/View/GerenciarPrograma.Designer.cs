@@ -60,6 +60,7 @@
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.diretorioProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnRemover = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.gpBxEditar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDadosXML)).BeginInit();
@@ -273,6 +274,7 @@
             // gpBxEditar
             // 
             this.gpBxEditar.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gpBxEditar.Controls.Add(this.btnRemover);
             this.gpBxEditar.Controls.Add(this.btnRetroceder);
             this.gpBxEditar.Controls.Add(this.btnAvancarLista);
             this.gpBxEditar.Controls.Add(this.btnAdiciona);
@@ -305,7 +307,7 @@
             this.btnRetroceder.AutoSize = true;
             this.btnRetroceder.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnRetroceder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRetroceder.Location = new System.Drawing.Point(227, 219);
+            this.btnRetroceder.Location = new System.Drawing.Point(310, 219);
             this.btnRetroceder.Name = "btnRetroceder";
             this.btnRetroceder.Size = new System.Drawing.Size(26, 27);
             this.btnRetroceder.TabIndex = 23;
@@ -319,7 +321,7 @@
             this.btnAvancarLista.AutoSize = true;
             this.btnAvancarLista.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnAvancarLista.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAvancarLista.Location = new System.Drawing.Point(259, 219);
+            this.btnAvancarLista.Location = new System.Drawing.Point(342, 219);
             this.btnAvancarLista.Name = "btnAvancarLista";
             this.btnAvancarLista.Size = new System.Drawing.Size(26, 27);
             this.btnAvancarLista.TabIndex = 22;
@@ -401,6 +403,20 @@
             this.arquiteturaProgramaDataGridViewTextBoxColumn.MinimumWidth = 8;
             this.arquiteturaProgramaDataGridViewTextBoxColumn.Name = "arquiteturaProgramaDataGridViewTextBoxColumn";
             // 
+            // btnRemover
+            // 
+            this.btnRemover.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRemover.AutoSize = true;
+            this.btnRemover.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnRemover.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemover.Location = new System.Drawing.Point(227, 219);
+            this.btnRemover.Name = "btnRemover";
+            this.btnRemover.Size = new System.Drawing.Size(75, 27);
+            this.btnRemover.TabIndex = 24;
+            this.btnRemover.Text = "Remover";
+            this.btnRemover.UseVisualStyleBackColor = true;
+            this.btnRemover.Click += new System.EventHandler(this.btnRemover_Click);
+            // 
             // Gerenciar_Programas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -457,5 +473,6 @@
         private System.Windows.Forms.Button btnAdiciona;
         private System.Windows.Forms.Button btnAvancarLista;
         private System.Windows.Forms.Button btnRetroceder;
+        private System.Windows.Forms.Button btnRemover;
     }
 }

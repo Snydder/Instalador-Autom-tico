@@ -160,6 +160,7 @@ namespace InstaladorAutomatico
             }
             try
             {
+                ListaLocal.Clear();
                 ListaLocal.AddRange(ProgramaFuncoes.DeserializaPrograma());
                 GradeDeDados.DataSource = null;
                 GradeDeDados.DataSource = ListaLocal;
