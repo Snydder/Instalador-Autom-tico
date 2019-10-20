@@ -279,31 +279,6 @@ namespace InstaladorAutomatico.View
             }
         }
 
-        private void GerarNovoXMLToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            CriarArquivoXML();
-        }
-
-        private void SalvarComoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SelecionarCaminhoXML();
-        }
-
-        private void GradeDeDadosXML_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-
-        }
-
-        private void BindingNavigatorAddNewItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ImportarXMLToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ImportarXML();
-        }
-
         private void BtnAvancarLista_Click(object sender, EventArgs e)
         {
             i = GradeDeDadosXML.CurrentCell.RowIndex + 1;
@@ -333,13 +308,14 @@ namespace InstaladorAutomatico.View
             ListaLocal.AddRange(ListaLocal2);
             ListaLocal2.Clear();
             SerializaPrograma(ListaLocal);
+            ReorganizaID();
             ObterLista();
         }
 
         private void btnRemover_Click(object sender, EventArgs e)
         {
-            //foreach (var n in ListaLocal.Where(p => p.IDPrograma == GradeDeDadosXML.CurrentCell.RowIndex).ToArray()) ListaLocal.Remove(n);
             RemoverDaLista(Int32.Parse(Convert.ToString(GradeDeDadosXML.Rows[GradeDeDadosXML.CurrentCell.RowIndex].Cells["iDProgramaDataGridViewTextBoxColumn"].Value)));
+            ReorganizaID();
         }
 
         private void BtnRetroceder_Click(object sender, EventArgs e)
@@ -357,6 +333,26 @@ namespace InstaladorAutomatico.View
                 return;
             }
             
+        }
+
+        private void ReorganizaID ()
+        {
+            int elementosLista = 0, i;
+            /*ListaLocal2 = ListaLocal.OrderBy(o => p.IDPrograma).ToList();
+            ListaLocal.Clear();
+            ListaLocal.AddRange(ListaLocal2);
+            ListaLocal2.Clear();*/
+            ListaLocal2.AddRange(ListaLocal);
+            ListaLocal2.Sort((ID1, ID2) => ID1.IDPrograma.CompareTo(ID2.IDPrograma));
+            elementosLista = ListaLocal2.Count;
+            for (i = 0; i < elementosLista; i++)
+            {
+                ListaLocal2[i].IDPrograma = i;
+            }
+            ListaLocal.Clear();
+            ListaLocal.AddRange(ListaLocal2);
+            ListaLocal2.Clear();
+            SerializaPrograma(ListaLocal);
         }
     }
 }

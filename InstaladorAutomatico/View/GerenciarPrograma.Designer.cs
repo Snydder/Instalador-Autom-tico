@@ -50,6 +50,7 @@
             this.btnCaminhoIcone = new System.Windows.Forms.Button();
             this.txtBxCaminhoIcone = new System.Windows.Forms.TextBox();
             this.gpBxEditar = new System.Windows.Forms.GroupBox();
+            this.btnRemover = new System.Windows.Forms.Button();
             this.btnRetroceder = new System.Windows.Forms.Button();
             this.btnAvancarLista = new System.Windows.Forms.Button();
             this.btnAdiciona = new System.Windows.Forms.Button();
@@ -60,7 +61,6 @@
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.diretorioProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnRemover = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.gpBxEditar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDadosXML)).BeginInit();
@@ -226,7 +226,6 @@
             this.salvarComoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
             this.salvarComoToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.salvarComoToolStripMenuItem.Text = "Salvar Como";
-            this.salvarComoToolStripMenuItem.Click += new System.EventHandler(this.SalvarComoToolStripMenuItem_Click);
             // 
             // importarXMLToolStripMenuItem
             // 
@@ -234,7 +233,6 @@
             this.importarXMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
             this.importarXMLToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.importarXMLToolStripMenuItem.Text = "Importar XML";
-            this.importarXMLToolStripMenuItem.Click += new System.EventHandler(this.ImportarXMLToolStripMenuItem_Click);
             // 
             // gerarNovoXMLToolStripMenuItem
             // 
@@ -242,7 +240,6 @@
             this.gerarNovoXMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.gerarNovoXMLToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.gerarNovoXMLToolStripMenuItem.Text = "Gerar Novo XML";
-            this.gerarNovoXMLToolStripMenuItem.Click += new System.EventHandler(this.GerarNovoXMLToolStripMenuItem_Click);
             // 
             // label4
             // 
@@ -300,6 +297,20 @@
             this.gpBxEditar.TabIndex = 21;
             this.gpBxEditar.TabStop = false;
             this.gpBxEditar.Text = "Editar";
+            // 
+            // btnRemover
+            // 
+            this.btnRemover.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRemover.AutoSize = true;
+            this.btnRemover.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnRemover.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemover.Location = new System.Drawing.Point(227, 219);
+            this.btnRemover.Name = "btnRemover";
+            this.btnRemover.Size = new System.Drawing.Size(75, 27);
+            this.btnRemover.TabIndex = 24;
+            this.btnRemover.Text = "Remover";
+            this.btnRemover.UseVisualStyleBackColor = true;
+            this.btnRemover.Click += new System.EventHandler(this.btnRemover_Click);
             // 
             // btnRetroceder
             // 
@@ -402,20 +413,6 @@
             this.arquiteturaProgramaDataGridViewTextBoxColumn.HeaderText = "Arquitetura";
             this.arquiteturaProgramaDataGridViewTextBoxColumn.MinimumWidth = 8;
             this.arquiteturaProgramaDataGridViewTextBoxColumn.Name = "arquiteturaProgramaDataGridViewTextBoxColumn";
-            // 
-            // btnRemover
-            // 
-            this.btnRemover.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnRemover.AutoSize = true;
-            this.btnRemover.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnRemover.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemover.Location = new System.Drawing.Point(227, 219);
-            this.btnRemover.Name = "btnRemover";
-            this.btnRemover.Size = new System.Drawing.Size(75, 27);
-            this.btnRemover.TabIndex = 24;
-            this.btnRemover.Text = "Remover";
-            this.btnRemover.UseVisualStyleBackColor = true;
-            this.btnRemover.Click += new System.EventHandler(this.btnRemover_Click);
             // 
             // Gerenciar_Programas
             // 
