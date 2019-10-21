@@ -18,6 +18,10 @@ namespace InstaladorAutomatico.Model
         //declaracao da lista de objetos
         public static List<Model.Programa> ListaDeProgramas = new List<Model.Programa>();
 
+        //Indicando caminho padrão 
+        static String nomeDeUsuario = Environment.UserName;
+        public String caminhoPadrao = $"C:\\Users\\{nomeDeUsuario}\\Desktop\\Lista de programas.xml";
+
         [XmlElement(ElementName = "IDPrograma")]
         public Int32 IDPrograma { get; set; }
 
@@ -44,7 +48,8 @@ namespace InstaladorAutomatico.Model
             }
             else
             {
-                Properties.Settings.Default.CaminhoXML = "";
+                Properties.Settings.Default.CaminhoXML = caminhoPadrao;
+                Properties.Settings.Default.Save();
                 return;
             }
         }

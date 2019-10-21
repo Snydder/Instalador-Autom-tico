@@ -160,7 +160,9 @@ namespace InstaladorAutomatico.View
             }
             else
             {
-                Properties.Settings.Default.CaminhoXML = null;
+                Properties.Settings.Default.CaminhoXML = p.caminhoPadrao;
+                Properties.Settings.Default.Save();
+                MessageBox.Show("Nenhum caminho selecionado. O local padrão foi definido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
         }
@@ -333,6 +335,21 @@ namespace InstaladorAutomatico.View
                 return;
             }
             
+        }
+
+        private void salvarComoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SalvarXML();
+        }
+
+        private void importarXMLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ImportarXML();
+        }
+
+        private void gerarNovoXMLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CriarArquivoXML();
         }
 
         private void ReorganizaID ()

@@ -23,11 +23,17 @@ namespace InstaladorAutomatico
         //declarando lista local
         List<Model.Programa> ListaLocal = new List<Model.Programa>();
         Model.Programa ProgramaFuncoes = new Model.Programa();
+
         public Principal()
         {
             //inicializando componente e Lista
             InitializeComponent();
             MessageBox.Show(Properties.Settings.Default.CaminhoXML);
+        }
+
+        private void Principal_Load(object sender, EventArgs e)
+        {
+            ObterLista();
         }
         private void BtnMarcaDesmarca_Click(object sender, EventArgs e)
         {
@@ -122,20 +128,22 @@ namespace InstaladorAutomatico
 
         private Boolean SelecionarCaminhoXML()
         {
+            MessageBox.Show("aqui");
             OpenFileDialog mudarDiretorioXML = new OpenFileDialog();
             DialogResult resultado = new DialogResult();
             mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
             mudarDiretorioXML.ShowDialog();
             if (resultado == DialogResult.OK)
             {
-                MessageBox.Show("Bati no resultado ==");
                 Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
                 Properties.Settings.Default.Save();
                 return true;
             }
             else
             {
-                MessageBox.Show("Bati no else.");
+                Properties.Settings.Default.CaminhoXML = ProgramaFuncoes.caminhoPadrao;
+                Properties.Settings.Default.Save();
+                MessageBox.Show("Nenhum caminho selecionado. O local padrão foi definido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
         }
@@ -180,11 +188,6 @@ namespace InstaladorAutomatico
         {
             ObterLista();
             GradeDeDados.FirstDisplayedScrollingRowIndex = GradeDeDados.RowCount - 1;
-        }
-
-        private void Principal_Load(object sender, EventArgs e)
-        {
-            ObterLista();
         }
 
         private void SairToolStripMenuItem_Click(object sender, EventArgs e)
