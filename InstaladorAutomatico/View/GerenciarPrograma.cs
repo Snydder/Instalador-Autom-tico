@@ -77,10 +77,7 @@ namespace InstaladorAutomatico.View
         public void SerializaPrograma(List<Model.Programa> ListaAlvoSerializacao)
         {
             XmlSerializer xs = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
-            if (Properties.Settings.Default.CaminhoXML == "")
-            {
-                SelecionarCaminhoXML();
-            }
+            p.VerificaSelecionarLocalSalvamentoXML();
             FileStream xmlWriter = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Create);
             xs.Serialize(xmlWriter, ListaAlvoSerializacao);
             xmlWriter.Close();
@@ -148,25 +145,6 @@ namespace InstaladorAutomatico.View
             Close();
         }
 
-        private Boolean SelecionarCaminhoXML()
-        {
-            SaveFileDialog mudarDiretorioXML = new SaveFileDialog();
-            mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
-            if (mudarDiretorioXML.ShowDialog() == DialogResult.OK)
-            {
-                Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
-                Properties.Settings.Default.Save();
-                return true;
-            }
-            else
-            {
-                Properties.Settings.Default.CaminhoXML = p.caminhoPadrao;
-                Properties.Settings.Default.Save();
-                MessageBox.Show("Nenhum caminho selecionado. O local padrão foi definido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return false;
-            }
-        }
-
         private void SalvaNaLista()
         {
             p.IDPrograma = ListaLocal.Count;
@@ -178,23 +156,21 @@ namespace InstaladorAutomatico.View
 
         private void ImportarXML()
         {
-            OpenFileDialog mudarDiretorioXML = new OpenFileDialog();
-            mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
-            mudarDiretorioXML.ShowDialog();
-            Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
-            Properties.Settings.Default.Save();
-            ListaLocal.Clear();
-            ListaLocal.AddRange(p.DeserializaPrograma());
-            ObterLista();
+            if (p.MudarDiretorioDoXML() == true)
+            {
+                ListaLocal.Clear();
+                ListaLocal.AddRange(p.DeserializaPrograma());
+                ObterLista();
+            }
+            else
+            {
+                return;
+            }
         }
 
         private void CriarArquivoXML()
         {
-            SaveFileDialog mudarDiretorioXML = new SaveFileDialog();
-            mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
-            mudarDiretorioXML.ShowDialog();
-            Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
-            Properties.Settings.Default.Save();
+            p.SelecionarLocalSalvamentoXML();
             SerializaPrograma(ListaDeProgramasXML);
             ObterLista();
         }

@@ -150,22 +150,7 @@ namespace InstaladorAutomatico
 
         public void ObterLista()
         {
-            if (Properties.Settings.Default.CaminhoXML == "")
-            {
-                DialogResult resultado = new DialogResult();
-                MessageBox.Show("Nenhum caminho para o arquivo XML está configurado. Deseja escolher um arquivo?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if (resultado == DialogResult.Yes)
-                {
-                    if (SelecionarCaminhoXML() == false)
-                    {
-                        return;
-                    }
-                }
-                else
-                {
-                    return;
-                }
-            }
+            ProgramaFuncoes.VerificaSelecionarLocalSalvamentoXML();
             try
             {
                 ListaLocal.Clear();

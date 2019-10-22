@@ -37,11 +37,29 @@ namespace InstaladorAutomatico.Model
         [XmlElement(ElementName = "arquiteturaPrograma")]
         public Int32 arquiteturaPrograma { get; set; }
 
-        private void SelecionarCaminhoXML()
+        public Boolean MudarDiretorioDoXML()
         {
+            OpenFileDialog mudarDiretorioXML = new OpenFileDialog();
+            DialogResult resultado = new DialogResult();
+            mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
+            mudarDiretorioXML.ShowDialog();
+            if (resultado == DialogResult.OK)
+            {
+                Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
+                Properties.Settings.Default.Save(); 
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public void SelecionarLocalSalvamentoXML()
+        {
+            DialogResult resultado = new DialogResult();
             SaveFileDialog mudarDiretorioXML = new SaveFileDialog();
             mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
-            if (mudarDiretorioXML.ShowDialog() == DialogResult.OK)
+            if (resultado == DialogResult.OK)
             {
                 Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
                 Properties.Settings.Default.Save();
@@ -50,16 +68,33 @@ namespace InstaladorAutomatico.Model
             {
                 Properties.Settings.Default.CaminhoXML = caminhoPadrao;
                 Properties.Settings.Default.Save();
-                return;
+            }
+        }
+
+        public void VerificaSelecionarLocalSalvamentoXML()
+        {
+            if (Properties.Settings.Default.CaminhoXML == null);
+            {
+                DialogResult resultado = new DialogResult();
+                MessageBox.Show("Nenhum caminho para o arquivo XML está configurado. Deseja escolher um arquivo?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (resultado == DialogResult.Yes)
+                {
+                    SelecionarLocalSalvamentoXML();
+                }
+                else
+                {
+                    Properties.Settings.Default.CaminhoXML = caminhoPadrao;
+                    Properties.Settings.Default.Save();
+                }
             }
         }
         public List<Model.Programa> DeserializaPrograma()
         {
             List<Model.Programa> listaSendoDeserializada = new List<Model.Programa>();
             XmlSerializer serializer = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
-            if (Properties.Settings.Default.CaminhoXML == "")
+            if (Properties.Settings.Default.CaminhoXML == "" || Properties.Settings.Default.CaminhoXML == caminhoPadrao);
             {
-                SelecionarCaminhoXML();
+                SelecionarLocalSalvamentoXML();
             }
             FileStream reader = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
             try
