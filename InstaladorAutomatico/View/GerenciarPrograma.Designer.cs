@@ -32,7 +32,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtBxNomePrograma = new System.Windows.Forms.TextBox();
-            this.programaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.txtBxDiretorioPrograma = new System.Windows.Forms.TextBox();
             this.btnDiretorioPrograma = new System.Windows.Forms.Button();
             this.btnFechar = new System.Windows.Forms.Button();
@@ -56,15 +55,17 @@
             this.btnAvancarLista = new System.Windows.Forms.Button();
             this.btnAdiciona = new System.Windows.Forms.Button();
             this.GradeDeDadosXML = new System.Windows.Forms.DataGridView();
+            this.programaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.iDProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.caminhoIconeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewImageColumn();
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.diretorioProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).BeginInit();
+            this.localizarXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.gpBxEditar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDadosXML)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -95,10 +96,6 @@
             this.txtBxNomePrograma.Size = new System.Drawing.Size(244, 20);
             this.txtBxNomePrograma.TabIndex = 2;
             this.txtBxNomePrograma.TextChanged += new System.EventHandler(this.TxtBxNomePrograma_TextChanged);
-            // 
-            // programaBindingSource
-            // 
-            this.programaBindingSource.DataSource = typeof(InstaladorAutomatico.Model.Programa);
             // 
             // txtBxDiretorioPrograma
             // 
@@ -219,7 +216,8 @@
             this.arquivoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.salvarComoToolStripMenuItem,
             this.importarXMLToolStripMenuItem,
-            this.gerarNovoXMLToolStripMenuItem});
+            this.gerarNovoXMLToolStripMenuItem,
+            this.localizarXMLToolStripMenuItem});
             this.arquivoToolStripMenuItem.Name = "arquivoToolStripMenuItem";
             this.arquivoToolStripMenuItem.Size = new System.Drawing.Size(61, 22);
             this.arquivoToolStripMenuItem.Text = "Arquivo";
@@ -380,6 +378,10 @@
             this.GradeDeDadosXML.Size = new System.Drawing.Size(785, 248);
             this.GradeDeDadosXML.TabIndex = 15;
             // 
+            // programaBindingSource
+            // 
+            this.programaBindingSource.DataSource = typeof(InstaladorAutomatico.Model.Programa);
+            // 
             // iDProgramaDataGridViewTextBoxColumn
             // 
             this.iDProgramaDataGridViewTextBoxColumn.DataPropertyName = "IDPrograma";
@@ -417,6 +419,14 @@
             this.arquiteturaProgramaDataGridViewTextBoxColumn.MinimumWidth = 8;
             this.arquiteturaProgramaDataGridViewTextBoxColumn.Name = "arquiteturaProgramaDataGridViewTextBoxColumn";
             // 
+            // localizarXMLToolStripMenuItem
+            // 
+            this.localizarXMLToolStripMenuItem.Name = "localizarXMLToolStripMenuItem";
+            this.localizarXMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.localizarXMLToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.localizarXMLToolStripMenuItem.Text = "Localizar XML";
+            this.localizarXMLToolStripMenuItem.Click += new System.EventHandler(this.localizarXMLToolStripMenuItem_Click);
+            // 
             // Gerenciar_Programas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -429,12 +439,12 @@
             this.Name = "Gerenciar_Programas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Gerenciar Programa";
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.gpBxEditar.ResumeLayout(false);
             this.gpBxEditar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDadosXML)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -474,5 +484,6 @@
         private System.Windows.Forms.Button btnAvancarLista;
         private System.Windows.Forms.Button btnRetroceder;
         private System.Windows.Forms.Button btnRemover;
+        private System.Windows.Forms.ToolStripMenuItem localizarXMLToolStripMenuItem;
     }
 }

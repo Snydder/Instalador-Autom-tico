@@ -20,6 +20,7 @@ namespace InstaladorAutomatico.View
 
         List<Model.Programa> ListaLocal = new List<Model.Programa>();
         List<Model.Programa> ListaLocal2 = new List<Model.Programa>();
+
         //declarando novo objeto do tipo Model.Programa
         Model.Programa p = new Model.Programa();
 
@@ -72,15 +73,6 @@ namespace InstaladorAutomatico.View
         private void SalvarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ValidaSalvaXML();
-        }
-
-        public void SerializaPrograma(List<Model.Programa> ListaAlvoSerializacao)
-        {
-            XmlSerializer xs = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
-            p.VerificaSelecionarLocalSalvamentoXML();
-            FileStream xmlWriter = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Create);
-            xs.Serialize(xmlWriter, ListaAlvoSerializacao);
-            xmlWriter.Close();
         }
 
         public void ObterLista()
@@ -171,7 +163,7 @@ namespace InstaladorAutomatico.View
         private void CriarArquivoXML()
         {
             p.SelecionarLocalSalvamentoXML();
-            SerializaPrograma(ListaDeProgramasXML);
+            p.SerializaPrograma(ListaDeProgramasXML);
             ObterLista();
         }
 
@@ -188,12 +180,12 @@ namespace InstaladorAutomatico.View
                 ListaDeProgramasXML.Clear();
                 ListaDeProgramasXML.AddRange(p.DeserializaPrograma());
                 ListaDeProgramasXML.Add(p);
-                SerializaPrograma(ListaDeProgramasXML);
+                p.SerializaPrograma(ListaDeProgramasXML);
             }
             catch (FileNotFoundException)
             {
                 Model.Programa.ListaDeProgramas.Add(p);
-                SerializaPrograma(Model.Programa.ListaDeProgramas);
+                p.SerializaPrograma(Model.Programa.ListaDeProgramas);
             }
             if (GradeDeDadosXML.RowCount > 1)
             {
@@ -285,7 +277,7 @@ namespace InstaladorAutomatico.View
             ListaLocal.Clear();
             ListaLocal.AddRange(ListaLocal2);
             ListaLocal2.Clear();
-            SerializaPrograma(ListaLocal);
+            p.SerializaPrograma(ListaLocal);
             ReorganizaID();
             ObterLista();
         }
@@ -328,6 +320,14 @@ namespace InstaladorAutomatico.View
             CriarArquivoXML();
         }
 
+        private void localizarXMLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog LocalizarXML = new OpenFileDialog();
+            LocalizarXML.Filter = "Arquivo XML | * .xml";
+            LocalizarXML.InitialDirectory = Properties.Settings.Default.CaminhoXML;
+            LocalizarXML.ShowDialog();
+        }
+
         private void ReorganizaID ()
         {
             int elementosLista = 0, i;
@@ -345,7 +345,7 @@ namespace InstaladorAutomatico.View
             ListaLocal.Clear();
             ListaLocal.AddRange(ListaLocal2);
             ListaLocal2.Clear();
-            SerializaPrograma(ListaLocal);
+            p.SerializaPrograma(ListaLocal);
         }
     }
 }

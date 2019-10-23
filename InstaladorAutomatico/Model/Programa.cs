@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using InstaladorAutomatico.View;
 
 namespace InstaladorAutomatico.Model
 {
@@ -17,10 +18,11 @@ namespace InstaladorAutomatico.Model
     {
         //declaracao da lista de objetos
         public static List<Model.Programa> ListaDeProgramas = new List<Model.Programa>();
+        private String atributoXML = "Novos_Programas";
 
         //Indicando caminho padrão 
         static String nomeDeUsuario = Environment.UserName;
-        public String caminhoPadrao = $"C:\\Users\\{nomeDeUsuario}\\Desktop\\Lista de programas.xml";
+        public String caminhoPadrao = $"C:\\Users\\{nomeDeUsuario}\\Desktop\\Lista_de_programas.xml";
 
         [XmlElement(ElementName = "IDPrograma")]
         public Int32 IDPrograma { get; set; }
@@ -71,9 +73,9 @@ namespace InstaladorAutomatico.Model
             }
         }
 
-        public void VerificaSelecionarLocalSalvamentoXML()
+        public void VerificaPorXMLInicializacao()
         {
-            if (Properties.Settings.Default.CaminhoXML == null);
+            if (Properties.Settings.Default.CaminhoXML == "")
             {
                 DialogResult resultado = new DialogResult();
                 MessageBox.Show("Nenhum caminho para o arquivo XML está configurado. Deseja escolher um arquivo?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
@@ -83,16 +85,107 @@ namespace InstaladorAutomatico.Model
                 }
                 else
                 {
+                    List<Model.Programa> listaVazia = new List<Model.Programa>();
                     Properties.Settings.Default.CaminhoXML = caminhoPadrao;
                     Properties.Settings.Default.Save();
+                    MessageBox.Show("O local padrão foi definido.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+            else if (Properties.Settings.Default.CaminhoXML == caminhoPadrao)
+            {
+                DialogResult resultado = new DialogResult();
+                MessageBox.Show("O caminho padrão para o arquivo XML está configurado. Deseja alterá-lo?", "Informação", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (resultado == DialogResult.Yes)
+                {
+                    SelecionarLocalSalvamentoXML();
+                }
+                else
+                {
+                    if (File.Exists(caminhoPadrao))
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        List<Model.Programa> listaVazia = new List<Model.Programa>();
+                        Properties.Settings.Default.CaminhoXML = caminhoPadrao;
+                        Properties.Settings.Default.Save();
+                        SerializaPrograma(listaVazia);
+                        if (File.Exists(caminhoPadrao))
+                        {
+                            MessageBox.Show("O arquivo foi criado com êxito.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Erro ao criar o arquivo. Escolher outro local?", "Erro", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                            if (resultado == DialogResult.Yes)
+                            {
+                                SelecionarLocalSalvamentoXML();
+                            }
+                            else
+                            {
+                                return;
+                            }
+                        }
+                    }
                 }
             }
         }
+
+        public void VerificaSelecionarLocalSalvamentoXML()
+        {
+            if (Properties.Settings.Default.CaminhoXML == "")
+            {
+                DialogResult resultado = new DialogResult();
+                MessageBox.Show("Nenhum caminho para o arquivo XML está configurado. Deseja escolher um arquivo?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (resultado == DialogResult.Yes)
+                {
+                    SelecionarLocalSalvamentoXML();
+                }
+                else
+                {
+                    List<Model.Programa> listaVazia = new List<Model.Programa>();
+                    Properties.Settings.Default.CaminhoXML = caminhoPadrao;
+                    Properties.Settings.Default.Save();
+                    SerializaPrograma(listaVazia);
+                    if (File.Exists(caminhoPadrao))
+                    {
+                        MessageBox.Show($"O local padrão foi definido em {caminhoPadrao} e o arquivo foi gerado.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erro ao criar o arquivo. Escolher outro local?", "Erro", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        if (resultado == DialogResult.Yes)
+                        {
+                            SelecionarLocalSalvamentoXML();
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        public void SerializaPrograma(List<Model.Programa> ListaAlvoSerializacao)
+        {
+            XmlSerializer xs = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute(atributoXML));
+            if (Properties.Settings.Default.CaminhoXML == "")
+            {
+                SelecionarLocalSalvamentoXML();
+            }
+            FileStream xmlWriter = new FileStream(Properties.Settings.Default.CaminhoXML, FileMode.Create);
+            xs.Serialize(xmlWriter, ListaAlvoSerializacao);
+            xmlWriter.Close();
+        }
+
         public List<Model.Programa> DeserializaPrograma()
         {
             List<Model.Programa> listaSendoDeserializada = new List<Model.Programa>();
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute("Novos_Programas"));
-            if (Properties.Settings.Default.CaminhoXML == "" || Properties.Settings.Default.CaminhoXML == caminhoPadrao);
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute(atributoXML));
+            if (Properties.Settings.Default.CaminhoXML == "")
             {
                 SelecionarLocalSalvamentoXML();
             }

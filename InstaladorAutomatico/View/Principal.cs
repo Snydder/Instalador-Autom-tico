@@ -33,6 +33,7 @@ namespace InstaladorAutomatico
 
         private void Principal_Load(object sender, EventArgs e)
         {
+            ProgramaFuncoes.VerificaPorXMLInicializacao();
             ObterLista();
         }
         private void BtnMarcaDesmarca_Click(object sender, EventArgs e)
@@ -126,28 +127,6 @@ namespace InstaladorAutomatico
 
         }
 
-        private Boolean SelecionarCaminhoXML()
-        {
-            MessageBox.Show("aqui");
-            OpenFileDialog mudarDiretorioXML = new OpenFileDialog();
-            DialogResult resultado = new DialogResult();
-            mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
-            mudarDiretorioXML.ShowDialog();
-            if (resultado == DialogResult.OK)
-            {
-                Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
-                Properties.Settings.Default.Save();
-                return true;
-            }
-            else
-            {
-                Properties.Settings.Default.CaminhoXML = ProgramaFuncoes.caminhoPadrao;
-                Properties.Settings.Default.Save();
-                MessageBox.Show("Nenhum caminho selecionado. O local padrão foi definido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return false;
-            }
-        }
-
         public void ObterLista()
         {
             ProgramaFuncoes.VerificaSelecionarLocalSalvamentoXML();
@@ -161,11 +140,6 @@ namespace InstaladorAutomatico
             catch (FileNotFoundException)
             {
                 MessageBox.Show("Arquivo não encontrado. A tabela está vazia.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (SelecionarCaminhoXML() == true)
-                {
-                    MessageBox.Show("Aqui");
-                    this.ObterLista();
-                }
             }
         }
 
