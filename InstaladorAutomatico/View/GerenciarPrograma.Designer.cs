@@ -32,6 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtBxNomePrograma = new System.Windows.Forms.TextBox();
+            this.programaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.txtBxDiretorioPrograma = new System.Windows.Forms.TextBox();
             this.btnDiretorioPrograma = new System.Windows.Forms.Button();
             this.btnFechar = new System.Windows.Forms.Button();
@@ -46,6 +47,7 @@
             this.salvarComoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importarXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gerarNovoXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.localizarXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label4 = new System.Windows.Forms.Label();
             this.btnCaminhoIcone = new System.Windows.Forms.Button();
             this.txtBxCaminhoIcone = new System.Windows.Forms.TextBox();
@@ -55,17 +57,15 @@
             this.btnAvancarLista = new System.Windows.Forms.Button();
             this.btnAdiciona = new System.Windows.Forms.Button();
             this.GradeDeDadosXML = new System.Windows.Forms.DataGridView();
-            this.programaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.iDProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.caminhoIconeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewImageColumn();
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.diretorioProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.localizarXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.gpBxEditar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDadosXML)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -96,6 +96,10 @@
             this.txtBxNomePrograma.Size = new System.Drawing.Size(244, 20);
             this.txtBxNomePrograma.TabIndex = 2;
             this.txtBxNomePrograma.TextChanged += new System.EventHandler(this.TxtBxNomePrograma_TextChanged);
+            // 
+            // programaBindingSource
+            // 
+            this.programaBindingSource.DataSource = typeof(InstaladorAutomatico.Model.Programa);
             // 
             // txtBxDiretorioPrograma
             // 
@@ -246,6 +250,14 @@
             this.gerarNovoXMLToolStripMenuItem.Text = "Gerar Novo XML";
             this.gerarNovoXMLToolStripMenuItem.Click += new System.EventHandler(this.gerarNovoXMLToolStripMenuItem_Click);
             // 
+            // localizarXMLToolStripMenuItem
+            // 
+            this.localizarXMLToolStripMenuItem.Name = "localizarXMLToolStripMenuItem";
+            this.localizarXMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.localizarXMLToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.localizarXMLToolStripMenuItem.Text = "Localizar XML";
+            this.localizarXMLToolStripMenuItem.Click += new System.EventHandler(this.localizarXMLToolStripMenuItem_Click);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -325,9 +337,9 @@
             this.btnRetroceder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRetroceder.Location = new System.Drawing.Point(310, 219);
             this.btnRetroceder.Name = "btnRetroceder";
-            this.btnRetroceder.Size = new System.Drawing.Size(26, 27);
+            this.btnRetroceder.Size = new System.Drawing.Size(25, 27);
             this.btnRetroceder.TabIndex = 23;
-            this.btnRetroceder.Text = "<";
+            this.btnRetroceder.Text = "↓";
             this.btnRetroceder.UseVisualStyleBackColor = true;
             this.btnRetroceder.Click += new System.EventHandler(this.BtnRetroceder_Click);
             // 
@@ -339,9 +351,9 @@
             this.btnAvancarLista.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAvancarLista.Location = new System.Drawing.Point(342, 219);
             this.btnAvancarLista.Name = "btnAvancarLista";
-            this.btnAvancarLista.Size = new System.Drawing.Size(26, 27);
+            this.btnAvancarLista.Size = new System.Drawing.Size(25, 27);
             this.btnAvancarLista.TabIndex = 22;
-            this.btnAvancarLista.Text = ">";
+            this.btnAvancarLista.Text = "↑";
             this.btnAvancarLista.UseVisualStyleBackColor = true;
             this.btnAvancarLista.Click += new System.EventHandler(this.BtnAvancarLista_Click);
             // 
@@ -377,10 +389,6 @@
             this.GradeDeDadosXML.RowHeadersWidth = 62;
             this.GradeDeDadosXML.Size = new System.Drawing.Size(785, 248);
             this.GradeDeDadosXML.TabIndex = 15;
-            // 
-            // programaBindingSource
-            // 
-            this.programaBindingSource.DataSource = typeof(InstaladorAutomatico.Model.Programa);
             // 
             // iDProgramaDataGridViewTextBoxColumn
             // 
@@ -419,14 +427,6 @@
             this.arquiteturaProgramaDataGridViewTextBoxColumn.MinimumWidth = 8;
             this.arquiteturaProgramaDataGridViewTextBoxColumn.Name = "arquiteturaProgramaDataGridViewTextBoxColumn";
             // 
-            // localizarXMLToolStripMenuItem
-            // 
-            this.localizarXMLToolStripMenuItem.Name = "localizarXMLToolStripMenuItem";
-            this.localizarXMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.localizarXMLToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-            this.localizarXMLToolStripMenuItem.Text = "Localizar XML";
-            this.localizarXMLToolStripMenuItem.Click += new System.EventHandler(this.localizarXMLToolStripMenuItem_Click);
-            // 
             // Gerenciar_Programas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -439,12 +439,12 @@
             this.Name = "Gerenciar_Programas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Gerenciar Programa";
+            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.gpBxEditar.ResumeLayout(false);
             this.gpBxEditar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDadosXML)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

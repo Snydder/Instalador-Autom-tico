@@ -251,17 +251,23 @@ namespace InstaladorAutomatico.View
 
         private void BtnAvancarLista_Click(object sender, EventArgs e)
         {
-            i = GradeDeDadosXML.CurrentCell.RowIndex + 1;
-            if (i < GradeDeDadosXML.Rows.Count)
-            {
-                GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", i];
-                return;
-            }
-            if (i == GradeDeDadosXML.Rows.Count)
-            {
-                i = 0;
-                GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", i];
-            }
+            int indexFonte = 0, indexAlvo = 0;
+
+            indexFonte = GradeDeDadosXML.CurrentCell.RowIndex + 1;
+            indexAlvo = indexFonte + 1;
+            ListaLocal2.AddRange(ListaLocal);
+            var itemLista = ListaLocal2[indexFonte];
+            ListaLocal2.RemoveAt(indexFonte);
+            ListaLocal2.Insert(indexAlvo, itemLista);
+            ListaLocal2[indexAlvo].IDPrograma = ListaLocal2[indexFonte].IDPrograma;
+            ListaLocal2[indexFonte].IDPrograma = ListaLocal2[indexAlvo].IDPrograma;
+            ListaLocal.Clear();
+            ListaLocal.AddRange(ListaLocal2);
+            ListaLocal2.Clear();
+            p.SerializaPrograma(ListaLocal);
+            ReorganizaID();
+            GradeDeDadosXML.Rows[GradeDeDadosXML.CurrentCell.RowIndex + 1].Selected = true;
+            ObterLista();
         }
 
         private void BtnAdiciona(object sender, EventArgs e)
@@ -290,7 +296,25 @@ namespace InstaladorAutomatico.View
 
         private void BtnRetroceder_Click(object sender, EventArgs e)
         {
-            i = GradeDeDadosXML.CurrentCell.RowIndex - 1;
+            int indexFonte = 0, indexAlvo = 0;
+
+            indexFonte = GradeDeDadosXML.CurrentCell.RowIndex + 1;
+            indexAlvo = indexFonte - 1;
+            ListaLocal2.AddRange(ListaLocal);
+            var itemLista = ListaLocal2[indexFonte];
+            ListaLocal2.RemoveAt(indexFonte);
+            ListaLocal2.Insert(indexAlvo, itemLista);
+            ListaLocal2[indexAlvo].IDPrograma = ListaLocal2[indexFonte].IDPrograma;
+            ListaLocal2[indexFonte].IDPrograma = ListaLocal2[indexAlvo].IDPrograma;
+            ListaLocal.Clear();
+            ListaLocal.AddRange(ListaLocal2);
+            ListaLocal2.Clear();
+            p.SerializaPrograma(ListaLocal);
+            ReorganizaID();
+            GradeDeDadosXML.Rows[GradeDeDadosXML.CurrentCell.RowIndex - 1].Selected = true;
+            ObterLista();
+
+            /*i = GradeDeDadosXML.CurrentCell.RowIndex - 1;
             if (i < GradeDeDadosXML.Rows.Count)
             {
                 if (i < 0)
@@ -301,8 +325,8 @@ namespace InstaladorAutomatico.View
                 }
                 GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", i];
                 return;
-            }
-            
+            }*/
+
         }
 
         private void salvarComoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -331,10 +355,6 @@ namespace InstaladorAutomatico.View
         private void ReorganizaID ()
         {
             int elementosLista = 0, i;
-            /*ListaLocal2 = ListaLocal.OrderBy(o => p.IDPrograma).ToList();
-            ListaLocal.Clear();
-            ListaLocal.AddRange(ListaLocal2);
-            ListaLocal2.Clear();*/
             ListaLocal2.AddRange(ListaLocal);
             ListaLocal2.Sort((ID1, ID2) => ID1.IDPrograma.CompareTo(ID2.IDPrograma));
             elementosLista = ListaLocal2.Count;
