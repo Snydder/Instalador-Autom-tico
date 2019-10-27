@@ -26,7 +26,7 @@ namespace InstaladorAutomatico.View
 
 
         //declarando variável
-        Int32 valorArquitetura = 0, i = 0;
+        Int32 valorArquitetura = 0, l = 0;
 
         public Gerenciar_Programas()
         {
@@ -249,27 +249,6 @@ namespace InstaladorAutomatico.View
             }
         }
 
-        private void BtnAvancarLista_Click(object sender, EventArgs e)
-        {
-            int indexFonte = 0, indexAlvo = 0;
-
-            indexFonte = GradeDeDadosXML.CurrentCell.RowIndex + 1;
-            indexAlvo = indexFonte + 1;
-            ListaLocal2.AddRange(ListaLocal);
-            var itemLista = ListaLocal2[indexFonte];
-            ListaLocal2.RemoveAt(indexFonte);
-            ListaLocal2.Insert(indexAlvo, itemLista);
-            ListaLocal2[indexAlvo].IDPrograma = ListaLocal2[indexFonte].IDPrograma;
-            ListaLocal2[indexFonte].IDPrograma = ListaLocal2[indexAlvo].IDPrograma;
-            ListaLocal.Clear();
-            ListaLocal.AddRange(ListaLocal2);
-            ListaLocal2.Clear();
-            p.SerializaPrograma(ListaLocal);
-            ReorganizaID();
-            GradeDeDadosXML.Rows[GradeDeDadosXML.CurrentCell.RowIndex + 1].Selected = true;
-            ObterLista();
-        }
-
         private void BtnAdiciona(object sender, EventArgs e)
         {
             ValidaSalvaXML();
@@ -294,41 +273,6 @@ namespace InstaladorAutomatico.View
             ReorganizaID();
         }
 
-        private void BtnRetroceder_Click(object sender, EventArgs e)
-        {
-            int indexFonte = 0, indexAlvo = 0;
-
-            indexFonte = GradeDeDadosXML.CurrentCell.RowIndex + 1;
-            indexAlvo = indexFonte - 1;
-            ListaLocal2.AddRange(ListaLocal);
-            var itemLista = ListaLocal2[indexFonte];
-            ListaLocal2.RemoveAt(indexFonte);
-            ListaLocal2.Insert(indexAlvo, itemLista);
-            ListaLocal2[indexAlvo].IDPrograma = ListaLocal2[indexFonte].IDPrograma;
-            ListaLocal2[indexFonte].IDPrograma = ListaLocal2[indexAlvo].IDPrograma;
-            ListaLocal.Clear();
-            ListaLocal.AddRange(ListaLocal2);
-            ListaLocal2.Clear();
-            p.SerializaPrograma(ListaLocal);
-            ReorganizaID();
-            GradeDeDadosXML.Rows[GradeDeDadosXML.CurrentCell.RowIndex - 1].Selected = true;
-            ObterLista();
-
-            /*i = GradeDeDadosXML.CurrentCell.RowIndex - 1;
-            if (i < GradeDeDadosXML.Rows.Count)
-            {
-                if (i < 0)
-                {
-                    i = GradeDeDadosXML.Rows.Count - 1;
-                    GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", i];
-                    return;
-                }
-                GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", i];
-                return;
-            }*/
-
-        }
-
         private void salvarComoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SalvarXML();
@@ -350,6 +294,88 @@ namespace InstaladorAutomatico.View
             LocalizarXML.Filter = "Arquivo XML | * .xml";
             LocalizarXML.InitialDirectory = Properties.Settings.Default.CaminhoXML;
             LocalizarXML.ShowDialog();
+        }
+
+        private void BtnSubirLista_Click(object sender, EventArgs e)
+        {
+
+            int indexFonte = 0, indexAlvo = 0;
+
+            indexFonte = Int32.Parse(GradeDeDadosXML.CurrentCell.Value.ToString());
+            indexAlvo = indexFonte - 1;
+
+            if (indexAlvo < 0)
+            {
+                l = GradeDeDadosXML.RowCount - 1;
+                GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", l];
+                return;
+                //indexFonte = GradeDeDadosXML.RowCount - 1;
+                //indexAlvo = 0;
+            }
+
+            ListaLocal2.AddRange(ListaLocal);
+            var itemLista = ListaLocal2[indexFonte];
+            ListaLocal2.RemoveAt(indexFonte);
+            ListaLocal2.Insert(indexAlvo, itemLista);
+            ListaLocal2[indexAlvo].IDPrograma = ListaLocal2[indexFonte].IDPrograma;
+            ListaLocal2[indexFonte].IDPrograma = ListaLocal2[indexAlvo].IDPrograma;
+            ListaLocal.Clear();
+            ListaLocal.AddRange(ListaLocal2);
+            ListaLocal2.Clear();
+            p.SerializaPrograma(ListaLocal);
+            ReorganizaID();
+            ObterLista();
+            l = GradeDeDadosXML.CurrentCell.RowIndex - 1;
+            if (l < GradeDeDadosXML.Rows.Count)
+            {
+
+                if (l < 0)
+                {
+                    l = GradeDeDadosXML.RowCount - 1;
+                    GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", l];
+                    return;
+                }
+                GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", l];
+            }
+        }
+
+        private void BtnDescerLista_Click(object sender, EventArgs e)
+        {
+            int indexFonte = 0, indexAlvo = 0;
+
+            indexFonte = Int32.Parse(GradeDeDadosXML.CurrentCell.Value.ToString());
+            indexAlvo = indexFonte + 1;
+
+            if (indexAlvo >= GradeDeDadosXML.RowCount)
+            {
+                l = 0;
+                GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", l];
+                return;
+            }
+
+            ListaLocal2.AddRange(ListaLocal);
+            var itemLista = ListaLocal2[indexFonte];
+            ListaLocal2.RemoveAt(indexFonte);
+            ListaLocal2.Insert(indexAlvo, itemLista);
+            ListaLocal2[indexAlvo].IDPrograma = ListaLocal2[indexFonte].IDPrograma;
+            ListaLocal2[indexFonte].IDPrograma = ListaLocal2[indexAlvo].IDPrograma;
+            ListaLocal.Clear();
+            ListaLocal.AddRange(ListaLocal2);
+            ListaLocal2.Clear();
+            p.SerializaPrograma(ListaLocal);
+            ReorganizaID();
+            ObterLista();
+            l = GradeDeDadosXML.CurrentCell.RowIndex + 1;
+
+            if (l < GradeDeDadosXML.Rows.Count)
+            {
+                GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", l];
+            }
+            else if (l >= GradeDeDadosXML.RowCount)
+            {
+                l = 0;
+                GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", l];
+            }
         }
 
         private void ReorganizaID ()
