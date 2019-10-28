@@ -60,6 +60,7 @@ namespace InstaladorAutomatico.Model
         {
             DialogResult resultado = new DialogResult();
             SaveFileDialog mudarDiretorioXML = new SaveFileDialog();
+            resultado = mudarDiretorioXML.ShowDialog();
             mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
             if (resultado == DialogResult.OK)
             {
@@ -78,7 +79,7 @@ namespace InstaladorAutomatico.Model
             if (Properties.Settings.Default.CaminhoXML == "")
             {
                 DialogResult resultado = new DialogResult();
-                MessageBox.Show("Nenhum caminho para o arquivo XML está configurado. Deseja escolher um arquivo?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                resultado = MessageBox.Show("Nenhum caminho para o arquivo XML está configurado. Deseja escolher um arquivo?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (resultado == DialogResult.Yes)
                 {
                     SelecionarLocalSalvamentoXML();
@@ -95,7 +96,7 @@ namespace InstaladorAutomatico.Model
             else if (Properties.Settings.Default.CaminhoXML == caminhoPadrao)
             {
                 DialogResult resultado = new DialogResult();
-                MessageBox.Show("O caminho padrão para o arquivo XML está configurado. Deseja alterá-lo?", "Informação", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                resultado = MessageBox.Show("O caminho padrão para o arquivo XML está configurado. Deseja alterá-lo?", "Informação", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (resultado == DialogResult.Yes)
                 {
                     SelecionarLocalSalvamentoXML();

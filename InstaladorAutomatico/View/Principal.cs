@@ -29,6 +29,17 @@ namespace InstaladorAutomatico
             //inicializando componente e Lista
             InitializeComponent();
             MessageBox.Show(Properties.Settings.Default.CaminhoXML);
+            //Image image = Image.FromFile(@"C:\TI\Ammyy\Ammyy_v3.5.exe");
+            //caminhoIconeDataGridViewTextBoxColumn.Image = image;
+            //caminhoIconeDataGridViewTextBoxColumn.HeaderText = "Image";
+            //caminhoIconeDataGridViewTextBoxColumn.Name = "img";
+            Image image = Image.FromFile(@"C:\\Users\\matheus.perches\\Downloads\\Windows-icon.png");
+            DataGridViewImageColumn img = new DataGridViewImageColumn();
+            img.Image = image;
+            GradeDeDados.Columns.Add(img);
+            img.HeaderText = "Image";
+            img.Name = "img";
+
         }
 
         private void Principal_Load(object sender, EventArgs e)

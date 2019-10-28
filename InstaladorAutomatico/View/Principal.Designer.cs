@@ -42,14 +42,14 @@
             this.btnSair = new System.Windows.Forms.Button();
             this.btnAtualizarDataGrid = new System.Windows.Forms.Button();
             this.GradeDeDados = new System.Windows.Forms.DataGridView();
+            this.programaBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.programaBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.iDProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.caminhoIconeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.caminhoIconeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewImageColumn();
             this.diretorioProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Selecionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.programaBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.programaBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
             this.gpBx.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDados)).BeginInit();
@@ -200,6 +200,14 @@
             this.GradeDeDados.Size = new System.Drawing.Size(863, 221);
             this.GradeDeDados.TabIndex = 24;
             // 
+            // programaBindingSource1
+            // 
+            this.programaBindingSource1.DataSource = typeof(InstaladorAutomatico.Model.Programa);
+            // 
+            // programaBindingSource2
+            // 
+            this.programaBindingSource2.DataSource = typeof(InstaladorAutomatico.Model.Programa);
+            // 
             // iDProgramaDataGridViewTextBoxColumn
             // 
             this.iDProgramaDataGridViewTextBoxColumn.DataPropertyName = "IDPrograma";
@@ -220,6 +228,8 @@
             this.caminhoIconeDataGridViewTextBoxColumn.HeaderText = "Ícone";
             this.caminhoIconeDataGridViewTextBoxColumn.MinimumWidth = 8;
             this.caminhoIconeDataGridViewTextBoxColumn.Name = "caminhoIconeDataGridViewTextBoxColumn";
+            this.caminhoIconeDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.caminhoIconeDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // diretorioProgramaDataGridViewTextBoxColumn
             // 
@@ -241,14 +251,6 @@
             this.Selecionar.MinimumWidth = 8;
             this.Selecionar.Name = "Selecionar";
             this.Selecionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // programaBindingSource1
-            // 
-            this.programaBindingSource1.DataSource = typeof(InstaladorAutomatico.Model.Programa);
-            // 
-            // programaBindingSource2
-            // 
-            this.programaBindingSource2.DataSource = typeof(InstaladorAutomatico.Model.Programa);
             // 
             // Principal
             // 
@@ -293,7 +295,7 @@
         private System.Windows.Forms.Button btnSair;
         private System.Windows.Forms.DataGridViewTextBoxColumn iDProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nomeProgramaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn caminhoIconeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewImageColumn caminhoIconeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn diretorioProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn arquiteturaProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Selecionar;
