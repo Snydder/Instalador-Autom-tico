@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.BtnMarcaDesmarca = new System.Windows.Forms.Button();
             this.btnIniciar = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -42,19 +43,16 @@
             this.btnSair = new System.Windows.Forms.Button();
             this.btnAtualizarDataGrid = new System.Windows.Forms.Button();
             this.GradeDeDados = new System.Windows.Forms.DataGridView();
-            this.programaBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.programaBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            this.Selecionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.iDProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.caminhoIconeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewImageColumn();
             this.diretorioProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Selecionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.programaBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
             this.gpBx.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDados)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource2)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnMarcaDesmarca
@@ -181,14 +179,15 @@
             // 
             // GradeDeDados
             // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.GradeDeDados.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.GradeDeDados.AutoGenerateColumns = false;
             this.GradeDeDados.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.GradeDeDados.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedHeaders;
+            this.GradeDeDados.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.GradeDeDados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GradeDeDados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.iDProgramaDataGridViewTextBoxColumn,
             this.nomeProgramaDataGridViewTextBoxColumn,
-            this.caminhoIconeDataGridViewTextBoxColumn,
             this.diretorioProgramaDataGridViewTextBoxColumn,
             this.arquiteturaProgramaDataGridViewTextBoxColumn,
             this.Selecionar});
@@ -196,69 +195,50 @@
             this.GradeDeDados.Dock = System.Windows.Forms.DockStyle.Top;
             this.GradeDeDados.Location = new System.Drawing.Point(0, 24);
             this.GradeDeDados.Name = "GradeDeDados";
-            this.GradeDeDados.RowHeadersWidth = 62;
-            this.GradeDeDados.Size = new System.Drawing.Size(863, 221);
-            this.GradeDeDados.TabIndex = 24;
+            this.GradeDeDados.Size = new System.Drawing.Size(863, 208);
+            this.GradeDeDados.TabIndex = 26;
             // 
-            // programaBindingSource1
+            // Selecionar
             // 
-            this.programaBindingSource1.DataSource = typeof(InstaladorAutomatico.Model.Programa);
-            // 
-            // programaBindingSource2
-            // 
-            this.programaBindingSource2.DataSource = typeof(InstaladorAutomatico.Model.Programa);
+            this.Selecionar.HeaderText = "Selecionar";
+            this.Selecionar.Name = "Selecionar";
+            this.Selecionar.ToolTipText = "Seleciona o programa a ser instalado.";
             // 
             // iDProgramaDataGridViewTextBoxColumn
             // 
             this.iDProgramaDataGridViewTextBoxColumn.DataPropertyName = "IDPrograma";
             this.iDProgramaDataGridViewTextBoxColumn.HeaderText = "ID";
-            this.iDProgramaDataGridViewTextBoxColumn.MinimumWidth = 8;
             this.iDProgramaDataGridViewTextBoxColumn.Name = "iDProgramaDataGridViewTextBoxColumn";
             // 
             // nomeProgramaDataGridViewTextBoxColumn
             // 
             this.nomeProgramaDataGridViewTextBoxColumn.DataPropertyName = "nomePrograma";
             this.nomeProgramaDataGridViewTextBoxColumn.HeaderText = "Nome";
-            this.nomeProgramaDataGridViewTextBoxColumn.MinimumWidth = 8;
             this.nomeProgramaDataGridViewTextBoxColumn.Name = "nomeProgramaDataGridViewTextBoxColumn";
-            // 
-            // caminhoIconeDataGridViewTextBoxColumn
-            // 
-            this.caminhoIconeDataGridViewTextBoxColumn.DataPropertyName = "caminhoIcone";
-            this.caminhoIconeDataGridViewTextBoxColumn.HeaderText = "Ícone";
-            this.caminhoIconeDataGridViewTextBoxColumn.MinimumWidth = 8;
-            this.caminhoIconeDataGridViewTextBoxColumn.Name = "caminhoIconeDataGridViewTextBoxColumn";
-            this.caminhoIconeDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.caminhoIconeDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // diretorioProgramaDataGridViewTextBoxColumn
             // 
             this.diretorioProgramaDataGridViewTextBoxColumn.DataPropertyName = "diretorioPrograma";
             this.diretorioProgramaDataGridViewTextBoxColumn.HeaderText = "Diretório";
-            this.diretorioProgramaDataGridViewTextBoxColumn.MinimumWidth = 8;
             this.diretorioProgramaDataGridViewTextBoxColumn.Name = "diretorioProgramaDataGridViewTextBoxColumn";
             // 
             // arquiteturaProgramaDataGridViewTextBoxColumn
             // 
             this.arquiteturaProgramaDataGridViewTextBoxColumn.DataPropertyName = "arquiteturaPrograma";
             this.arquiteturaProgramaDataGridViewTextBoxColumn.HeaderText = "Arquitetura";
-            this.arquiteturaProgramaDataGridViewTextBoxColumn.MinimumWidth = 8;
             this.arquiteturaProgramaDataGridViewTextBoxColumn.Name = "arquiteturaProgramaDataGridViewTextBoxColumn";
             // 
-            // Selecionar
+            // programaBindingSource1
             // 
-            this.Selecionar.HeaderText = "Selecionar";
-            this.Selecionar.MinimumWidth = 8;
-            this.Selecionar.Name = "Selecionar";
-            this.Selecionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.programaBindingSource1.DataSource = typeof(InstaladorAutomatico.Model.Programa);
             // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(863, 366);
-            this.Controls.Add(this.gpBx);
             this.Controls.Add(this.GradeDeDados);
+            this.Controls.Add(this.gpBx);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Principal";
@@ -271,7 +251,6 @@
             this.gpBx.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDados)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -287,15 +266,13 @@
         private System.Windows.Forms.Button btnCopiarArquivos;
         private System.Windows.Forms.ToolStripMenuItem verificarInstalaçõesToolStripMenuItem;
         private System.Windows.Forms.BindingSource programaBindingSource1;
-        private System.Windows.Forms.BindingSource programaBindingSource2;
         private System.Windows.Forms.GroupBox gpBx;
-        private System.Windows.Forms.DataGridView GradeDeDados;
         private System.Windows.Forms.ToolStripMenuItem sairToolStripMenuItem;
         private System.Windows.Forms.Button btnAtualizarDataGrid;
         private System.Windows.Forms.Button btnSair;
+        private System.Windows.Forms.DataGridView GradeDeDados;
         private System.Windows.Forms.DataGridViewTextBoxColumn iDProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nomeProgramaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewImageColumn caminhoIconeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn diretorioProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn arquiteturaProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Selecionar;

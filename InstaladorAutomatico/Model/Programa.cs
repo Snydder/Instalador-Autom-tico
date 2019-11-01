@@ -22,7 +22,7 @@ namespace InstaladorAutomatico.Model
 
         //Indicando caminho padrão 
         static String nomeDeUsuario = Environment.UserName;
-        public String caminhoPadrao = $"C:\\Users\\{nomeDeUsuario}\\Desktop\\Lista_de_programas.xml";
+        private String caminhoPadrao = $"C:\\Users\\{nomeDeUsuario}\\Desktop\\Lista_de_programas.xml";
 
         [XmlElement(ElementName = "IDPrograma")]
         public Int32 IDPrograma { get; set; }
