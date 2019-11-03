@@ -60,9 +60,9 @@
             this.BtnMarcaDesmarca.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnMarcaDesmarca.Location = new System.Drawing.Point(434, 30);
             this.BtnMarcaDesmarca.Name = "BtnMarcaDesmarca";
-            this.BtnMarcaDesmarca.Size = new System.Drawing.Size(125, 35);
+            this.BtnMarcaDesmarca.Size = new System.Drawing.Size(144, 35);
             this.BtnMarcaDesmarca.TabIndex = 6;
-            this.BtnMarcaDesmarca.Text = "Marcar Tudo";
+            this.BtnMarcaDesmarca.Text = "Marcar / Desmarcar";
             this.BtnMarcaDesmarca.UseVisualStyleBackColor = true;
             this.BtnMarcaDesmarca.Click += new System.EventHandler(this.BtnMarcaDesmarca_Click);
             // 
@@ -72,7 +72,7 @@
             this.btnIniciar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnIniciar.Location = new System.Drawing.Point(434, 71);
             this.btnIniciar.Name = "btnIniciar";
-            this.btnIniciar.Size = new System.Drawing.Size(125, 35);
+            this.btnIniciar.Size = new System.Drawing.Size(144, 35);
             this.btnIniciar.TabIndex = 8;
             this.btnIniciar.Text = "Instalar";
             this.btnIniciar.UseVisualStyleBackColor = true;
@@ -131,9 +131,9 @@
             // 
             this.btnCopiarArquivos.AutoSize = true;
             this.btnCopiarArquivos.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCopiarArquivos.Location = new System.Drawing.Point(303, 71);
+            this.btnCopiarArquivos.Location = new System.Drawing.Point(284, 71);
             this.btnCopiarArquivos.Name = "btnCopiarArquivos";
-            this.btnCopiarArquivos.Size = new System.Drawing.Size(125, 35);
+            this.btnCopiarArquivos.Size = new System.Drawing.Size(144, 35);
             this.btnCopiarArquivos.TabIndex = 4;
             this.btnCopiarArquivos.Text = "Copiar Arquivos";
             this.btnCopiarArquivos.UseVisualStyleBackColor = true;
@@ -157,7 +157,7 @@
             // 
             this.btnSair.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnSair.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSair.Location = new System.Drawing.Point(767, 92);
+            this.btnSair.Location = new System.Drawing.Point(767, 86);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(84, 30);
             this.btnSair.TabIndex = 9;
@@ -169,9 +169,9 @@
             // 
             this.btnAtualizarDataGrid.AutoSize = true;
             this.btnAtualizarDataGrid.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAtualizarDataGrid.Location = new System.Drawing.Point(303, 30);
+            this.btnAtualizarDataGrid.Location = new System.Drawing.Point(284, 30);
             this.btnAtualizarDataGrid.Name = "btnAtualizarDataGrid";
-            this.btnAtualizarDataGrid.Size = new System.Drawing.Size(125, 35);
+            this.btnAtualizarDataGrid.Size = new System.Drawing.Size(144, 35);
             this.btnAtualizarDataGrid.TabIndex = 7;
             this.btnAtualizarDataGrid.Text = "Regarregar";
             this.btnAtualizarDataGrid.UseVisualStyleBackColor = true;
@@ -244,7 +244,6 @@
             this.Name = "Principal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Instalador";
-            this.Load += new System.EventHandler(this.Principal_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.gpBx.ResumeLayout(false);

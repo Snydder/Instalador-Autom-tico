@@ -32,7 +32,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtBxNomePrograma = new System.Windows.Forms.TextBox();
-            this.programaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.txtBxDiretorioPrograma = new System.Windows.Forms.TextBox();
             this.btnDiretorioPrograma = new System.Windows.Forms.Button();
             this.btnFechar = new System.Windows.Forms.Button();
@@ -57,21 +56,22 @@
             this.btnSubirLista = new System.Windows.Forms.Button();
             this.btnAdiciona = new System.Windows.Forms.Button();
             this.GradeDeDadosXML = new System.Windows.Forms.DataGridView();
+            this.programaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.iDProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.diretorioProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.gpBxEditar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDadosXML)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 29);
+            this.label1.Location = new System.Drawing.Point(12, 26);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(134, 17);
             this.label1.TabIndex = 0;
@@ -81,7 +81,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 107);
+            this.label2.Location = new System.Drawing.Point(12, 102);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(82, 17);
             this.label2.TabIndex = 1;
@@ -90,20 +90,16 @@
             // txtBxNomePrograma
             // 
             this.txtBxNomePrograma.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.programaBindingSource, "nomePrograma", true));
-            this.txtBxNomePrograma.Location = new System.Drawing.Point(164, 26);
+            this.txtBxNomePrograma.Location = new System.Drawing.Point(170, 25);
             this.txtBxNomePrograma.Name = "txtBxNomePrograma";
             this.txtBxNomePrograma.Size = new System.Drawing.Size(244, 20);
             this.txtBxNomePrograma.TabIndex = 2;
             this.txtBxNomePrograma.TextChanged += new System.EventHandler(this.TxtBxNomePrograma_TextChanged);
             // 
-            // programaBindingSource
-            // 
-            this.programaBindingSource.DataSource = typeof(InstaladorAutomatico.Model.Programa);
-            // 
             // txtBxDiretorioPrograma
             // 
             this.txtBxDiretorioPrograma.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.programaBindingSource, "diretorioPrograma", true));
-            this.txtBxDiretorioPrograma.Location = new System.Drawing.Point(164, 52);
+            this.txtBxDiretorioPrograma.Location = new System.Drawing.Point(170, 51);
             this.txtBxDiretorioPrograma.Name = "txtBxDiretorioPrograma";
             this.txtBxDiretorioPrograma.Size = new System.Drawing.Size(205, 20);
             this.txtBxDiretorioPrograma.TabIndex = 3;
@@ -111,7 +107,7 @@
             // 
             // btnDiretorioPrograma
             // 
-            this.btnDiretorioPrograma.Location = new System.Drawing.Point(375, 51);
+            this.btnDiretorioPrograma.Location = new System.Drawing.Point(381, 50);
             this.btnDiretorioPrograma.Name = "btnDiretorioPrograma";
             this.btnDiretorioPrograma.Size = new System.Drawing.Size(33, 21);
             this.btnDiretorioPrograma.TabIndex = 4;
@@ -125,7 +121,7 @@
             this.btnFechar.AutoSize = true;
             this.btnFechar.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnFechar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFechar.Location = new System.Drawing.Point(73, 136);
+            this.btnFechar.Location = new System.Drawing.Point(711, 136);
             this.btnFechar.Name = "btnFechar";
             this.btnFechar.Size = new System.Drawing.Size(62, 27);
             this.btnFechar.TabIndex = 6;
@@ -139,7 +135,7 @@
             this.btnLimpar.AutoSize = true;
             this.btnLimpar.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnLimpar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpar.Location = new System.Drawing.Point(6, 136);
+            this.btnLimpar.Location = new System.Drawing.Point(12, 136);
             this.btnLimpar.Name = "btnLimpar";
             this.btnLimpar.Size = new System.Drawing.Size(61, 27);
             this.btnLimpar.TabIndex = 7;
@@ -151,7 +147,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(6, 55);
+            this.label3.Location = new System.Drawing.Point(12, 52);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(66, 17);
             this.label3.TabIndex = 1;
@@ -162,7 +158,7 @@
             this.rdoBtn32bits.AutoSize = true;
             this.rdoBtn32bits.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.programaBindingSource, "arquiteturaPrograma", true));
             this.rdoBtn32bits.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdoBtn32bits.Location = new System.Drawing.Point(94, 105);
+            this.rdoBtn32bits.Location = new System.Drawing.Point(100, 102);
             this.rdoBtn32bits.Name = "rdoBtn32bits";
             this.rdoBtn32bits.Size = new System.Drawing.Size(69, 21);
             this.rdoBtn32bits.TabIndex = 8;
@@ -176,7 +172,7 @@
             this.rdoBtn64bits.AutoSize = true;
             this.rdoBtn64bits.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.programaBindingSource, "arquiteturaPrograma", true));
             this.rdoBtn64bits.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdoBtn64bits.Location = new System.Drawing.Point(170, 105);
+            this.rdoBtn64bits.Location = new System.Drawing.Point(175, 102);
             this.rdoBtn64bits.Name = "rdoBtn64bits";
             this.rdoBtn64bits.Size = new System.Drawing.Size(69, 21);
             this.rdoBtn64bits.TabIndex = 9;
@@ -187,7 +183,7 @@
             // 
             // txtBxArg
             // 
-            this.txtBxArg.Location = new System.Drawing.Point(164, 78);
+            this.txtBxArg.Location = new System.Drawing.Point(170, 77);
             this.txtBxArg.Name = "txtBxArg";
             this.txtBxArg.Size = new System.Drawing.Size(244, 20);
             this.txtBxArg.TabIndex = 13;
@@ -196,7 +192,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(6, 81);
+            this.label6.Location = new System.Drawing.Point(12, 76);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(88, 17);
             this.label6.TabIndex = 12;
@@ -323,7 +319,7 @@
             this.btnRemover.AutoSize = true;
             this.btnRemover.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnRemover.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemover.Location = new System.Drawing.Point(224, 136);
+            this.btnRemover.Location = new System.Drawing.Point(162, 136);
             this.btnRemover.Name = "btnRemover";
             this.btnRemover.Size = new System.Drawing.Size(75, 27);
             this.btnRemover.TabIndex = 24;
@@ -337,7 +333,7 @@
             this.btnDescerLista.AutoSize = true;
             this.btnDescerLista.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnDescerLista.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDescerLista.Location = new System.Drawing.Point(305, 136);
+            this.btnDescerLista.Location = new System.Drawing.Point(243, 136);
             this.btnDescerLista.Name = "btnDescerLista";
             this.btnDescerLista.Size = new System.Drawing.Size(25, 27);
             this.btnDescerLista.TabIndex = 23;
@@ -351,7 +347,7 @@
             this.btnSubirLista.AutoSize = true;
             this.btnSubirLista.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnSubirLista.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSubirLista.Location = new System.Drawing.Point(336, 136);
+            this.btnSubirLista.Location = new System.Drawing.Point(274, 136);
             this.btnSubirLista.Name = "btnSubirLista";
             this.btnSubirLista.Size = new System.Drawing.Size(25, 27);
             this.btnSubirLista.TabIndex = 22;
@@ -365,7 +361,7 @@
             this.btnAdiciona.AutoSize = true;
             this.btnAdiciona.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnAdiciona.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAdiciona.Location = new System.Drawing.Point(141, 136);
+            this.btnAdiciona.Location = new System.Drawing.Point(79, 136);
             this.btnAdiciona.Name = "btnAdiciona";
             this.btnAdiciona.Size = new System.Drawing.Size(77, 27);
             this.btnAdiciona.TabIndex = 21;
@@ -390,6 +386,10 @@
             this.GradeDeDadosXML.RowHeadersWidth = 62;
             this.GradeDeDadosXML.Size = new System.Drawing.Size(785, 248);
             this.GradeDeDadosXML.TabIndex = 15;
+            // 
+            // programaBindingSource
+            // 
+            this.programaBindingSource.DataSource = typeof(InstaladorAutomatico.Model.Programa);
             // 
             // iDProgramaDataGridViewTextBoxColumn
             // 
@@ -431,12 +431,12 @@
             this.Name = "Gerenciar_Programas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Gerenciar Programa";
-            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.gpBxEditar.ResumeLayout(false);
             this.gpBxEditar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDadosXML)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.programaBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -28,29 +28,53 @@ namespace InstaladorAutomatico
         {
             //inicializando componente e Lista
             InitializeComponent();
-            MessageBox.Show(Properties.Settings.Default.CaminhoXML);
             GradeDeDados.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            ProgramaFuncoes.VerificaPorXMLInicializacao();
+            ObterLista();
             //Image image = Image.FromFile(@"C:\TI\Ammyy\Ammyy_v3.5.exe");
             //caminhoIconeDataGridViewTextBoxColumn.Image = image;
             //caminhoIconeDataGridViewTextBoxColumn.HeaderText = "Image";
             //caminhoIconeDataGridViewTextBoxColumn.Name = "img";
         }
 
-        private void Principal_Load(object sender, EventArgs e)
+        private int PercorreCheckBoxes()
         {
-            ProgramaFuncoes.VerificaPorXMLInicializacao();
-            ObterLista();
-            MessageBox.Show(ListaLocal[0].diretorioPrograma);
+            Boolean valorCheckBox = false;
+            int contaMarcacoes = 0;
+
+            for (int i = 0; i <= GradeDeDados.RowCount - 1; i++)
+            {
+                valorCheckBox = Convert.ToBoolean(GradeDeDados[4, i].Value);
+                if (valorCheckBox == true)
+                {
+                    contaMarcacoes++;
+                }
+            }
+
+            return contaMarcacoes;
+        }
+
+        private void DefineValorCheckBox(Boolean valorBooleano)
+        {
+            for (int i = 0; i <= GradeDeDados.RowCount - 1; i++)
+            {
+                GradeDeDados[4, i].Value = valorBooleano;
+            }
         }
         private void BtnMarcaDesmarca_Click(object sender, EventArgs e)
         {
-            bool executouPrimeiroIf = false, executouSegundoIf = false;
-            for (int i = 0; i <= GradeDeDados.RowCount - 1; i++)
+            if (PercorreCheckBoxes() == 0)
             {
-                GradeDeDados[4, i].Value = 1;
+                DefineValorCheckBox(true);
             }
-
-
+            else if (PercorreCheckBoxes() == GradeDeDados.RowCount)
+            {
+                DefineValorCheckBox(false);
+            }
+            else if (PercorreCheckBoxes() < GradeDeDados.RowCount)
+            {
+                DefineValorCheckBox(true);
+            }
             /*
              * depreciado
              * foreach (Control c in tblPnlOrganiza.Controls)
@@ -85,10 +109,52 @@ namespace InstaladorAutomatico
 
         private void btnInstlr_Click(object sender, EventArgs e)
         {
-            //Process.Start("C:\\"); <- iniciar um programa
+
+
+            if (PercorreCheckBoxes() == 0)
+            {
+                MessageBox.Show("Nenhum programa está selecionado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            String ProgramaSendoInstalado;
+            Queue<String> filaDeInstalacao = new Queue<String>();
+            List<int> posicaoSelecionados = new List<int>();
+            Boolean valorCheckBox;
+            for (int i = 0; i <= GradeDeDados.RowCount - 1; i++)
+            {
+                valorCheckBox = Convert.ToBoolean(GradeDeDados[4, i].Value);
+                if (valorCheckBox == true)
+                {
+                    filaDeInstalacao.Enqueue(ListaLocal[i].diretorioPrograma);
+                    posicaoSelecionados.Add(i);
+                    GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
+
+            GradeDeDados.ClearSelection();
+
+            for (int i = 0; i <= GradeDeDados.RowCount - 1; i++)
+            {
+
+                if (filaDeInstalacao.Count == 0)
+                {
+                    MessageBox.Show("Instalação concluída!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                ProgramaSendoInstalado = filaDeInstalacao.Peek();
+                System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(ProgramaSendoInstalado);
+
+                System.Diagnostics.Process rfp = new System.Diagnostics.Process();
+                rfp = System.Diagnostics.Process.Start(psi);
+
+                rfp.WaitForExit(300000);
+                GradeDeDados.Rows[posicaoSelecionados[i]].DefaultCellStyle.BackColor = Color.LightGreen;
+                filaDeInstalacao.Dequeue();
+            }
+            posicaoSelecionados.Clear();
 
             //chechando arquitetura do sistema
-            bool ArchSys = System.Environment.Is64BitOperatingSystem; 
+            bool ArchSys = System.Environment.Is64BitOperatingSystem;
             if (ArchSys == true)
             {
                 //fazer uma filtragem de programas.
@@ -110,7 +176,7 @@ namespace InstaladorAutomatico
                 }
             }*/
         }
-            private void CopiarArquivos (String fonteArquivo, String destinoArquivo)
+        private void CopiarArquivos(String fonteArquivo, String destinoArquivo)
         {
             try
             {
