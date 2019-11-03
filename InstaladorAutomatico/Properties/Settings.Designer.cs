@@ -34,5 +34,17 @@ namespace InstaladorAutomatico.Properties {
                 this["CaminhoXML"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\\\TI")]
+        public string DestinoCopia {
+            get {
+                return ((string)(this["DestinoCopia"]));
+            }
+            set {
+                this["DestinoCopia"] = value;
+            }
+        }
     }
 }

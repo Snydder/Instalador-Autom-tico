@@ -55,11 +55,14 @@ namespace InstaladorAutomatico.View
 
         private void BtnCaminhoIcone_Click(object sender, EventArgs e)
         {
-            OpenFileDialog selecionarIcone = new OpenFileDialog();
-            selecionarIcone.Filter = "Icones | * .ico";
+            OpenFileDialog selecionarIcone = new OpenFileDialog
+            {
+                Filter = "Icones | * .ico"
+            };
             selecionarIcone.ShowDialog();
             String caminhoIconeStr = selecionarIcone.FileName;
             txtBxCaminhoIcone.Text = caminhoIconeStr;
+            selecionarIcone.Dispose();
         }
 
         private void BtnDiretorioPrograma_Click(object sender, EventArgs e)
@@ -68,6 +71,7 @@ namespace InstaladorAutomatico.View
             selecionarPrograma.ShowDialog();
             String caminhoProgramaStr = selecionarPrograma.FileName;
             txtBxDiretorioPrograma.Text = caminhoProgramaStr;
+            selecionarPrograma.Dispose();
         }
 
         private void SalvarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -135,15 +139,6 @@ namespace InstaladorAutomatico.View
         private void BtnFechar_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void SalvaNaLista()
-        {
-            p.IDPrograma = ListaLocal.Count;
-            p.nomePrograma = txtBxNomePrograma.Text;
-            p.caminhoIcone = txtBxCaminhoIcone.Text;
-            p.diretorioPrograma = txtBxDiretorioPrograma.Text;
-            p.arquiteturaPrograma = valorArquitetura;
         }
 
         private void ImportarXML()
@@ -290,16 +285,19 @@ namespace InstaladorAutomatico.View
 
         private void localizarXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog LocalizarXML = new OpenFileDialog();
-            LocalizarXML.Filter = "Arquivo XML | * .xml";
-            LocalizarXML.InitialDirectory = Properties.Settings.Default.CaminhoXML;
+            OpenFileDialog LocalizarXML = new OpenFileDialog
+            {
+                Filter = "Arquivo XML | * .xml",
+                InitialDirectory = Properties.Settings.Default.CaminhoXML
+            };
             LocalizarXML.ShowDialog();
+            LocalizarXML.Dispose();
         }
 
         private void BtnSubirLista_Click(object sender, EventArgs e)
         {
 
-            int indexFonte = 0, indexAlvo = 0;
+            int indexFonte, indexAlvo;
 
             indexFonte = Int32.Parse(GradeDeDadosXML.CurrentCell.Value.ToString());
             indexAlvo = indexFonte - 1;
@@ -341,7 +339,7 @@ namespace InstaladorAutomatico.View
 
         private void BtnDescerLista_Click(object sender, EventArgs e)
         {
-            int indexFonte = 0, indexAlvo = 0;
+            int indexFonte, indexAlvo;
 
             indexFonte = Int32.Parse(GradeDeDadosXML.CurrentCell.Value.ToString());
             indexAlvo = indexFonte + 1;

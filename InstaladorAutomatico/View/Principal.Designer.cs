@@ -40,14 +40,11 @@
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCopiarArquivos = new System.Windows.Forms.Button();
             this.gpBx = new System.Windows.Forms.GroupBox();
-            this.btnSair = new System.Windows.Forms.Button();
             this.btnAtualizarDataGrid = new System.Windows.Forms.Button();
             this.GradeDeDados = new System.Windows.Forms.DataGridView();
-            this.Selecionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.iDProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.diretorioProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Selecionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.programaBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
             this.gpBx.SuspendLayout();
@@ -58,7 +55,7 @@
             // BtnMarcaDesmarca
             // 
             this.BtnMarcaDesmarca.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnMarcaDesmarca.Location = new System.Drawing.Point(434, 30);
+            this.BtnMarcaDesmarca.Location = new System.Drawing.Point(276, 26);
             this.BtnMarcaDesmarca.Name = "BtnMarcaDesmarca";
             this.BtnMarcaDesmarca.Size = new System.Drawing.Size(144, 35);
             this.BtnMarcaDesmarca.TabIndex = 6;
@@ -70,7 +67,7 @@
             // 
             this.btnIniciar.AutoSize = true;
             this.btnIniciar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnIniciar.Location = new System.Drawing.Point(434, 71);
+            this.btnIniciar.Location = new System.Drawing.Point(276, 67);
             this.btnIniciar.Name = "btnIniciar";
             this.btnIniciar.Size = new System.Drawing.Size(144, 35);
             this.btnIniciar.TabIndex = 8;
@@ -85,7 +82,7 @@
             this.arquivoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(863, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(547, 24);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -131,16 +128,16 @@
             // 
             this.btnCopiarArquivos.AutoSize = true;
             this.btnCopiarArquivos.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCopiarArquivos.Location = new System.Drawing.Point(284, 71);
+            this.btnCopiarArquivos.Location = new System.Drawing.Point(126, 67);
             this.btnCopiarArquivos.Name = "btnCopiarArquivos";
             this.btnCopiarArquivos.Size = new System.Drawing.Size(144, 35);
             this.btnCopiarArquivos.TabIndex = 4;
             this.btnCopiarArquivos.Text = "Copiar Arquivos";
             this.btnCopiarArquivos.UseVisualStyleBackColor = true;
+            this.btnCopiarArquivos.Click += new System.EventHandler(this.BtnCopiarArquivos_Click);
             // 
             // gpBx
             // 
-            this.gpBx.Controls.Add(this.btnSair);
             this.gpBx.Controls.Add(this.btnIniciar);
             this.gpBx.Controls.Add(this.BtnMarcaDesmarca);
             this.gpBx.Controls.Add(this.btnCopiarArquivos);
@@ -148,28 +145,16 @@
             this.gpBx.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.gpBx.Location = new System.Drawing.Point(0, 238);
             this.gpBx.Name = "gpBx";
-            this.gpBx.Size = new System.Drawing.Size(863, 128);
+            this.gpBx.Size = new System.Drawing.Size(547, 128);
             this.gpBx.TabIndex = 25;
             this.gpBx.TabStop = false;
             this.gpBx.Text = "Ações";
-            // 
-            // btnSair
-            // 
-            this.btnSair.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSair.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSair.Location = new System.Drawing.Point(767, 86);
-            this.btnSair.Name = "btnSair";
-            this.btnSair.Size = new System.Drawing.Size(84, 30);
-            this.btnSair.TabIndex = 9;
-            this.btnSair.Text = "Sair";
-            this.btnSair.UseVisualStyleBackColor = true;
-            this.btnSair.Click += new System.EventHandler(this.BtnSair_Click_1);
             // 
             // btnAtualizarDataGrid
             // 
             this.btnAtualizarDataGrid.AutoSize = true;
             this.btnAtualizarDataGrid.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAtualizarDataGrid.Location = new System.Drawing.Point(284, 30);
+            this.btnAtualizarDataGrid.Location = new System.Drawing.Point(126, 26);
             this.btnAtualizarDataGrid.Name = "btnAtualizarDataGrid";
             this.btnAtualizarDataGrid.Size = new System.Drawing.Size(144, 35);
             this.btnAtualizarDataGrid.TabIndex = 7;
@@ -186,47 +171,38 @@
             this.GradeDeDados.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.GradeDeDados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GradeDeDados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.iDProgramaDataGridViewTextBoxColumn,
             this.nomeProgramaDataGridViewTextBoxColumn,
-            this.diretorioProgramaDataGridViewTextBoxColumn,
             this.arquiteturaProgramaDataGridViewTextBoxColumn,
             this.Selecionar});
             this.GradeDeDados.DataSource = this.programaBindingSource1;
             this.GradeDeDados.Dock = System.Windows.Forms.DockStyle.Top;
             this.GradeDeDados.Location = new System.Drawing.Point(0, 24);
             this.GradeDeDados.Name = "GradeDeDados";
-            this.GradeDeDados.Size = new System.Drawing.Size(863, 208);
+            this.GradeDeDados.Size = new System.Drawing.Size(547, 208);
             this.GradeDeDados.TabIndex = 26;
-            // 
-            // Selecionar
-            // 
-            this.Selecionar.HeaderText = "Selecionar";
-            this.Selecionar.Name = "Selecionar";
-            this.Selecionar.ToolTipText = "Seleciona o programa a ser instalado.";
-            // 
-            // iDProgramaDataGridViewTextBoxColumn
-            // 
-            this.iDProgramaDataGridViewTextBoxColumn.DataPropertyName = "IDPrograma";
-            this.iDProgramaDataGridViewTextBoxColumn.HeaderText = "ID";
-            this.iDProgramaDataGridViewTextBoxColumn.Name = "iDProgramaDataGridViewTextBoxColumn";
             // 
             // nomeProgramaDataGridViewTextBoxColumn
             // 
             this.nomeProgramaDataGridViewTextBoxColumn.DataPropertyName = "nomePrograma";
             this.nomeProgramaDataGridViewTextBoxColumn.HeaderText = "Nome";
             this.nomeProgramaDataGridViewTextBoxColumn.Name = "nomeProgramaDataGridViewTextBoxColumn";
-            // 
-            // diretorioProgramaDataGridViewTextBoxColumn
-            // 
-            this.diretorioProgramaDataGridViewTextBoxColumn.DataPropertyName = "diretorioPrograma";
-            this.diretorioProgramaDataGridViewTextBoxColumn.HeaderText = "Diretório";
-            this.diretorioProgramaDataGridViewTextBoxColumn.Name = "diretorioProgramaDataGridViewTextBoxColumn";
+            this.nomeProgramaDataGridViewTextBoxColumn.ReadOnly = true;
+            this.nomeProgramaDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // arquiteturaProgramaDataGridViewTextBoxColumn
             // 
             this.arquiteturaProgramaDataGridViewTextBoxColumn.DataPropertyName = "arquiteturaPrograma";
             this.arquiteturaProgramaDataGridViewTextBoxColumn.HeaderText = "Arquitetura";
             this.arquiteturaProgramaDataGridViewTextBoxColumn.Name = "arquiteturaProgramaDataGridViewTextBoxColumn";
+            this.arquiteturaProgramaDataGridViewTextBoxColumn.ReadOnly = true;
+            this.arquiteturaProgramaDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Selecionar
+            // 
+            this.Selecionar.HeaderText = "Selecionar";
+            this.Selecionar.Name = "Selecionar";
+            this.Selecionar.ReadOnly = true;
+            this.Selecionar.ToolTipText = "Seleciona o programa a ser instalado.";
             // 
             // programaBindingSource1
             // 
@@ -236,7 +212,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(863, 366);
+            this.ClientSize = new System.Drawing.Size(547, 366);
             this.Controls.Add(this.GradeDeDados);
             this.Controls.Add(this.gpBx);
             this.Controls.Add(this.menuStrip1);
@@ -268,11 +244,8 @@
         private System.Windows.Forms.GroupBox gpBx;
         private System.Windows.Forms.ToolStripMenuItem sairToolStripMenuItem;
         private System.Windows.Forms.Button btnAtualizarDataGrid;
-        private System.Windows.Forms.Button btnSair;
         private System.Windows.Forms.DataGridView GradeDeDados;
-        private System.Windows.Forms.DataGridViewTextBoxColumn iDProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nomeProgramaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn diretorioProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn arquiteturaProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Selecionar;
     }
