@@ -71,6 +71,10 @@ namespace InstaladorAutomatico.View
             selecionarPrograma.ShowDialog();
             String caminhoProgramaStr = selecionarPrograma.FileName;
             txtBxDiretorioPrograma.Text = caminhoProgramaStr;
+            if (txtBxNomePrograma.Text == "")
+            {
+                txtBxNomePrograma.Text = Path.GetFileNameWithoutExtension(selecionarPrograma.SafeFileName);
+            }
             selecionarPrograma.Dispose();
         }
 

@@ -30,6 +30,14 @@ namespace InstaladorAutomatico
         {
             //inicializando componente e Lista
             InitializeComponent();
+            //Image image = Image.FromFile(@"C:\TI\Ammyy\Ammyy_v3.5.exe");
+            //caminhoIconeDataGridViewTextBoxColumn.Image = image;
+            //caminhoIconeDataGridViewTextBoxColumn.HeaderText = "Image";
+            //caminhoIconeDataGridViewTextBoxColumn.Name = "img";
+        }
+
+        private void Principal_Load(object sender, EventArgs e)
+        {
             GradeDeDados.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             GradeDeDados.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             nomeProgramaDataGridViewTextBoxColumn.ReadOnly = true;
@@ -37,15 +45,7 @@ namespace InstaladorAutomatico
             Selecionar.ReadOnly = false;
             ProgramaFuncoes.VerificaPorXMLInicializacao();
             ObterLista();
-
-            for (int i = 0; i <= GradeDeDados.RowCount - 1; i++)
-            {
-                GradeDeDados[2, i].Value = true;
-            }
-            //Image image = Image.FromFile(@"C:\TI\Ammyy\Ammyy_v3.5.exe");
-            //caminhoIconeDataGridViewTextBoxColumn.Image = image;
-            //caminhoIconeDataGridViewTextBoxColumn.HeaderText = "Image";
-            //caminhoIconeDataGridViewTextBoxColumn.Name = "img";
+            DefineValorCheckBox(true);
         }
 
         private int PercorreCheckBoxes()
@@ -289,6 +289,12 @@ namespace InstaladorAutomatico
         private void BtnSair_Click_1(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void VerificarWindowsUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var cplPath = System.IO.Path.Combine(Environment.SystemDirectory, "control.exe");
+            System.Diagnostics.Process.Start(cplPath, "/name Microsoft.WindowsUpdate");
         }
     }
 }
