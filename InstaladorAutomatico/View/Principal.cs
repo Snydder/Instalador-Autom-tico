@@ -153,7 +153,7 @@ namespace InstaladorAutomatico
 
         private void GeraFilaInstalacao()
         {
-            for (int i = 0; i <= linhasSelecionadas.Count- 1; i++)
+            for (int i = 0; i <= linhasSelecionadas.Count - 1; i++)
             {
                 filaDeInstalacao.Enqueue(ListaLocal[linhasSelecionadas[i]].diretorioPrograma);
             }
@@ -177,14 +177,12 @@ namespace InstaladorAutomatico
                 rfp = System.Diagnostics.Process.Start(psi);
                 rfp.WaitForExit(300000);
                 GradeDeDados.FirstDisplayedScrollingRowIndex = linhasSelecionadas[i];
-                GradeDeDados.Rows[linhasSelecionadas[i]].Selected = true;
-                //GradeDeDados.Rows[linhasSelecionadas[i] - 1].Selected = false;
                 GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.LightGreen;
             }
             linhasSelecionadas.Clear();
-            
+
         }
-         
+
         private void btnInstlr_Click(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.LocalUAC != "")
@@ -199,11 +197,8 @@ namespace InstaladorAutomatico
                     return;
                 }
             }
-            else
-            {
-                MessageBox.Show("O script do UAC não está sendo executado nessa instalação.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
 
+            CopiarArquivos();
 
             if (PercorreCheckBoxes() == 0)
             {
