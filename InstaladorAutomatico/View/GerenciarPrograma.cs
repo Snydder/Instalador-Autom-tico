@@ -31,7 +31,6 @@ namespace InstaladorAutomatico.View
         public Gerenciar_Programas()
         {
             InitializeComponent();
-            ObterLista();
         }
 
         private void LimpaCampos()
@@ -378,6 +377,20 @@ namespace InstaladorAutomatico.View
                 l = 0;
                 GradeDeDadosXML.CurrentCell = GradeDeDadosXML["iDProgramaDataGridViewTextBoxColumn", l];
             }
+        }
+
+        private void Gerenciar_Programas_Load(object sender, EventArgs e)
+        {
+            ObterLista();
+            iDProgramaDataGridViewTextBoxColumn.ReadOnly = true;
+            nomeProgramaDataGridViewTextBoxColumn.ReadOnly = true;
+            diretorioProgramaDataGridViewTextBoxColumn.ReadOnly = true;
+            arquiteturaProgramaDataGridViewTextBoxColumn.ReadOnly = true;
+        }
+
+        private void alterarLocalUACToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            p.SelecionarLocalUAC();
         }
 
         private void ReorganizaID ()

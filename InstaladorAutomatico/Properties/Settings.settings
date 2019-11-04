@@ -2,11 +2,14 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="InstaladorAutomatico.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="CaminhoXML" Type="System.String" Scope="User">
+    <Setting Name="CaminhoXML" Provider="InstaladorAutomatico.Model.PortableSettingsProvider" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="DestinoCopia" Type="System.String" Scope="User">
+    <Setting Name="DestinoCopia" Provider="InstaladorAutomatico.Model.PortableSettingsProvider" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\\TI</Value>
+    </Setting>
+    <Setting Name="LocalUAC" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

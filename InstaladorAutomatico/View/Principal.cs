@@ -25,10 +25,9 @@ namespace InstaladorAutomatico
         List<int> linhasSelecionadas = new List<int>();
         Queue<String> filaDeInstalacao = new Queue<String>();
         Model.Programa ProgramaFuncoes = new Model.Programa();
-
         public Principal()
         {
-            //inicializando componente e Lista
+            //inicializando componente
             InitializeComponent();
             //Image image = Image.FromFile(@"C:\TI\Ammyy\Ammyy_v3.5.exe");
             //caminhoIconeDataGridViewTextBoxColumn.Image = image;
@@ -38,12 +37,19 @@ namespace InstaladorAutomatico
 
         private void Principal_Load(object sender, EventArgs e)
         {
+
+            //declarando lista local
+            List<Model.Programa> ListaLocal = new List<Model.Programa>();
+            List<int> linhasSelecionadas = new List<int>();
+            Queue<String> filaDeInstalacao = new Queue<String>();
+            Model.Programa ProgramaFuncoes = new Model.Programa();
             GradeDeDados.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             GradeDeDados.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             nomeProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             arquiteturaProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             Selecionar.ReadOnly = false;
             ProgramaFuncoes.VerificaPorXMLInicializacao();
+            ProgramaFuncoes.VerificaLocalUAC();
             ObterLista();
             DefineValorCheckBox(true);
         }
@@ -170,6 +176,9 @@ namespace InstaladorAutomatico
                 System.Diagnostics.Process rfp = new System.Diagnostics.Process();
                 rfp = System.Diagnostics.Process.Start(psi);
                 rfp.WaitForExit(300000);
+                GradeDeDados.FirstDisplayedScrollingRowIndex = linhasSelecionadas[i];
+                GradeDeDados.Rows[linhasSelecionadas[i]].Selected = true;
+                //GradeDeDados.Rows[linhasSelecionadas[i] - 1].Selected = false;
                 GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.LightGreen;
             }
             linhasSelecionadas.Clear();
@@ -178,7 +187,23 @@ namespace InstaladorAutomatico
          
         private void btnInstlr_Click(object sender, EventArgs e)
         {
-            GradeDeDados.Enabled = false;
+            if (Properties.Settings.Default.LocalUAC != "")
+            {
+                System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(Properties.Settings.Default.LocalUAC);
+                System.Diagnostics.Process rfp = new System.Diagnostics.Process();
+                rfp = System.Diagnostics.Process.Start(psi);
+                rfp.WaitForExit(300000);
+                if (rfp.ExitCode == 1)
+                {
+                    MessageBox.Show("O UAC foi desativado. Reiniciando em breve.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("O script do UAC não está sendo executado nessa instalação.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
 
             if (PercorreCheckBoxes() == 0)
             {
@@ -199,7 +224,6 @@ namespace InstaladorAutomatico
             {
                 //fazer outra filtragem de programas.
             }
-            GradeDeDados.Enabled = true;
         }
         private void CopiarArquivos()
         {

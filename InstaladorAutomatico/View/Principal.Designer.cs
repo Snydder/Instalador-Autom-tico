@@ -36,15 +36,15 @@
             this.arquivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listaDeProgramasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verificarWindowsUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.verificarInstalaçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCopiarArquivos = new System.Windows.Forms.Button();
             this.gpBx = new System.Windows.Forms.GroupBox();
             this.btnAtualizarDataGrid = new System.Windows.Forms.Button();
             this.GradeDeDados = new System.Windows.Forms.DataGridView();
-            this.Selecionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.verificarInstalaçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Selecionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.programaBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
             this.gpBx.SuspendLayout();
@@ -102,7 +102,7 @@
             this.listaDeProgramasToolStripMenuItem.Name = "listaDeProgramasToolStripMenuItem";
             this.listaDeProgramasToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
             this.listaDeProgramasToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
-            this.listaDeProgramasToolStripMenuItem.Text = "Gerenciar Programas";
+            this.listaDeProgramasToolStripMenuItem.Text = "Configurações";
             this.listaDeProgramasToolStripMenuItem.Click += new System.EventHandler(this.ListaDeProgramasToolStripMenuItem_Click);
             // 
             // verificarWindowsUpdateToolStripMenuItem
@@ -112,6 +112,13 @@
             this.verificarWindowsUpdateToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
             this.verificarWindowsUpdateToolStripMenuItem.Text = "Abrir Windows Update";
             this.verificarWindowsUpdateToolStripMenuItem.Click += new System.EventHandler(this.VerificarWindowsUpdateToolStripMenuItem_Click);
+            // 
+            // verificarInstalaçõesToolStripMenuItem
+            // 
+            this.verificarInstalaçõesToolStripMenuItem.Enabled = false;
+            this.verificarInstalaçõesToolStripMenuItem.Name = "verificarInstalaçõesToolStripMenuItem";
+            this.verificarInstalaçõesToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.verificarInstalaçõesToolStripMenuItem.Text = "Verificar Instalações";
             // 
             // sairToolStripMenuItem
             // 
@@ -178,20 +185,6 @@
             this.GradeDeDados.Size = new System.Drawing.Size(547, 208);
             this.GradeDeDados.TabIndex = 26;
             // 
-            // Selecionar
-            // 
-            this.Selecionar.HeaderText = "Selecionar";
-            this.Selecionar.Name = "Selecionar";
-            this.Selecionar.ReadOnly = true;
-            this.Selecionar.ToolTipText = "Seleciona o programa a ser instalado.";
-            // 
-            // verificarInstalaçõesToolStripMenuItem
-            // 
-            this.verificarInstalaçõesToolStripMenuItem.Enabled = false;
-            this.verificarInstalaçõesToolStripMenuItem.Name = "verificarInstalaçõesToolStripMenuItem";
-            this.verificarInstalaçõesToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
-            this.verificarInstalaçõesToolStripMenuItem.Text = "Verificar Instalações";
-            // 
             // nomeProgramaDataGridViewTextBoxColumn
             // 
             this.nomeProgramaDataGridViewTextBoxColumn.DataPropertyName = "nomePrograma";
@@ -207,6 +200,13 @@
             this.arquiteturaProgramaDataGridViewTextBoxColumn.Name = "arquiteturaProgramaDataGridViewTextBoxColumn";
             this.arquiteturaProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             this.arquiteturaProgramaDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Selecionar
+            // 
+            this.Selecionar.HeaderText = "Selecionar";
+            this.Selecionar.Name = "Selecionar";
+            this.Selecionar.ReadOnly = true;
+            this.Selecionar.ToolTipText = "Seleciona o programa a ser instalado.";
             // 
             // programaBindingSource1
             // 

@@ -44,7 +44,7 @@ namespace InstaladorAutomatico.Model
             OpenFileDialog mudarDiretorioXML = new OpenFileDialog();
             DialogResult resultado = new DialogResult();
             mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
-            mudarDiretorioXML.ShowDialog();
+            resultado = mudarDiretorioXML.ShowDialog();
             if (resultado == DialogResult.OK)
             {
                 Properties.Settings.Default.CaminhoXML = mudarDiretorioXML.FileName;
@@ -59,7 +59,7 @@ namespace InstaladorAutomatico.Model
         public void SelecionarLocalSalvamentoXML()
         {
             DialogResult resultado = new DialogResult();
-            SaveFileDialog mudarDiretorioXML = new SaveFileDialog();
+            OpenFileDialog mudarDiretorioXML = new OpenFileDialog();
             resultado = mudarDiretorioXML.ShowDialog();
             mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
             if (resultado == DialogResult.OK)
@@ -70,6 +70,24 @@ namespace InstaladorAutomatico.Model
             else
             {
                 Properties.Settings.Default.CaminhoXML = caminhoPadrao;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public void SelecionarLocalUAC()
+        {
+            DialogResult resultado = new DialogResult();
+            OpenFileDialog mudarDiretorioUAC = new OpenFileDialog();
+            resultado = mudarDiretorioUAC.ShowDialog();
+            mudarDiretorioUAC.Filter = "Arquivo XML | * .xml";
+            if (resultado == DialogResult.OK)
+            {
+                Properties.Settings.Default.LocalUAC = mudarDiretorioUAC.FileName;
+                Properties.Settings.Default.Save();
+            }
+            else
+            {
+                Properties.Settings.Default.LocalUAC = "";
                 Properties.Settings.Default.Save();
             }
         }
@@ -139,7 +157,7 @@ namespace InstaladorAutomatico.Model
             if (Properties.Settings.Default.CaminhoXML == "")
             {
                 DialogResult resultado = new DialogResult();
-                MessageBox.Show("Nenhum caminho para o arquivo XML está configurado. Deseja escolher um arquivo?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                resultado = MessageBox.Show("Nenhum caminho para o arquivo XML está configurado. Deseja escolher um arquivo?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (resultado == DialogResult.Yes)
                 {
                     SelecionarLocalSalvamentoXML();
@@ -166,6 +184,20 @@ namespace InstaladorAutomatico.Model
                             return;
                         }
                     }
+                }
+            }
+        }
+
+        public void VerificaLocalUAC()
+        {
+
+            if (Properties.Settings.Default.LocalUAC == "")
+            {
+                DialogResult resultado = new DialogResult();
+                resultado = MessageBox.Show("Nenhum caminho para script do UAC está configurado. Deseja escolher um arquivo?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (resultado == DialogResult.Yes)
+                {
+                    SelecionarLocalUAC();
                 }
             }
         }

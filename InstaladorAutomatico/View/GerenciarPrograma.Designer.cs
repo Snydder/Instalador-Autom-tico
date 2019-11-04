@@ -61,6 +61,7 @@
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.diretorioProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.alterarLocalUACToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.gpBxEditar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDadosXML)).BeginInit();
@@ -216,7 +217,8 @@
             this.salvarComoToolStripMenuItem,
             this.importarXMLToolStripMenuItem,
             this.gerarNovoXMLToolStripMenuItem,
-            this.localizarXMLToolStripMenuItem});
+            this.localizarXMLToolStripMenuItem,
+            this.alterarLocalUACToolStripMenuItem});
             this.arquivoToolStripMenuItem.Name = "arquivoToolStripMenuItem";
             this.arquivoToolStripMenuItem.Size = new System.Drawing.Size(61, 22);
             this.arquivoToolStripMenuItem.Text = "Arquivo";
@@ -419,6 +421,13 @@
             this.arquiteturaProgramaDataGridViewTextBoxColumn.MinimumWidth = 8;
             this.arquiteturaProgramaDataGridViewTextBoxColumn.Name = "arquiteturaProgramaDataGridViewTextBoxColumn";
             // 
+            // alterarLocalUACToolStripMenuItem
+            // 
+            this.alterarLocalUACToolStripMenuItem.Name = "alterarLocalUACToolStripMenuItem";
+            this.alterarLocalUACToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.alterarLocalUACToolStripMenuItem.Text = "Alterar Local UAC";
+            this.alterarLocalUACToolStripMenuItem.Click += new System.EventHandler(this.alterarLocalUACToolStripMenuItem_Click);
+            // 
             // Gerenciar_Programas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -431,6 +440,7 @@
             this.Name = "Gerenciar_Programas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Gerenciar Programa";
+            this.Load += new System.EventHandler(this.Gerenciar_Programas_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.gpBxEditar.ResumeLayout(false);
@@ -476,5 +486,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn nomeProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn diretorioProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn arquiteturaProgramaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.ToolStripMenuItem alterarLocalUACToolStripMenuItem;
     }
 }

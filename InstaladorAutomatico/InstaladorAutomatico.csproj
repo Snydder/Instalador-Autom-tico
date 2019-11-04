@@ -42,6 +42,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -94,6 +96,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
@@ -108,6 +111,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\PortableSettingsProvider.cs" />
     <Compile Include="Model\Programa.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="View\GerenciarPrograma.cs">
@@ -124,12 +128,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\ProgressoInstalacao.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="View\ProgressoInstalacao.Designer.cs">
-      <DependentUpon>ProgressoInstalacao.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="View\GerenciarPrograma.resx">
       <DependentUpon>GerenciarPrograma.cs</DependentUpon>
     </EmbeddedResource>
@@ -146,9 +144,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="View\ProgressoInstalacao.resx">
-      <DependentUpon>ProgressoInstalacao.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="InstaladorAutomatico_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
@@ -178,8 +173,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
