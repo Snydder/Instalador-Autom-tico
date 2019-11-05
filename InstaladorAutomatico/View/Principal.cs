@@ -136,11 +136,11 @@ namespace InstaladorAutomatico
             ObterLinhasSelecionadas();
             GeraFilaInstalacao();
             CopiarArquivos();
-            for (int i = 0; i <= GradeDeDados.Rows.Count - 1; i++)
+            for (int i = 0; i < GradeDeDados.Rows.Count; i++)
             {
                 GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.White;
             }
-                for (int i = 0; i <= GradeDeDados.Rows.Count - 1; i++)
+            for (int i = 0; i < GradeDeDados.Rows.Count; i++)
             {
                 if (filaDeInstalacao.Count == 0)
                 {
@@ -164,6 +164,11 @@ namespace InstaladorAutomatico
 
         private void btnInstlr_Click(object sender, EventArgs e)
         {
+            if (PercorreCheckBoxes() == 0)
+            {
+                MessageBox.Show("Nenhum programa está selecionado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             if (Properties.Settings.Default.LocalUAC != "")
             {
                 System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(Properties.Settings.Default.LocalUAC);
@@ -175,12 +180,6 @@ namespace InstaladorAutomatico
                     MessageBox.Show("O UAC foi desativado. Reiniciando em breve.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-            }
-
-            if (PercorreCheckBoxes() == 0)
-            {
-                MessageBox.Show("Nenhum programa está selecionado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
             }
             GradeDeDados.ClearSelection();
             ExecutaFilaDeInstalacao();
@@ -259,9 +258,8 @@ namespace InstaladorAutomatico
         private void ListaDeProgramasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //abrindo o formulário para a adição de um novo programa
-            View.Gerenciar_Programas novoPrograma = new View.Gerenciar_Programas();
-            novoPrograma.ShowDialog();
-            novoPrograma.Dispose();
+            View.Gerenciar_Programas GerenciarPrograma = new View.Gerenciar_Programas();
+            GerenciarPrograma.Show();
         }
 
         private void BtnVrfcInstlc_Click(object sender, EventArgs e)
@@ -289,7 +287,10 @@ namespace InstaladorAutomatico
         private void BtnAtualizarDataGrid_Click(object sender, EventArgs e)
         {
             ObterLista();
-            GradeDeDados.FirstDisplayedScrollingRowIndex = GradeDeDados.RowCount - 1;
+            if (GradeDeDados.RowCount > 2)
+            {
+                GradeDeDados.FirstDisplayedScrollingRowIndex = GradeDeDados.RowCount - 1;
+            }
         }
 
         private void SairToolStripMenuItem_Click(object sender, EventArgs e)
@@ -304,16 +305,8 @@ namespace InstaladorAutomatico
 
         private void VerificarWindowsUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var cplPath = System.IO.Path.Combine(Environment.SystemDirectory, "control.exe");
-            System.Diagnostics.Process.Start(cplPath, "/name Microsoft.WindowsUpdate");
-        }
-
-        private void GradeDeDados_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex == -1)
-            {
-                return;
-            }
+            var cplPath = Path.Combine(Environment.SystemDirectory, "control.exe");
+            Process.Start(cplPath, "/name Microsoft.WindowsUpdate");
         }
     }
 }

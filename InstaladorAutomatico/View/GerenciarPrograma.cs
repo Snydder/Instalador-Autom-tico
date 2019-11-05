@@ -32,6 +32,16 @@ namespace InstaladorAutomatico.View
         {
             InitializeComponent();
         }
+        private void Gerenciar_Programas_Load(object sender, EventArgs e)
+        {
+            ObterLista();
+            nomeProgramaDataGridViewTextBoxColumn.ReadOnly = true;
+            diretorioProgramaDataGridViewTextBoxColumn.ReadOnly = true;
+            arquiteturaProgramaDataGridViewTextBoxColumn.ReadOnly = true;
+            GradeDeDadosXML.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            GradeDeDadosXML.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            GradeDeDadosXML.CellClick -= GradeDeDadosXML_CellClick;
+        }
 
         private void LimpaCampos()
         {
@@ -185,7 +195,7 @@ namespace InstaladorAutomatico.View
                 Model.Programa.ListaDeProgramas.Add(p);
                 p.SerializaPrograma(Model.Programa.ListaDeProgramas);
             }
-            if (GradeDeDadosXML.RowCount > 1)
+            if (GradeDeDadosXML.RowCount > 2)
             {
                 GradeDeDadosXML.FirstDisplayedScrollingRowIndex = GradeDeDadosXML.RowCount - 1;
             }
@@ -379,14 +389,6 @@ namespace InstaladorAutomatico.View
             }
         }
 
-        private void Gerenciar_Programas_Load(object sender, EventArgs e)
-        {
-            ObterLista();
-            nomeProgramaDataGridViewTextBoxColumn.ReadOnly = true;
-            diretorioProgramaDataGridViewTextBoxColumn.ReadOnly = true;
-            arquiteturaProgramaDataGridViewTextBoxColumn.ReadOnly = true;
-        }
-
         private void alterarLocalUACToolStripMenuItem_Click(object sender, EventArgs e)
         {
             p.SelecionarLocalUAC();
@@ -411,6 +413,14 @@ namespace InstaladorAutomatico.View
         private void alterarLocalPastaTIToolStripMenuItem_Click(object sender, EventArgs e)
         {
             p.SelecionarLocalPastaTI();
+        }
+
+        private void GradeDeDadosXML_CellClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+            {
+                return; 
+            }
         }
 
         private void ReorganizaID ()
