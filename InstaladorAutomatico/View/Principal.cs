@@ -37,7 +37,6 @@ namespace InstaladorAutomatico
 
         private void Principal_Load(object sender, EventArgs e)
         {
-
             //declarando lista local
             List<Model.Programa> ListaLocal = new List<Model.Programa>();
             List<int> linhasSelecionadas = new List<int>();
@@ -140,6 +139,7 @@ namespace InstaladorAutomatico
             {
                 GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.White;
             }
+            MarcaComoPendente();
             for (int i = 0; i < GradeDeDados.Rows.Count; i++)
             {
                 if (filaDeInstalacao.Count == 0)
@@ -274,12 +274,14 @@ namespace InstaladorAutomatico
             {
                 ListaLocal.Clear();
                 ListaLocal.AddRange(ProgramaFuncoes.DeserializaPrograma());
-                GradeDeDados.DataSource = null;
-                GradeDeDados.DataSource = ListaLocal;
+                if (ListaLocal.Count > 0)
+                {
+                    GradeDeDados.DataSource = null;
+                    GradeDeDados.DataSource = ListaLocal;
+                }
             }
             catch (FileNotFoundException)
             {
-                MessageBox.Show("Arquivo não encontrado. A tabela está vazia.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ProgramaFuncoes.SerializaPrograma(ListaLocal);
             }
         }

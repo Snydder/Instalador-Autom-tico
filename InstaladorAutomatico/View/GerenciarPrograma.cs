@@ -34,13 +34,12 @@ namespace InstaladorAutomatico.View
         }
         private void Gerenciar_Programas_Load(object sender, EventArgs e)
         {
-            ObterLista();
             nomeProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             diretorioProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             arquiteturaProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             GradeDeDadosXML.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             GradeDeDadosXML.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            GradeDeDadosXML.CellClick -= GradeDeDadosXML_CellClick;
+            ObterLista();
         }
 
         private void LimpaCampos()
@@ -103,8 +102,11 @@ namespace InstaladorAutomatico.View
             {
                 ListaLocal.Clear();
                 ListaLocal.AddRange(p.DeserializaPrograma());
-                GradeDeDadosXML.DataSource = null;
-                GradeDeDadosXML.DataSource = ListaLocal;
+                if (ListaLocal.Count > 0)
+                {
+                    GradeDeDadosXML.DataSource = null;
+                    GradeDeDadosXML.DataSource = ListaLocal;
+                }
             }
             catch (FileNotFoundException)
             {
