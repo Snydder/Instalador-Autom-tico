@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
             this.BtnMarcaDesmarca = new System.Windows.Forms.Button();
             this.btnIniciar = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -184,6 +185,7 @@
             this.GradeDeDados.Name = "GradeDeDados";
             this.GradeDeDados.Size = new System.Drawing.Size(547, 208);
             this.GradeDeDados.TabIndex = 26;
+            this.GradeDeDados.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GradeDeDados_CellClick);
             // 
             // nomeProgramaDataGridViewTextBoxColumn
             // 
@@ -220,10 +222,11 @@
             this.Controls.Add(this.GradeDeDados);
             this.Controls.Add(this.gpBx);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Principal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Instalador";
+            this.Text = "Instalador Automático";
             this.Load += new System.EventHandler(this.Principal_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

@@ -92,35 +92,6 @@ namespace InstaladorAutomatico
             {
                 DefineValorCheckBox(true);
             }
-            /*
-             * depreciado
-             * foreach (Control c in tblPnlOrganiza.Controls)
-            {
-                if (c is CheckBox)
-                {
-                    CheckBox cb = (CheckBox)c;
-                    if (cb.Checked == false)
-                    {
-                        if (executouSegundoIf == false)
-                        {
-                            cb.Checked = true;
-                            executouPrimeiroIf = true;
-                            executouSegundoIf = false;
-                            BtnMarcaDesmarca.Text = "Desmarcar Tudo";
-                        }
-                    }
-                    if (cb.Checked == true)
-                    {
-                        if (executouPrimeiroIf == false)
-                        {
-                            cb.Checked = false;
-                            executouSegundoIf = true;
-                            executouPrimeiroIf = false;
-                            BtnMarcaDesmarca.Text = "Marcar Tudo";
-                        }
-                    }
-                }
-            }*/
         }
 
         private void ObterLinhasSelecionadas()
@@ -155,7 +126,7 @@ namespace InstaladorAutomatico
         {
             for (int i = 0; i <= linhasSelecionadas.Count - 1; i++)
             {
-                filaDeInstalacao.Enqueue(ListaLocal[linhasSelecionadas[i]].diretorioPrograma);
+                filaDeInstalacao.Enqueue(Properties.Settings.Default.DestinoCopia + "\\" + ListaLocal[i].nomePrograma + "\\" + ListaLocal[i].nomePrograma + Path.GetExtension(ListaLocal[i].diretorioPrograma));
             }
         }
 
@@ -164,7 +135,12 @@ namespace InstaladorAutomatico
             String ProgramaSendoInstalado;
             ObterLinhasSelecionadas();
             GeraFilaInstalacao();
+            CopiarArquivos();
             for (int i = 0; i <= GradeDeDados.Rows.Count - 1; i++)
+            {
+                GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.White;
+            }
+                for (int i = 0; i <= GradeDeDados.Rows.Count - 1; i++)
             {
                 if (filaDeInstalacao.Count == 0)
                 {
@@ -172,11 +148,14 @@ namespace InstaladorAutomatico
                     return;
                 }
                 ProgramaSendoInstalado = filaDeInstalacao.Dequeue();
-                System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(ProgramaSendoInstalado);
-                System.Diagnostics.Process rfp = new System.Diagnostics.Process();
-                rfp = System.Diagnostics.Process.Start(psi);
+                ProcessStartInfo psi = new ProcessStartInfo(ProgramaSendoInstalado);
+                Process rfp = new Process();
+                rfp = Process.Start(psi);
                 rfp.WaitForExit(300000);
-                GradeDeDados.FirstDisplayedScrollingRowIndex = linhasSelecionadas[i];
+                if (i >= 9)
+                {
+                    GradeDeDados.FirstDisplayedScrollingRowIndex = linhasSelecionadas[i];
+                }
                 GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.LightGreen;
             }
             linhasSelecionadas.Clear();
@@ -197,8 +176,6 @@ namespace InstaladorAutomatico
                     return;
                 }
             }
-
-            CopiarArquivos();
 
             if (PercorreCheckBoxes() == 0)
             {
@@ -224,8 +201,8 @@ namespace InstaladorAutomatico
         {
             Boolean valorCheckBox;
             System.IO.Directory.CreateDirectory(Properties.Settings.Default.DestinoCopia);
-            String caminhoCopia;
             String extensaoArquivo;
+            String caminhoCopia;
             if (PercorreCheckBoxes() == 0)
             {
                 MessageBox.Show("Nenhum programa está selecionado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -236,18 +213,32 @@ namespace InstaladorAutomatico
             for (int i = 0; i <= GradeDeDados.RowCount - 1; i++)
             {
                 valorCheckBox = Convert.ToBoolean(GradeDeDados[2, i].Value);
+                String nomeUltimaPasta = Path.GetDirectoryName(ListaLocal[i].diretorioPrograma);
+                DirectoryInfo dir = new DirectoryInfo(nomeUltimaPasta);
                 if (valorCheckBox == true)
                 {
+                    extensaoArquivo = Path.GetExtension(ListaLocal[i].diretorioPrograma);
+                    caminhoCopia = Properties.Settings.Default.DestinoCopia + "\\" + ListaLocal[i].nomePrograma;
+                    // Obter os arquivos e copiá-los para um novo local. 
                     try
                     {
-                        extensaoArquivo = Path.GetExtension(ListaLocal[i].diretorioPrograma);
-                        caminhoCopia = Properties.Settings.Default.DestinoCopia + "\\" + ListaLocal[i].nomePrograma;
-                        System.IO.Directory.CreateDirectory(caminhoCopia);
-                        File.Copy(ListaLocal[i].diretorioPrograma, caminhoCopia + "\\" + ListaLocal[i].nomePrograma + extensaoArquivo, true);
+                        if (!Directory.Exists(caminhoCopia))
+                        {
+                            Directory.CreateDirectory(caminhoCopia);
+                        }
+                        FileInfo[] arquivos = dir.GetFiles();
+                        foreach (FileInfo arquivo in arquivos)
+                        {
+                            String caminhotemp = Path.Combine(caminhoCopia, arquivo.Name);
+                            arquivo.CopyTo(caminhotemp, true);
+                        }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.Red;
                         MessageBox.Show($"Erro ao copiar o programa {ListaLocal[i].nomePrograma}.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(ex.ToString(), "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
                     GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.LightGreen;
                 }
@@ -291,6 +282,7 @@ namespace InstaladorAutomatico
             catch (FileNotFoundException)
             {
                 MessageBox.Show("Arquivo não encontrado. A tabela está vazia.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ProgramaFuncoes.SerializaPrograma(ListaLocal);
             }
         }
 
@@ -314,6 +306,14 @@ namespace InstaladorAutomatico
         {
             var cplPath = System.IO.Path.Combine(Environment.SystemDirectory, "control.exe");
             System.Diagnostics.Process.Start(cplPath, "/name Microsoft.WindowsUpdate");
+        }
+
+        private void GradeDeDados_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+            {
+                return;
+            }
         }
     }
 }

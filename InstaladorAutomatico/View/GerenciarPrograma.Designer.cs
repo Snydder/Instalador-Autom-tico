@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Gerenciar_Programas));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtBxNomePrograma = new System.Windows.Forms.TextBox();
@@ -47,6 +48,7 @@
             this.importarXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gerarNovoXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.localizarXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.alterarLocalUACToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label4 = new System.Windows.Forms.Label();
             this.btnCaminhoIcone = new System.Windows.Forms.Button();
             this.txtBxCaminhoIcone = new System.Windows.Forms.TextBox();
@@ -56,12 +58,11 @@
             this.btnSubirLista = new System.Windows.Forms.Button();
             this.btnAdiciona = new System.Windows.Forms.Button();
             this.GradeDeDadosXML = new System.Windows.Forms.DataGridView();
+            this.alterarLocalPastaTIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.programaBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.iDProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.diretorioProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.alterarLocalUACToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.gpBxEditar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GradeDeDadosXML)).BeginInit();
@@ -218,7 +219,8 @@
             this.importarXMLToolStripMenuItem,
             this.gerarNovoXMLToolStripMenuItem,
             this.localizarXMLToolStripMenuItem,
-            this.alterarLocalUACToolStripMenuItem});
+            this.alterarLocalUACToolStripMenuItem,
+            this.alterarLocalPastaTIToolStripMenuItem});
             this.arquivoToolStripMenuItem.Name = "arquivoToolStripMenuItem";
             this.arquivoToolStripMenuItem.Size = new System.Drawing.Size(61, 22);
             this.arquivoToolStripMenuItem.Text = "Arquivo";
@@ -254,6 +256,13 @@
             this.localizarXMLToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.localizarXMLToolStripMenuItem.Text = "Localizar XML";
             this.localizarXMLToolStripMenuItem.Click += new System.EventHandler(this.localizarXMLToolStripMenuItem_Click);
+            // 
+            // alterarLocalUACToolStripMenuItem
+            // 
+            this.alterarLocalUACToolStripMenuItem.Name = "alterarLocalUACToolStripMenuItem";
+            this.alterarLocalUACToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.alterarLocalUACToolStripMenuItem.Text = "Alterar Local UAC";
+            this.alterarLocalUACToolStripMenuItem.Click += new System.EventHandler(this.alterarLocalUACToolStripMenuItem_Click);
             // 
             // label4
             // 
@@ -377,7 +386,6 @@
             this.GradeDeDadosXML.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.GradeDeDadosXML.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GradeDeDadosXML.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.iDProgramaDataGridViewTextBoxColumn,
             this.nomeProgramaDataGridViewTextBoxColumn,
             this.diretorioProgramaDataGridViewTextBoxColumn,
             this.arquiteturaProgramaDataGridViewTextBoxColumn});
@@ -388,17 +396,19 @@
             this.GradeDeDadosXML.RowHeadersWidth = 62;
             this.GradeDeDadosXML.Size = new System.Drawing.Size(785, 248);
             this.GradeDeDadosXML.TabIndex = 15;
+            this.GradeDeDadosXML.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GradeDeDadosXML_CellClick);
+            this.GradeDeDadosXML.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GradeDeDadosXML_CellContentClick);
+            // 
+            // alterarLocalPastaTIToolStripMenuItem
+            // 
+            this.alterarLocalPastaTIToolStripMenuItem.Name = "alterarLocalPastaTIToolStripMenuItem";
+            this.alterarLocalPastaTIToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.alterarLocalPastaTIToolStripMenuItem.Text = "Alterar Local Pasta TI";
+            this.alterarLocalPastaTIToolStripMenuItem.Click += new System.EventHandler(this.alterarLocalPastaTIToolStripMenuItem_Click);
             // 
             // programaBindingSource
             // 
             this.programaBindingSource.DataSource = typeof(InstaladorAutomatico.Model.Programa);
-            // 
-            // iDProgramaDataGridViewTextBoxColumn
-            // 
-            this.iDProgramaDataGridViewTextBoxColumn.DataPropertyName = "IDPrograma";
-            this.iDProgramaDataGridViewTextBoxColumn.HeaderText = "ID";
-            this.iDProgramaDataGridViewTextBoxColumn.MinimumWidth = 8;
-            this.iDProgramaDataGridViewTextBoxColumn.Name = "iDProgramaDataGridViewTextBoxColumn";
             // 
             // nomeProgramaDataGridViewTextBoxColumn
             // 
@@ -421,13 +431,6 @@
             this.arquiteturaProgramaDataGridViewTextBoxColumn.MinimumWidth = 8;
             this.arquiteturaProgramaDataGridViewTextBoxColumn.Name = "arquiteturaProgramaDataGridViewTextBoxColumn";
             // 
-            // alterarLocalUACToolStripMenuItem
-            // 
-            this.alterarLocalUACToolStripMenuItem.Name = "alterarLocalUACToolStripMenuItem";
-            this.alterarLocalUACToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-            this.alterarLocalUACToolStripMenuItem.Text = "Alterar Local UAC";
-            this.alterarLocalUACToolStripMenuItem.Click += new System.EventHandler(this.alterarLocalUACToolStripMenuItem_Click);
-            // 
             // Gerenciar_Programas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -436,6 +439,7 @@
             this.Controls.Add(this.gpBxEditar);
             this.Controls.Add(this.GradeDeDadosXML);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Gerenciar_Programas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -482,10 +486,10 @@
         private System.Windows.Forms.Button btnDescerLista;
         private System.Windows.Forms.Button btnRemover;
         private System.Windows.Forms.ToolStripMenuItem localizarXMLToolStripMenuItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn iDProgramaDataGridViewTextBoxColumn;
+        private System.Windows.Forms.ToolStripMenuItem alterarLocalUACToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn nomeProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn diretorioProgramaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn arquiteturaProgramaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.ToolStripMenuItem alterarLocalUACToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem alterarLocalPastaTIToolStripMenuItem;
     }
 }

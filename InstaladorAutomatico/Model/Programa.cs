@@ -22,7 +22,8 @@ namespace InstaladorAutomatico.Model
 
         //Indicando caminho padrão 
         static String nomeDeUsuario = Environment.UserName;
-        private String caminhoPadrao = $"C:\\Users\\{nomeDeUsuario}\\Desktop\\Lista_de_programas.xml";
+        //private String caminhoPadrao = $"C:\\Users\\{nomeDeUsuario}\\Desktop\\Lista_de_programas.xml";
+        private String caminhoPadrao = AppDomain.CurrentDomain.BaseDirectory + "\\Lista_de_programas.xml";
 
         [XmlElement(ElementName = "IDPrograma")]
         public Int32 IDPrograma { get; set; }
@@ -78,16 +79,37 @@ namespace InstaladorAutomatico.Model
         {
             DialogResult resultado = new DialogResult();
             OpenFileDialog mudarDiretorioUAC = new OpenFileDialog();
+            mudarDiretorioUAC.InitialDirectory = Properties.Settings.Default.LocalUAC;
             resultado = mudarDiretorioUAC.ShowDialog();
-            mudarDiretorioUAC.Filter = "Arquivo XML | * .xml";
+            mudarDiretorioUAC.Filter = "Arquivo .bat | * .bat";
             if (resultado == DialogResult.OK)
             {
                 Properties.Settings.Default.LocalUAC = mudarDiretorioUAC.FileName;
                 Properties.Settings.Default.Save();
+                MessageBox.Show("O local do UAC foi alterado.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
                 Properties.Settings.Default.LocalUAC = "";
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public void SelecionarLocalPastaTI()
+        {
+            DialogResult resultado = new DialogResult();
+            FolderBrowserDialog mudarDiretorioTI = new FolderBrowserDialog();
+
+            resultado = mudarDiretorioTI.ShowDialog();
+            if (resultado == DialogResult.OK)
+            {
+                Properties.Settings.Default.DestinoCopia = mudarDiretorioTI.SelectedPath;
+                Properties.Settings.Default.Save();
+                MessageBox.Show("O local da pasta TI foi alterada.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                Properties.Settings.Default.DestinoCopia = "C:\\TI";
                 Properties.Settings.Default.Save();
             }
         }
@@ -109,45 +131,6 @@ namespace InstaladorAutomatico.Model
                     Properties.Settings.Default.Save();
                     MessageBox.Show("O local padrão foi definido.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
-                }
-            }
-            else if (Properties.Settings.Default.CaminhoXML == caminhoPadrao)
-            {
-                DialogResult resultado = new DialogResult();
-                resultado = MessageBox.Show("O caminho padrão para o arquivo XML está configurado. Deseja alterá-lo?", "Informação", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if (resultado == DialogResult.Yes)
-                {
-                    SelecionarLocalSalvamentoXML();
-                }
-                else
-                {
-                    if (File.Exists(caminhoPadrao))
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        List<Model.Programa> listaVazia = new List<Model.Programa>();
-                        Properties.Settings.Default.CaminhoXML = caminhoPadrao;
-                        Properties.Settings.Default.Save();
-                        SerializaPrograma(listaVazia);
-                        if (File.Exists(caminhoPadrao))
-                        {
-                            MessageBox.Show("O arquivo foi criado com êxito.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Erro ao criar o arquivo. Escolher outro local?", "Erro", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-                            if (resultado == DialogResult.Yes)
-                            {
-                                SelecionarLocalSalvamentoXML();
-                            }
-                            else
-                            {
-                                return;
-                            }
-                        }
-                    }
                 }
             }
         }

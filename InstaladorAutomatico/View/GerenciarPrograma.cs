@@ -382,7 +382,6 @@ namespace InstaladorAutomatico.View
         private void Gerenciar_Programas_Load(object sender, EventArgs e)
         {
             ObterLista();
-            iDProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             nomeProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             diretorioProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             arquiteturaProgramaDataGridViewTextBoxColumn.ReadOnly = true;
@@ -391,6 +390,27 @@ namespace InstaladorAutomatico.View
         private void alterarLocalUACToolStripMenuItem_Click(object sender, EventArgs e)
         {
             p.SelecionarLocalUAC();
+        }
+
+        private void GradeDeDadosXML_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+            {
+                return;
+            }
+        }
+
+        private void GradeDeDadosXML_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+            {
+                return;
+            }
+        }
+
+        private void alterarLocalPastaTIToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            p.SelecionarLocalPastaTI();
         }
 
         private void ReorganizaID ()
