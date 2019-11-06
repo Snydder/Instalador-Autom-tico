@@ -6,13 +6,13 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="CaminhoXML" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\192.168.0.13\InstaladorAutomatico2\ArquivosInternos\Lista_de_Programas.xml</Value>
+      <Value Profile="(Default)">\192.168.0.13\InstaladorAutomatico2\ArquivosInternos\Lista_de_Programas.xml</Value>
     </Setting>
     <Setting Name="DestinoCopia" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">C:\\TesteTI</Value>
+      <Value Profile="(Default)">C:\TesteTI</Value>
     </Setting>
     <Setting Name="LocalUAC" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\192.168.0.13\InstaladorAutomatico2\ArquivosInternos\DesabilitarUAC.bat</Value>
+      <Value Profile="(Default)">\192.168.0.13\InstaladorAutomatico2\ArquivosInternos\DesabilitarUAC.bat</Value>
     </Setting>
   </Settings>
 </SettingsFile>

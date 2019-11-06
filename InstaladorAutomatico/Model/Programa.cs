@@ -119,6 +119,7 @@ namespace InstaladorAutomatico.Model
                 if (resultado == DialogResult.Yes)
                 {
                     Process.Start("notepad.exe", AppDomain.CurrentDomain.BaseDirectory + "\\InstaladorAutomatico.exe.config");
+                    return;
                 }
                 else
                 {
@@ -139,6 +140,7 @@ namespace InstaladorAutomatico.Model
                 if (resultado == DialogResult.Yes)
                 {
                     Process.Start("notepad.exe", AppDomain.CurrentDomain.BaseDirectory + "\\InstaladorAutomatico.exe.config");
+                    return;
                 }
                 else
                 {
@@ -174,7 +176,7 @@ namespace InstaladorAutomatico.Model
                 resultado = MessageBox.Show("Nenhum caminho para script do UAC está configurado. Deseja escolher um arquivo?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (resultado == DialogResult.Yes)
                 {
-                    Process.Start("notepad.exe", AppDomain.CurrentDomain.BaseDirectory + "\\InstaladorAutomatico.exe.config");
+                    Process.Start("notepad.exe", Path.Combine(AppDomain.CurrentDomain.BaseDirectory , "\\InstaladorAutomatico.exe.config"));
                 }
             }
         }
