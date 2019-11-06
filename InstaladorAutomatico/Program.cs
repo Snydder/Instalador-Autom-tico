@@ -16,14 +16,7 @@ namespace InstaladorAutomatico
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            try
-            {
-                Application.Run(new Principal());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            Application.Run(new Principal());
         }
     }
 }

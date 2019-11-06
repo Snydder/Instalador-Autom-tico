@@ -23,41 +23,39 @@ namespace InstaladorAutomatico.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsProviderAttribute(typeof(InstaladorAutomatico.Model.PortableSettingsProvider))]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Configuração {
+            get {
+                return ((string)(this["Configuração"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\192.168.0.13\\InstaladorAutomatico2\\ArquivosInternos\\Lista_de_Programas.xml")]
         public string CaminhoXML {
             get {
                 return ((string)(this["CaminhoXML"]));
             }
-            set {
-                this["CaminhoXML"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsProviderAttribute(typeof(InstaladorAutomatico.Model.PortableSettingsProvider))]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\\\TI")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\\\TesteTI")]
         public string DestinoCopia {
             get {
                 return ((string)(this["DestinoCopia"]));
             }
-            set {
-                this["DestinoCopia"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\192.168.0.13\\InstaladorAutomatico2\\ArquivosInternos\\DesabilitarUAC.bat")]
         public string LocalUAC {
             get {
                 return ((string)(this["LocalUAC"]));
-            }
-            set {
-                this["LocalUAC"] = value;
             }
         }
     }

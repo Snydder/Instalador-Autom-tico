@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -125,7 +126,7 @@ namespace InstaladorAutomatico
         {
             for (int i = 0; i <= linhasSelecionadas.Count - 1; i++)
             {
-                filaDeInstalacao.Enqueue(Properties.Settings.Default.DestinoCopia + "\\" + ListaLocal[i].nomePrograma + "\\" + ListaLocal[i].nomePrograma + Path.GetExtension(ListaLocal[i].diretorioPrograma));
+                filaDeInstalacao.Enqueue(Properties.Settings.Default.DestinoCopia + ListaLocal[i].nomePrograma + "\\" + ListaLocal[i].nomePrograma + Path.GetExtension(ListaLocal[i].diretorioPrograma));
             }
         }
 
@@ -196,7 +197,7 @@ namespace InstaladorAutomatico
                 //fazer outra filtragem de programas.
             }
         }
-        private void CopiarArquivos()
+        private async void CopiarArquivos()
         {
             Boolean valorCheckBox;
             System.IO.Directory.CreateDirectory(Properties.Settings.Default.DestinoCopia);
@@ -218,6 +219,37 @@ namespace InstaladorAutomatico
                 {
                     extensaoArquivo = Path.GetExtension(ListaLocal[i].diretorioPrograma);
                     caminhoCopia = Properties.Settings.Default.DestinoCopia + "\\" + ListaLocal[i].nomePrograma;
+                    if (!Directory.Exists(caminhoCopia))
+                    {
+                        Directory.CreateDirectory(caminhoCopia);
+                    }
+
+                    foreach (string filename in Directory.EnumerateFiles(nomeUltimaPasta))
+                    {
+                        using (FileStream SourceStream = File.OpenRead(filename))
+                        {
+                            using (FileStream DestinationStream = File.Create(caminhoCopia + filename.Substring(filename.LastIndexOf('\\'))))
+                            {
+                                await SourceStream.CopyToAsync(DestinationStream);
+                            }
+                        }
+                    }
+                    GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.LightGreen;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    /*
                     // Obter os arquivos e copiá-los para um novo local. 
                     try
                     {
@@ -235,11 +267,15 @@ namespace InstaladorAutomatico
                     catch (Exception ex)
                     {
                         GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.Red;
-                        MessageBox.Show($"Erro ao copiar o programa {ListaLocal[i].nomePrograma}.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"Erro ao copiar o diretório do programa {ListaLocal[i].nomePrograma}.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         MessageBox.Show(ex.ToString(), "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.LightGreen;
+                }
+            }
+            MessageBox.Show($"Cópia concluída!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            */
                 }
             }
             MessageBox.Show($"Cópia concluída!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -111,7 +111,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\PortableSettingsProvider.cs" />
     <Compile Include="Model\Programa.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="View\GerenciarPrograma.cs">
@@ -144,6 +143,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="InstaladorAutomatico_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
@@ -159,7 +159,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="InstaladorAutomatico.exe.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
