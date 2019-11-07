@@ -39,7 +39,12 @@ namespace InstaladorAutomatico.View
             arquiteturaProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             GradeDeDadosXML.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             GradeDeDadosXML.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            ObterLista();
+            if (p.VerificaPorXMLInicializacao() == false)
+            {
+                MessageBox.Show($"O arquivo XML não foi encontrado no caminho especificado. Edite o arquivo de configuração e abra o programa novamente.", "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+                return;
+            }
         }
 
         private void LimpaCampos()

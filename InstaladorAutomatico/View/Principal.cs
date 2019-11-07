@@ -48,7 +48,11 @@ namespace InstaladorAutomatico
             nomeProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             arquiteturaProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             Selecionar.ReadOnly = false;
-            ProgramaFuncoes.VerificaPorXMLInicializacao();
+            if (ProgramaFuncoes.VerificaPorXMLInicializacao() == false)
+            {
+                Application.Exit();
+                return;
+            }
             ProgramaFuncoes.VerificaLocalUAC();
             ObterLista();
             DefineValorCheckBox(true);
@@ -155,7 +159,6 @@ namespace InstaladorAutomatico
                     GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.White;
                 }
             }
-
             MarcaComoPendente();
             for (int i = 0; i <= GradeDeDados.Rows.Count - 1; i++)
             {
@@ -168,11 +171,17 @@ namespace InstaladorAutomatico
                 if (valorCheckBox == true)
                 {
                     ProgramaSendoInstalado = filaDeInstalacao.Dequeue();
+                    if (!File.Exists(ProgramaSendoInstalado))
+                    {
+                        MessageBox.Show($"O arquivo {ProgramaSendoInstalado} não foi encontrado. Corrija a lista de programas.", "Erro ao instalar.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        linhasSelecionadas.Clear();
+                        return;
+                    }
                     ProcessStartInfo psi = new ProcessStartInfo(ProgramaSendoInstalado);
                     Process rfp = new Process();
                     rfp = Process.Start(psi);
                     rfp.WaitForExit(300000);
-                    if (i >= 9)
+                    if (i >= 5)
                     {
                         GradeDeDados.FirstDisplayedScrollingRowIndex = linhasSelecionadas[i];
                     }
