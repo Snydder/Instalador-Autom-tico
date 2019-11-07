@@ -98,7 +98,7 @@ namespace InstaladorAutomatico
         {
             linhasSelecionadas.Clear();
             Boolean valorCheckBox;
-            for (int i = 0; i <= GradeDeDados.RowCount - 1; i++)
+            for (int i = 0; i < GradeDeDados.RowCount; i++)
             {
                 valorCheckBox = Convert.ToBoolean(GradeDeDados[2, i].Value);
                 if (valorCheckBox == true)
@@ -124,47 +124,67 @@ namespace InstaladorAutomatico
 
         private void GeraFilaInstalacao()
         {
-            for (int i = 0; i <= linhasSelecionadas.Count - 1; i++)
+            for (int i = 0; i < linhasSelecionadas.Count; i++)
             {
-                filaDeInstalacao.Enqueue(Properties.Settings.Default.DestinoCopia + ListaLocal[i].nomePrograma + "\\" + ListaLocal[i].nomePrograma + Path.GetExtension(ListaLocal[i].diretorioPrograma));
+                String nomeProgramaComExtensao = Path.GetFileName(ListaLocal[i].diretorioPrograma);
+                String destinoCopiaComNomePrograma = Path.Combine(Properties.Settings.Default.DestinoCopia, ListaLocal[i].nomePrograma);
+                filaDeInstalacao.Enqueue(Path.Combine(destinoCopiaComNomePrograma, nomeProgramaComExtensao));
             }
         }
 
-        private void ExecutaFilaDeInstalacao()
+        private async void ExecutaFilaDeInstalacao()
         {
             String ProgramaSendoInstalado;
+            Boolean valorCheckBox;
             ObterLinhasSelecionadas();
             GeraFilaInstalacao();
-            CopiarArquivos();
+            System.IO.Directory.CreateDirectory(Properties.Settings.Default.DestinoCopia);
+            if (PercorreCheckBoxes() == 0)
+            {
+                MessageBox.Show("Nenhum programa está selecionado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            await CopiarArquivos();
+
             for (int i = 0; i < GradeDeDados.Rows.Count; i++)
             {
-                GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.White;
+                valorCheckBox = Convert.ToBoolean(GradeDeDados[2, i].Value);
+                if (valorCheckBox == true)
+                {
+                    GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                }
             }
+
             MarcaComoPendente();
-            for (int i = 0; i < GradeDeDados.Rows.Count; i++)
+            for (int i = 0; i <= GradeDeDados.Rows.Count - 1; i++)
             {
                 if (filaDeInstalacao.Count == 0)
                 {
                     MessageBox.Show("Instalação concluída!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                ProgramaSendoInstalado = filaDeInstalacao.Dequeue();
-                ProcessStartInfo psi = new ProcessStartInfo(ProgramaSendoInstalado);
-                Process rfp = new Process();
-                rfp = Process.Start(psi);
-                rfp.WaitForExit(300000);
-                if (i >= 9)
+                valorCheckBox = Convert.ToBoolean(GradeDeDados[2, i].Value);
+                if (valorCheckBox == true)
                 {
-                    GradeDeDados.FirstDisplayedScrollingRowIndex = linhasSelecionadas[i];
+                    ProgramaSendoInstalado = filaDeInstalacao.Dequeue();
+                    ProcessStartInfo psi = new ProcessStartInfo(ProgramaSendoInstalado);
+                    Process rfp = new Process();
+                    rfp = Process.Start(psi);
+                    rfp.WaitForExit(300000);
+                    if (i >= 9)
+                    {
+                        GradeDeDados.FirstDisplayedScrollingRowIndex = linhasSelecionadas[i];
+                    }
+                    GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.LightGreen;
                 }
-                GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.LightGreen;
             }
             linhasSelecionadas.Clear();
-
         }
 
         private void btnInstlr_Click(object sender, EventArgs e)
         {
+            DesabilitaHabilitaBotoes(false);
             if (PercorreCheckBoxes() == 0)
             {
                 MessageBox.Show("Nenhum programa está selecionado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -185,7 +205,9 @@ namespace InstaladorAutomatico
             GradeDeDados.ClearSelection();
             ExecutaFilaDeInstalacao();
             linhasSelecionadas.Clear();
+            DesabilitaHabilitaBotoes(true);
 
+            /*
             //chechando arquitetura do sistema
             bool ArchSys = System.Environment.Is64BitOperatingSystem;
             if (ArchSys == true)
@@ -196,94 +218,61 @@ namespace InstaladorAutomatico
             {
                 //fazer outra filtragem de programas.
             }
+            */
         }
-        private async void CopiarArquivos()
+        private async Task CopiarArquivos()
         {
             Boolean valorCheckBox;
-            System.IO.Directory.CreateDirectory(Properties.Settings.Default.DestinoCopia);
-            String extensaoArquivo;
-            String caminhoCopia;
-            if (PercorreCheckBoxes() == 0)
-            {
-                MessageBox.Show("Nenhum programa está selecionado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+            String DestinoArquivo;
             MarcaComoPendente();
-            ObterLinhasSelecionadas();
-            for (int i = 0; i <= GradeDeDados.RowCount - 1; i++)
+            DesabilitaHabilitaBotoes(false);
+            for (int i = 0; i < GradeDeDados.RowCount; i++)
             {
                 valorCheckBox = Convert.ToBoolean(GradeDeDados[2, i].Value);
                 String nomeUltimaPasta = Path.GetDirectoryName(ListaLocal[i].diretorioPrograma);
                 DirectoryInfo dir = new DirectoryInfo(nomeUltimaPasta);
+                DestinoArquivo = Properties.Settings.Default.DestinoCopia + "\\" + ListaLocal[i].nomePrograma;
                 if (valorCheckBox == true)
                 {
-                    extensaoArquivo = Path.GetExtension(ListaLocal[i].diretorioPrograma);
-                    caminhoCopia = Properties.Settings.Default.DestinoCopia + "\\" + ListaLocal[i].nomePrograma;
-                    if (!Directory.Exists(caminhoCopia))
+                    if (!Directory.Exists(DestinoArquivo))
                     {
-                        Directory.CreateDirectory(caminhoCopia);
+                        Directory.CreateDirectory(DestinoArquivo);
                     }
 
                     foreach (string filename in Directory.EnumerateFiles(nomeUltimaPasta))
                     {
-                        using (FileStream SourceStream = File.OpenRead(filename))
+                        using (FileStream SourceStream = File.Open(filename, FileMode.Open, FileAccess.Read))
                         {
-                            using (FileStream DestinationStream = File.Create(caminhoCopia + filename.Substring(filename.LastIndexOf('\\'))))
+                            using (FileStream DestinationStream = File.Create(DestinoArquivo + filename.Substring(filename.LastIndexOf('\\'))))
                             {
                                 await SourceStream.CopyToAsync(DestinationStream);
                             }
                         }
                     }
-                    GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.LightGreen;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    /*
-                    // Obter os arquivos e copiá-los para um novo local. 
-                    try
-                    {
-                        if (!Directory.Exists(caminhoCopia))
-                        {
-                            Directory.CreateDirectory(caminhoCopia);
-                        }
-                        FileInfo[] arquivos = dir.GetFiles();
-                        foreach (FileInfo arquivo in arquivos)
-                        {
-                            String caminhotemp = Path.Combine(caminhoCopia, arquivo.Name);
-                            arquivo.CopyTo(caminhotemp, true);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.Red;
-                        MessageBox.Show($"Erro ao copiar o diretório do programa {ListaLocal[i].nomePrograma}.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        MessageBox.Show(ex.ToString(), "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    GradeDeDados.Rows[linhasSelecionadas[i]].DefaultCellStyle.BackColor = Color.LightGreen;
+                    GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.LightGreen;
                 }
             }
             MessageBox.Show($"Cópia concluída!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            */
-                }
-            }
-            MessageBox.Show($"Cópia concluída!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DesabilitaHabilitaBotoes(true);
         }
 
-        private void BtnCopiarArquivos_Click(object sender, EventArgs e)
+        private void DesabilitaHabilitaBotoes(bool VF)
         {
-            CopiarArquivos();
+            btnCopiarArquivos.Enabled = VF;
+            btnInstalar.Enabled = VF;
+            BtnMarcaDesmarca.Enabled = VF;
+            btnAtualizarDataGrid.Enabled = VF;
+            arquivoToolStripMenuItem.Enabled = VF;
+        }
+
+        private async void BtnCopiarArquivos_Click(object sender, EventArgs e)
+        {
+            btnCopiarArquivos.Enabled = false;
+            btnInstalar.Enabled = false;
+            BtnMarcaDesmarca.Enabled = false;
+            btnAtualizarDataGrid.Enabled = false;
+            arquivoToolStripMenuItem.Enabled = false;
+            await CopiarArquivos();
         }
 
         private void btnSair_Click(object sender, EventArgs e)

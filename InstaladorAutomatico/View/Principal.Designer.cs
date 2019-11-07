@@ -32,7 +32,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
             this.BtnMarcaDesmarca = new System.Windows.Forms.Button();
-            this.btnIniciar = new System.Windows.Forms.Button();
+            this.btnInstalar = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.arquivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listaDeProgramasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,9 +42,9 @@
             this.gpBx = new System.Windows.Forms.GroupBox();
             this.btnAtualizarDataGrid = new System.Windows.Forms.Button();
             this.GradeDeDados = new System.Windows.Forms.DataGridView();
-            this.Selecionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.nomeProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arquiteturaProgramaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Selecionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.programaBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
             this.gpBx.SuspendLayout();
@@ -63,17 +63,17 @@
             this.BtnMarcaDesmarca.UseVisualStyleBackColor = true;
             this.BtnMarcaDesmarca.Click += new System.EventHandler(this.BtnMarcaDesmarca_Click);
             // 
-            // btnIniciar
+            // btnInstalar
             // 
-            this.btnIniciar.AutoSize = true;
-            this.btnIniciar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnIniciar.Location = new System.Drawing.Point(276, 67);
-            this.btnIniciar.Name = "btnIniciar";
-            this.btnIniciar.Size = new System.Drawing.Size(144, 35);
-            this.btnIniciar.TabIndex = 8;
-            this.btnIniciar.Text = "Instalar";
-            this.btnIniciar.UseVisualStyleBackColor = true;
-            this.btnIniciar.Click += new System.EventHandler(this.btnInstlr_Click);
+            this.btnInstalar.AutoSize = true;
+            this.btnInstalar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnInstalar.Location = new System.Drawing.Point(276, 67);
+            this.btnInstalar.Name = "btnInstalar";
+            this.btnInstalar.Size = new System.Drawing.Size(144, 35);
+            this.btnInstalar.TabIndex = 8;
+            this.btnInstalar.Text = "Instalar";
+            this.btnInstalar.UseVisualStyleBackColor = true;
+            this.btnInstalar.Click += new System.EventHandler(this.btnInstlr_Click);
             // 
             // menuStrip1
             // 
@@ -134,7 +134,7 @@
             // 
             // gpBx
             // 
-            this.gpBx.Controls.Add(this.btnIniciar);
+            this.gpBx.Controls.Add(this.btnInstalar);
             this.gpBx.Controls.Add(this.BtnMarcaDesmarca);
             this.gpBx.Controls.Add(this.btnCopiarArquivos);
             this.gpBx.Controls.Add(this.btnAtualizarDataGrid);
@@ -177,13 +177,6 @@
             this.GradeDeDados.Size = new System.Drawing.Size(547, 208);
             this.GradeDeDados.TabIndex = 26;
             // 
-            // Selecionar
-            // 
-            this.Selecionar.HeaderText = "Selecionar";
-            this.Selecionar.Name = "Selecionar";
-            this.Selecionar.ReadOnly = true;
-            this.Selecionar.ToolTipText = "Seleciona o programa a ser instalado.";
-            // 
             // nomeProgramaDataGridViewTextBoxColumn
             // 
             this.nomeProgramaDataGridViewTextBoxColumn.DataPropertyName = "nomePrograma";
@@ -199,6 +192,13 @@
             this.arquiteturaProgramaDataGridViewTextBoxColumn.Name = "arquiteturaProgramaDataGridViewTextBoxColumn";
             this.arquiteturaProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             this.arquiteturaProgramaDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Selecionar
+            // 
+            this.Selecionar.HeaderText = "Selecionar";
+            this.Selecionar.Name = "Selecionar";
+            this.Selecionar.ReadOnly = true;
+            this.Selecionar.ToolTipText = "Seleciona o programa a ser instalado.";
             // 
             // programaBindingSource1
             // 
@@ -231,7 +231,7 @@
 
         #endregion
         private System.Windows.Forms.Button BtnMarcaDesmarca;
-        private System.Windows.Forms.Button btnIniciar;
+        private System.Windows.Forms.Button btnInstalar;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem arquivoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listaDeProgramasToolStripMenuItem;

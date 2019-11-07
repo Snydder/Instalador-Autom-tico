@@ -279,7 +279,7 @@ namespace InstaladorAutomatico.View
 
         private void btnRemover_Click(object sender, EventArgs e)
         {
-            RemoverDaLista(Int32.Parse(Convert.ToString(GradeDeDadosXML.Rows[GradeDeDadosXML.CurrentCell.RowIndex].Cells["iDProgramaDataGridViewTextBoxColumn"].Value)));
+             RemoverDaLista(Int32.Parse(Convert.ToString(GradeDeDadosXML.Rows[GradeDeDadosXML.CurrentCell.RowIndex].Cells["iDProgramaDataGridViewTextBoxColumn"].Value)));
             ReorganizaID();
         }
 
