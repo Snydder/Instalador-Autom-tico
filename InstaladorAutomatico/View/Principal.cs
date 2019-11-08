@@ -131,7 +131,7 @@ namespace InstaladorAutomatico
             for (int i = 0; i < linhasSelecionadas.Count; i++)
             {
                 String nomeProgramaComExtensao = Path.GetFileName(ListaLocal[i].diretorioPrograma);
-                String destinoCopiaComNomePrograma = Path.Combine(Properties.Settings.Default.DestinoCopia, ListaLocal[i].nomePrograma);
+                String destinoCopiaComNomePrograma = Path.Combine(System.Configuration.ConfigurationManager.AppSettings.Get("DestinoCopia"), ListaLocal[i].nomePrograma);
                 filaDeInstalacao.Enqueue(Path.Combine(destinoCopiaComNomePrograma, nomeProgramaComExtensao));
             }
         }
@@ -142,7 +142,7 @@ namespace InstaladorAutomatico
             Boolean valorCheckBox;
             ObterLinhasSelecionadas();
             GeraFilaInstalacao();
-            System.IO.Directory.CreateDirectory(Properties.Settings.Default.DestinoCopia);
+            System.IO.Directory.CreateDirectory(System.Configuration.ConfigurationManager.AppSettings.Get("DestinoCopia"));
             if (PercorreCheckBoxes() == 0)
             {
                 MessageBox.Show("Nenhum programa está selecionado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -199,7 +199,7 @@ namespace InstaladorAutomatico
                 MessageBox.Show("Nenhum programa está selecionado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            if (Properties.Settings.Default.LocalUAC != "")
+            if (System.Configuration.ConfigurationManager.AppSettings.Get("LocalUAC") != "")
             {
                 System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(Properties.Settings.Default.LocalUAC);
                 System.Diagnostics.Process rfp = new System.Diagnostics.Process();
@@ -240,7 +240,7 @@ namespace InstaladorAutomatico
                 valorCheckBox = Convert.ToBoolean(GradeDeDados[2, i].Value);
                 String nomeUltimaPasta = Path.GetDirectoryName(ListaLocal[i].diretorioPrograma);
                 DirectoryInfo dir = new DirectoryInfo(nomeUltimaPasta);
-                DestinoArquivo = Properties.Settings.Default.DestinoCopia + "\\" + ListaLocal[i].nomePrograma;
+                DestinoArquivo = System.Configuration.ConfigurationManager.AppSettings.Get("DestinoCopia") + "\\" + ListaLocal[i].nomePrograma;
                 if (valorCheckBox == true)
                 {
                     if (!Directory.Exists(DestinoArquivo))

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -41,36 +42,25 @@ namespace InstaladorAutomatico.Model
 
         [XmlElement(ElementName = "arquiteturaPrograma")]
         public Int32 arquiteturaPrograma { get; set; }
-
-        public Boolean MudarDiretorioDoXML()
-        {
-            OpenFileDialog mudarDiretorioXML = new OpenFileDialog();
-            DialogResult resultado = new DialogResult();
-            mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
-            resultado = mudarDiretorioXML.ShowDialog();
-            if (resultado == DialogResult.OK)
-            {
-                Properties.Settings.Default.Save();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
         public void SelecionarLocalSalvamentoXML()
         {
             DialogResult resultado = new DialogResult();
-            OpenFileDialog mudarDiretorioXML = new OpenFileDialog();
+            SaveFileDialog mudarDiretorioXML = new SaveFileDialog();
             resultado = mudarDiretorioXML.ShowDialog();
             mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
             if (resultado == DialogResult.OK)
             {
-                Properties.Settings.Default.Save();
+                List<Model.Programa> listaLimpa = new List<Model.Programa>();
+                caminhoGeracaoXML = mudarDiretorioXML.FileName;
+                SerializaPrograma(listaLimpa);
+                if (File.Exists(caminhoGeracaoXML))
+                {
+                    MessageBox.Show("Altere o novo caminho do XML no arquivo de configuração para utilizá-lo, e reinicie o programa.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             else
             {
-                Properties.Settings.Default.Save();
+                return;
             }
         }
 
@@ -78,7 +68,7 @@ namespace InstaladorAutomatico.Model
         {
             DialogResult resultado = new DialogResult();
             OpenFileDialog mudarDiretorioUAC = new OpenFileDialog();
-            mudarDiretorioUAC.InitialDirectory = Properties.Settings.Default.LocalUAC;
+            mudarDiretorioUAC.InitialDirectory = System.Configuration.ConfigurationManager.AppSettings.Get("LocalUAC");
             resultado = mudarDiretorioUAC.ShowDialog();
             mudarDiretorioUAC.Filter = "Arquivo .bat | * .bat";
             if (resultado == DialogResult.OK)
@@ -94,32 +84,20 @@ namespace InstaladorAutomatico.Model
 
         public void SelecionarLocalPastaTI()
         {
-            DialogResult resultado = new DialogResult();
-            FolderBrowserDialog mudarDiretorioTI = new FolderBrowserDialog();
-
-            resultado = mudarDiretorioTI.ShowDialog();
-            if (resultado == DialogResult.OK)
-            {
-                //Properties.Settings.Default.DestinoCopia = mudarDiretorioTI.SelectedPath;
-                Properties.Settings.Default.Save();
-                MessageBox.Show("O local da pasta TI foi alterada.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                //Properties.Settings.Default.DestinoCopia = "C:\\TI";
-                Properties.Settings.Default.Save();
-            }
+            Process.Start("notepad.exe", AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
+            return;
         }
 
         public Boolean VerificaPorXMLInicializacao()
         {
-            if (Properties.Settings.Default.CaminhoXML == "")
+            if (System.Configuration.ConfigurationManager.AppSettings.Get("CaminhoXML") == "")
             {
                 DialogResult resultado = new DialogResult();
                 resultado = MessageBox.Show("Nenhum caminho para o arquivo XML está configurado. Deseja gerar um agora?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (resultado == DialogResult.Yes)
                 {
                     List<Model.Programa> listaVazia = new List<Model.Programa>();
+                    caminhoGeracaoXML = AppDomain.CurrentDomain.BaseDirectory + "\\InstaladorAutomatico.exe.config";
                     SerializaPrograma(listaVazia);
                     return true;
                 }
@@ -130,13 +108,14 @@ namespace InstaladorAutomatico.Model
             }
             else
             {
-                if (!File.Exists(Properties.Settings.Default.CaminhoXML))
+                if (!File.Exists(System.Configuration.ConfigurationManager.AppSettings.Get("CaminhoXML")))
                 {
                     DialogResult resultado = new DialogResult();
                     resultado = MessageBox.Show("O arquivo XML não foi encontrado. Deseja gerar um agora?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                     if (resultado == DialogResult.Yes)
                     {
                         List<Model.Programa> listaVazia = new List<Model.Programa>();
+                        caminhoGeracaoXML = AppDomain.CurrentDomain.BaseDirectory + "\\InstaladorAutomatico.exe.config";
                         SerializaPrograma(listaVazia);
                         return true;
                     }
@@ -155,19 +134,18 @@ namespace InstaladorAutomatico.Model
 
         public void VerificaSelecionarLocalSalvamentoXML()
         {
-            if (Properties.Settings.Default.CaminhoXML == "")
+            if (System.Configuration.ConfigurationManager.AppSettings.Get("CaminhoXML") == "")
             {
                 DialogResult resultado = new DialogResult();
                 resultado = MessageBox.Show("Nenhum caminho para o arquivo XML está configurado. Deseja escolher um arquivo?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (resultado == DialogResult.Yes)
                 {
-                    Process.Start("notepad.exe", AppDomain.CurrentDomain.BaseDirectory + "\\InstaladorAutomatico.exe.config");
+                    Process.Start("notepad.exe", System.Configuration.ConfigurationManager.AppSettings.Get("CaminhoXML"));
                     return;
                 }
                 else
                 {
                     List<Model.Programa> listaVazia = new List<Model.Programa>();
-                    Properties.Settings.Default.Save();
                     SerializaPrograma(listaVazia);
                     if (File.Exists(caminhoPadrao))
                     {
@@ -178,7 +156,7 @@ namespace InstaladorAutomatico.Model
                         MessageBox.Show("Erro ao criar o arquivo. Escolher outro local?", "Erro", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                         if (resultado == DialogResult.Yes)
                         {
-                            Process.Start("notepad.exe", AppDomain.CurrentDomain.BaseDirectory + "\\InstaladorAutomatico.exe.config");
+                            Process.Start("notepad.exe", System.Configuration.ConfigurationManager.AppSettings.Get("CaminhoXML"));
                         }
                         else
                         {
@@ -206,14 +184,6 @@ namespace InstaladorAutomatico.Model
         public void SerializaPrograma(List<Model.Programa> ListaAlvoSerializacao)
         {
             XmlSerializer xs = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute(atributoXML));
-            if (!File.Exists(Properties.Settings.Default.CaminhoXML))
-            {
-                caminhoGeracaoXML = AppDomain.CurrentDomain.BaseDirectory + "Lista_de_programas.xml";
-            }
-            else
-            {
-                caminhoGeracaoXML = Properties.Settings.Default.CaminhoXML;
-            }
             FileStream xmlWriter = new FileStream(caminhoGeracaoXML, FileMode.Create);
             xs.Serialize(xmlWriter, ListaAlvoSerializacao);
             xmlWriter.Close();
@@ -223,10 +193,19 @@ namespace InstaladorAutomatico.Model
         {
             List<Model.Programa> listaSendoDeserializada = new List<Model.Programa>();
             XmlSerializer serializer = new XmlSerializer(typeof(List<Model.Programa>), new XmlRootAttribute(atributoXML));
-            if (Properties.Settings.Default.CaminhoXML == "")
+            if (System.Configuration.ConfigurationManager.AppSettings.Get("CaminhoXML") == "")
             {
-                Process.Start("notepad.exe", AppDomain.CurrentDomain.BaseDirectory + "\\InstaladorAutomatico.exe.config");
+                MessageBox.Show("Nenhum caminho para o arquivo XML está configurado.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return listaSendoDeserializada;
+            }
+            if (!File.Exists(System.Configuration.ConfigurationManager.AppSettings.Get("CaminhoXML")))
+            {
+                MessageBox.Show("O arquivo não existe.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return listaSendoDeserializada;
+            }
+            else
+            {
+                caminhoGeracaoXML = System.Configuration.ConfigurationManager.AppSettings.Get("CaminhoXML");
             }
             FileStream reader = new FileStream(caminhoGeracaoXML, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
             try

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -63,7 +64,7 @@ namespace InstaladorAutomatico.View
         private void BtnLimpar_Click(object sender, EventArgs e)
         {
             LimpaCampos();
-            MessageBox.Show(Properties.Settings.Default.CaminhoXML);
+            MessageBox.Show(System.Configuration.ConfigurationManager.AppSettings.Get("CaminhoXML"));
         }
 
         private void BtnCaminhoIcone_Click(object sender, EventArgs e)
@@ -98,8 +99,9 @@ namespace InstaladorAutomatico.View
 
         public void ObterLista()
         {
-            if (Properties.Settings.Default.CaminhoXML == "")
+            if (System.Configuration.ConfigurationManager.AppSettings.Get("CaminhoXML") == "")
             {
+                MessageBox.Show("O caminho do XML está vazio.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -111,6 +113,11 @@ namespace InstaladorAutomatico.View
                 {
                     GradeDeDadosXML.DataSource = null;
                     GradeDeDadosXML.DataSource = ListaLocal;
+                }
+                else
+                {
+                    GradeDeDadosXML.DataSource = null;
+
                 }
             }
             catch (FileNotFoundException)
@@ -159,20 +166,6 @@ namespace InstaladorAutomatico.View
         private void BtnFechar_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void ImportarXML()
-        {
-            if (p.MudarDiretorioDoXML() == true)
-            {
-                ListaLocal.Clear();
-                ListaLocal.AddRange(p.DeserializaPrograma());
-                ObterLista();
-            }
-            else
-            {
-                return;
-            }
         }
 
         private void CriarArquivoXML()
@@ -284,18 +277,20 @@ namespace InstaladorAutomatico.View
 
         private void btnRemover_Click(object sender, EventArgs e)
         {
-             RemoverDaLista(Int32.Parse(Convert.ToString(GradeDeDadosXML.Rows[GradeDeDadosXML.CurrentCell.RowIndex].Cells["iDProgramaDataGridViewTextBoxColumn"].Value)));
-            ReorganizaID();
+            if (GradeDeDadosXML.CurrentCell == null)
+            {
+                return;
+            }
+            else
+            {
+                RemoverDaLista(Int32.Parse(Convert.ToString(GradeDeDadosXML.Rows[GradeDeDadosXML.CurrentCell.RowIndex].Cells["iDProgramaDataGridViewTextBoxColumn"].Value)));
+                ReorganizaID();
+            }
         }
 
         private void salvarComoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SalvarXML();
-        }
-
-        private void importarXMLToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ImportarXML();
         }
 
         private void gerarNovoXMLToolStripMenuItem_Click(object sender, EventArgs e)
@@ -305,13 +300,7 @@ namespace InstaladorAutomatico.View
 
         private void localizarXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog LocalizarXML = new OpenFileDialog
-            {
-                Filter = "Arquivo XML | * .xml",
-                InitialDirectory = Properties.Settings.Default.CaminhoXML
-            };
-            LocalizarXML.ShowDialog();
-            LocalizarXML.Dispose();
+            Process.Start("notepad.exe", AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
         }
 
         private void BtnSubirLista_Click(object sender, EventArgs e)
@@ -398,7 +387,6 @@ namespace InstaladorAutomatico.View
 
         private void alterarLocalUACToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            p.SelecionarLocalUAC();
         }
 
         private void GradeDeDadosXML_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -419,7 +407,6 @@ namespace InstaladorAutomatico.View
 
         private void alterarLocalPastaTIToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            p.SelecionarLocalPastaTI();
         }
 
         private void GradeDeDadosXML_CellClick_1(object sender, DataGridViewCellEventArgs e)
