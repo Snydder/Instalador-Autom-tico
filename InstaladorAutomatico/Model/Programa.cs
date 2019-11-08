@@ -46,8 +46,8 @@ namespace InstaladorAutomatico.Model
         {
             DialogResult resultado = new DialogResult();
             SaveFileDialog mudarDiretorioXML = new SaveFileDialog();
-            resultado = mudarDiretorioXML.ShowDialog();
             mudarDiretorioXML.Filter = "Arquivo XML | * .xml";
+            resultado = mudarDiretorioXML.ShowDialog();
             if (resultado == DialogResult.OK)
             {
                 List<Model.Programa> listaLimpa = new List<Model.Programa>();
@@ -64,42 +64,22 @@ namespace InstaladorAutomatico.Model
             }
         }
 
-        public void SelecionarLocalUAC()
-        {
-            DialogResult resultado = new DialogResult();
-            OpenFileDialog mudarDiretorioUAC = new OpenFileDialog();
-            mudarDiretorioUAC.InitialDirectory = System.Configuration.ConfigurationManager.AppSettings.Get("LocalUAC");
-            resultado = mudarDiretorioUAC.ShowDialog();
-            mudarDiretorioUAC.Filter = "Arquivo .bat | * .bat";
-            if (resultado == DialogResult.OK)
-            {
-                Properties.Settings.Default.Save();
-                MessageBox.Show("O local do UAC foi alterado.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                return;
-            }
-        }
-
-        public void SelecionarLocalPastaTI()
-        {
-            Process.Start("notepad.exe", AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
-            return;
-        }
-
         public Boolean VerificaPorXMLInicializacao()
-        {
-            if (System.Configuration.ConfigurationManager.AppSettings.Get("CaminhoXML") == "")
+        { 
+            if (System.Configuration.ConfigurationManager.AppSettings.Get("CaminhoXML") == null)
             {
                 DialogResult resultado = new DialogResult();
                 resultado = MessageBox.Show("Nenhum caminho para o arquivo XML está configurado. Deseja gerar um agora?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (resultado == DialogResult.Yes)
                 {
                     List<Model.Programa> listaVazia = new List<Model.Programa>();
-                    caminhoGeracaoXML = AppDomain.CurrentDomain.BaseDirectory + "\\InstaladorAutomatico.exe.config";
+                    caminhoGeracaoXML = AppDomain.CurrentDomain.BaseDirectory + "\\Lista_de_Programas.xml";
                     SerializaPrograma(listaVazia);
-                    return true;
+                    if (File.Exists(caminhoGeracaoXML))
+                    {
+                        MessageBox.Show("O arquivo foi gerado na raiz desse programa. Aponte o novo local no arquivo de configuração.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    return false;
                 }
                 else
                 {
@@ -115,9 +95,14 @@ namespace InstaladorAutomatico.Model
                     if (resultado == DialogResult.Yes)
                     {
                         List<Model.Programa> listaVazia = new List<Model.Programa>();
-                        caminhoGeracaoXML = AppDomain.CurrentDomain.BaseDirectory + "\\InstaladorAutomatico.exe.config";
+                        caminhoGeracaoXML = AppDomain.CurrentDomain.BaseDirectory + "\\Lista_de_Programas.xml";
                         SerializaPrograma(listaVazia);
-                        return true;
+                        if (File.Exists(caminhoGeracaoXML))
+                        {
+                            MessageBox.Show("O arquivo foi gerado na raiz desse programa. Aponte o novo local no arquivo de configuração.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        SerializaPrograma(listaVazia);
+                        return false;
                     }
                     else
                     {
@@ -134,7 +119,7 @@ namespace InstaladorAutomatico.Model
 
         public void VerificaSelecionarLocalSalvamentoXML()
         {
-            if (System.Configuration.ConfigurationManager.AppSettings.Get("CaminhoXML") == "")
+            if (System.Configuration.ConfigurationManager.AppSettings.Get("CaminhoXML") == null)
             {
                 DialogResult resultado = new DialogResult();
                 resultado = MessageBox.Show("Nenhum caminho para o arquivo XML está configurado. Deseja escolher um arquivo?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
@@ -170,13 +155,15 @@ namespace InstaladorAutomatico.Model
         public void VerificaLocalUAC()
         {
 
-            if (Properties.Settings.Default.LocalUAC == "")
+            if (System.Configuration.ConfigurationManager.AppSettings.Get("LocalUAC") == null)
             {
                 DialogResult resultado = new DialogResult();
                 resultado = MessageBox.Show("Nenhum caminho para script do UAC está configurado. Deseja escolher um arquivo?", "Falha no carregamento", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (resultado == DialogResult.Yes)
                 {
                     Process.Start("notepad.exe", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "\\InstaladorAutomatico.exe.config"));
+                    Application.Exit();
+                    return;
                 }
             }
         }
@@ -200,7 +187,7 @@ namespace InstaladorAutomatico.Model
             }
             if (!File.Exists(System.Configuration.ConfigurationManager.AppSettings.Get("CaminhoXML")))
             {
-                MessageBox.Show("O arquivo não existe.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("O arquivo não existe. Verifique o arquivo de configuração e tente novamente.", "Falha no carregamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return listaSendoDeserializada;
             }
             else

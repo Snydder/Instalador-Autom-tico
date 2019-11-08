@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.VisualBasic.FileIO;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -136,20 +137,20 @@ namespace InstaladorAutomatico
             }
         }
 
-        private async void ExecutaFilaDeInstalacao()
+        private void ExecutaFilaDeInstalacao()
         {
             String ProgramaSendoInstalado;
             Boolean valorCheckBox;
             ObterLinhasSelecionadas();
             GeraFilaInstalacao();
+            DesabilitaHabilitaBotoes(false);
             System.IO.Directory.CreateDirectory(System.Configuration.ConfigurationManager.AppSettings.Get("DestinoCopia"));
             if (PercorreCheckBoxes() == 0)
             {
                 MessageBox.Show("Nenhum programa está selecionado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
-            await CopiarArquivos();
+            CopiarArquivos();
 
             for (int i = 0; i < GradeDeDados.Rows.Count; i++)
             {
@@ -171,16 +172,18 @@ namespace InstaladorAutomatico
                 if (valorCheckBox == true)
                 {
                     ProgramaSendoInstalado = filaDeInstalacao.Dequeue();
-                    if (!File.Exists(ProgramaSendoInstalado))
+                    if (File.Exists(ProgramaSendoInstalado))
                     {
-                        MessageBox.Show($"O arquivo {ProgramaSendoInstalado} não foi encontrado. Corrija a lista de programas.", "Erro ao instalar.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        linhasSelecionadas.Clear();
-                        return;
+                        ProcessStartInfo psi = new ProcessStartInfo(ProgramaSendoInstalado);
+                        Process rfp = new Process();
+                        rfp = Process.Start(psi);
+                        rfp.WaitForExit(300000);
+                        rfp.Dispose();
                     }
-                    ProcessStartInfo psi = new ProcessStartInfo(ProgramaSendoInstalado);
-                    Process rfp = new Process();
-                    rfp = Process.Start(psi);
-                    rfp.WaitForExit(300000);
+                    else
+                    {
+                        continue;
+                    }
                     if (i >= 5)
                     {
                         GradeDeDados.FirstDisplayedScrollingRowIndex = linhasSelecionadas[i];
@@ -189,6 +192,7 @@ namespace InstaladorAutomatico
                 }
             }
             linhasSelecionadas.Clear();
+            DesabilitaHabilitaBotoes(true);
         }
 
         private void btnInstlr_Click(object sender, EventArgs e)
@@ -201,7 +205,7 @@ namespace InstaladorAutomatico
             }
             if (System.Configuration.ConfigurationManager.AppSettings.Get("LocalUAC") != "")
             {
-                System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(Properties.Settings.Default.LocalUAC);
+                System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(System.Configuration.ConfigurationManager.AppSettings.Get("LocalUAC"));
                 System.Diagnostics.Process rfp = new System.Diagnostics.Process();
                 rfp = System.Diagnostics.Process.Start(psi);
                 rfp.WaitForExit(300000);
@@ -229,9 +233,26 @@ namespace InstaladorAutomatico
             }
             */
         }
-        private async Task CopiarArquivos()
+        private int CopiarArquivos()
         {
-            Boolean valorCheckBox;
+            String DestinoArquivo;
+            int i;
+            DesabilitaHabilitaBotoes(false);
+            for (i = 0; i < GradeDeDados.Rows.Count; i++)
+            {
+                DestinoArquivo = System.Configuration.ConfigurationManager.AppSettings.Get("DestinoCopia");
+                try
+                {
+                    FileSystem.CopyDirectory(Path.GetDirectoryName(ListaLocal[i].diretorioPrograma), Path.Combine(System.Configuration.ConfigurationManager.AppSettings.Get("DestinoCopia"), ListaLocal[i].nomePrograma), UIOption.AllDialogs);
+                }
+                catch (System.OperationCanceledException ex)
+                {
+                    MessageBox.Show(ex.Message, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return i;
+                }
+                GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.LightGreen;
+            }
+            /*Boolean valorCheckBox;
             String DestinoArquivo;
             MarcaComoPendente();
             DesabilitaHabilitaBotoes(false);
@@ -263,6 +284,9 @@ namespace InstaladorAutomatico
             }
             MessageBox.Show($"Cópia concluída!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             DesabilitaHabilitaBotoes(true);
+            */
+            DesabilitaHabilitaBotoes(true);
+            return i;
         }
 
         private void DesabilitaHabilitaBotoes(bool VF)
@@ -274,14 +298,9 @@ namespace InstaladorAutomatico
             arquivoToolStripMenuItem.Enabled = VF;
         }
 
-        private async void BtnCopiarArquivos_Click(object sender, EventArgs e)
+        private void BtnCopiarArquivos_Click(object sender, EventArgs e)
         {
-            btnCopiarArquivos.Enabled = false;
-            btnInstalar.Enabled = false;
-            BtnMarcaDesmarca.Enabled = false;
-            btnAtualizarDataGrid.Enabled = false;
-            arquivoToolStripMenuItem.Enabled = false;
-            await CopiarArquivos();
+            CopiarArquivos();
         }
 
         private void btnSair_Click(object sender, EventArgs e)
@@ -296,11 +315,6 @@ namespace InstaladorAutomatico
             GerenciarPrograma.Show();
         }
 
-        private void BtnVrfcInstlc_Click(object sender, EventArgs e)
-        {
-
-        }
-
         public void ObterLista()
         {
             ProgramaFuncoes.VerificaSelecionarLocalSalvamentoXML();
@@ -310,8 +324,14 @@ namespace InstaladorAutomatico
                 ListaLocal.AddRange(ProgramaFuncoes.DeserializaPrograma());
                 if (ListaLocal.Count > 0)
                 {
+                    GradeDeDados.Enabled = true;
                     GradeDeDados.DataSource = null;
                     GradeDeDados.DataSource = ListaLocal;
+                }
+                else
+                {
+                    GradeDeDados.DataSource = null;
+                    GradeDeDados.Enabled = false;
                 }
             }
             catch (FileNotFoundException)

@@ -38,6 +38,7 @@ namespace InstaladorAutomatico.View
             nomeProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             diretorioProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             arquiteturaProgramaDataGridViewTextBoxColumn.ReadOnly = true;
+            iDProgramaDataGridViewTextBoxColumn.ReadOnly = true;
             GradeDeDadosXML.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             GradeDeDadosXML.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             if (p.VerificaPorXMLInicializacao() == false)
@@ -45,6 +46,10 @@ namespace InstaladorAutomatico.View
                 MessageBox.Show($"O arquivo XML não foi encontrado no caminho especificado. Edite o arquivo de configuração e abra o programa novamente.", "Erro.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
                 return;
+            }
+            else
+            {
+                ObterLista();
             }
         }
 
@@ -117,7 +122,6 @@ namespace InstaladorAutomatico.View
                 else
                 {
                     GradeDeDadosXML.DataSource = null;
-
                 }
             }
             catch (FileNotFoundException)
@@ -171,7 +175,6 @@ namespace InstaladorAutomatico.View
         private void CriarArquivoXML()
         {
             p.SelecionarLocalSalvamentoXML();
-            p.SerializaPrograma(ListaDeProgramasXML);
             ObterLista();
         }
 
