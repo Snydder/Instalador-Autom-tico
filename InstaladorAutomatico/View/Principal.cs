@@ -192,6 +192,7 @@ namespace InstaladorAutomatico
                 }
             }
             linhasSelecionadas.Clear();
+            MessageBox.Show("Instalação concluída.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             DesabilitaHabilitaBotoes(true);
         }
 
@@ -205,14 +206,21 @@ namespace InstaladorAutomatico
             }
             if (System.Configuration.ConfigurationManager.AppSettings.Get("LocalUAC") != "")
             {
-                System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(System.Configuration.ConfigurationManager.AppSettings.Get("LocalUAC"));
-                System.Diagnostics.Process rfp = new System.Diagnostics.Process();
-                rfp = System.Diagnostics.Process.Start(psi);
-                rfp.WaitForExit(300000);
-                if (rfp.ExitCode == 1)
+                if (File.Exists(System.Configuration.ConfigurationManager.AppSettings.Get("LocalUAC")))
                 {
-                    MessageBox.Show("O UAC foi desativado. Reiniciando em breve.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(System.Configuration.ConfigurationManager.AppSettings.Get("LocalUAC"));
+                    System.Diagnostics.Process rfp = new System.Diagnostics.Process();
+                    rfp = System.Diagnostics.Process.Start(psi);
+                    rfp.WaitForExit(300000);
+                    if (rfp.ExitCode == 1)
+                    {
+                        MessageBox.Show("O UAC foi desativado. Reiniciando em breve.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("O arquivo do UAC não foi encontrado no diretório especificado. A instalação prosseguirá sem a checagem.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             GradeDeDados.ClearSelection();
@@ -301,6 +309,7 @@ namespace InstaladorAutomatico
         private void BtnCopiarArquivos_Click(object sender, EventArgs e)
         {
             CopiarArquivos();
+            MessageBox.Show($"Cópia concluída!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnSair_Click(object sender, EventArgs e)
