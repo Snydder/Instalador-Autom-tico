@@ -99,6 +99,15 @@ namespace InstaladorAutomatico
             }
         }
 
+        private void ResetaLinhas()
+        {
+            //marcando todas as linhas com a cor branca 
+            for (int i = 0; i < GradeDeDados.Rows.Count; i++)
+            {
+                GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.White;
+            }
+        }
+
         private void ObterLinhasSelecionadas()
         {
             linhasSelecionadas.Clear();
@@ -131,8 +140,8 @@ namespace InstaladorAutomatico
         {
             for (int i = 0; i < linhasSelecionadas.Count; i++)
             {
-                String nomeProgramaComExtensao = Path.GetFileName(ListaLocal[i].diretorioPrograma);
-                String destinoCopiaComNomePrograma = Path.Combine(System.Configuration.ConfigurationManager.AppSettings.Get("DestinoCopia"), ListaLocal[i].nomePrograma);
+                String nomeProgramaComExtensao = Path.GetFileName(ListaLocal[linhasSelecionadas[i]].diretorioPrograma);
+                String destinoCopiaComNomePrograma = Path.Combine(System.Configuration.ConfigurationManager.AppSettings.Get("DestinoCopia"), ListaLocal[linhasSelecionadas[i]].nomePrograma);
                 filaDeInstalacao.Enqueue(Path.Combine(destinoCopiaComNomePrograma, nomeProgramaComExtensao));
             }
         }
@@ -143,7 +152,6 @@ namespace InstaladorAutomatico
             Boolean valorCheckBox;
             ObterLinhasSelecionadas();
             GeraFilaInstalacao();
-            DesabilitaHabilitaBotoes(false);
             System.IO.Directory.CreateDirectory(System.Configuration.ConfigurationManager.AppSettings.Get("DestinoCopia"));
             if (PercorreCheckBoxes() == 0)
             {
@@ -151,16 +159,15 @@ namespace InstaladorAutomatico
                 return;
             }
             CopiarArquivos();
+            DesabilitaHabilitaBotoes(false);
 
-            for (int i = 0; i < GradeDeDados.Rows.Count; i++)
-            {
-                valorCheckBox = Convert.ToBoolean(GradeDeDados[2, i].Value);
-                if (valorCheckBox == true)
-                {
-                    GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.White;
-                }
-            }
+            //marcando todas as linhas com a cor branca 
+            ResetaLinhas();
+
+            //marcando linhas selecionadas como amarela
             MarcaComoPendente();
+
+
             for (int i = 0; i <= GradeDeDados.Rows.Count - 1; i++)
             {
                 if (filaDeInstalacao.Count == 0)
@@ -168,6 +175,7 @@ namespace InstaladorAutomatico
                     MessageBox.Show("Instalação concluída!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
+
                 valorCheckBox = Convert.ToBoolean(GradeDeDados[2, i].Value);
                 if (valorCheckBox == true)
                 {
@@ -179,16 +187,17 @@ namespace InstaladorAutomatico
                         rfp = Process.Start(psi);
                         rfp.WaitForExit(300000);
                         rfp.Dispose();
+                        GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.LightGreen;
                     }
                     else
                     {
+                        GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.Red;
                         continue;
                     }
                     if (i >= 5)
                     {
                         GradeDeDados.FirstDisplayedScrollingRowIndex = linhasSelecionadas[i];
                     }
-                    GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.LightGreen;
                 }
             }
             linhasSelecionadas.Clear();
@@ -243,22 +252,30 @@ namespace InstaladorAutomatico
         }
         private int CopiarArquivos()
         {
+            Boolean valorCheckBox;
             String DestinoArquivo;
             int i;
             DesabilitaHabilitaBotoes(false);
+            ResetaLinhas();
             for (i = 0; i < GradeDeDados.Rows.Count; i++)
             {
-                DestinoArquivo = System.Configuration.ConfigurationManager.AppSettings.Get("DestinoCopia");
-                try
+                valorCheckBox = Convert.ToBoolean(GradeDeDados[2, i].Value);
+                if (valorCheckBox == true)
                 {
-                    FileSystem.CopyDirectory(Path.GetDirectoryName(ListaLocal[i].diretorioPrograma), Path.Combine(System.Configuration.ConfigurationManager.AppSettings.Get("DestinoCopia"), ListaLocal[i].nomePrograma), UIOption.AllDialogs);
+                    DestinoArquivo = System.Configuration.ConfigurationManager.AppSettings.Get("DestinoCopia");
+                    try
+                    {
+                        FileSystem.CopyDirectory(Path.GetDirectoryName(ListaLocal[i].diretorioPrograma), Path.Combine(System.Configuration.ConfigurationManager.AppSettings.Get("DestinoCopia"), ListaLocal[i].nomePrograma), UIOption.AllDialogs);
+                        GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.LightGreen;
+                    }
+                    catch (System.OperationCanceledException ex)
+                    {
+                        MessageBox.Show(ex.Message, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information); 
+                        GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                        return i;
+                    }
                 }
-                catch (System.OperationCanceledException ex)
-                {
-                    MessageBox.Show(ex.Message, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return i;
-                }
-                GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.LightGreen;
+                
             }
             /*Boolean valorCheckBox;
             String DestinoArquivo;
