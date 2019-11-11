@@ -152,13 +152,21 @@ namespace InstaladorAutomatico
             Boolean valorCheckBox;
             ObterLinhasSelecionadas();
             GeraFilaInstalacao();
+            GradeDeDados.FirstDisplayedScrollingRowIndex = 0;
             System.IO.Directory.CreateDirectory(System.Configuration.ConfigurationManager.AppSettings.Get("DestinoCopia"));
             if (PercorreCheckBoxes() == 0)
             {
                 MessageBox.Show("Nenhum programa está selecionado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            CopiarArquivos();
+            if (CopiarArquivos() == 0)
+            {
+                GradeDeDados.ClearSelection();
+                linhasSelecionadas.Clear();
+                DesabilitaHabilitaBotoes(true);
+                ResetaLinhas();
+                return;
+            }
             DesabilitaHabilitaBotoes(false);
 
             //marcando todas as linhas com a cor branca 
@@ -168,7 +176,7 @@ namespace InstaladorAutomatico
             MarcaComoPendente();
 
 
-            for (int i = 0; i <= GradeDeDados.Rows.Count - 1; i++)
+            for (int i = 0; i < GradeDeDados.Rows.Count; i++)
             {
                 if (filaDeInstalacao.Count == 0)
                 {
@@ -192,11 +200,15 @@ namespace InstaladorAutomatico
                     else
                     {
                         GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                        if (i >= 8)
+                        {
+                            GradeDeDados.FirstDisplayedScrollingRowIndex = i;
+                        }
                         continue;
                     }
-                    if (i >= 5)
+                    if (i >= 8)
                     {
-                        GradeDeDados.FirstDisplayedScrollingRowIndex = linhasSelecionadas[i];
+                        GradeDeDados.FirstDisplayedScrollingRowIndex = i;
                     }
                 }
             }
@@ -257,6 +269,8 @@ namespace InstaladorAutomatico
             int i;
             DesabilitaHabilitaBotoes(false);
             ResetaLinhas();
+            MarcaComoPendente();
+            GradeDeDados.FirstDisplayedScrollingRowIndex = 0;
             for (i = 0; i < GradeDeDados.Rows.Count; i++)
             {
                 valorCheckBox = Convert.ToBoolean(GradeDeDados[2, i].Value);
@@ -267,12 +281,17 @@ namespace InstaladorAutomatico
                     {
                         FileSystem.CopyDirectory(Path.GetDirectoryName(ListaLocal[i].diretorioPrograma), Path.Combine(System.Configuration.ConfigurationManager.AppSettings.Get("DestinoCopia"), ListaLocal[i].nomePrograma), UIOption.AllDialogs);
                         GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.LightGreen;
+                        if (i >= 8)
+                        {
+                            GradeDeDados.FirstDisplayedScrollingRowIndex = i;
+                        }
                     }
                     catch (System.OperationCanceledException ex)
                     {
                         MessageBox.Show(ex.Message, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information); 
                         GradeDeDados.Rows[i].DefaultCellStyle.BackColor = Color.Red;
-                        return i;
+                        Activate();
+                        return 0;
                     }
                 }
                 
@@ -311,7 +330,7 @@ namespace InstaladorAutomatico
             DesabilitaHabilitaBotoes(true);
             */
             DesabilitaHabilitaBotoes(true);
-            return i;
+            return 1;
         }
 
         private void DesabilitaHabilitaBotoes(bool VF)
